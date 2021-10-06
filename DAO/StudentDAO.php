@@ -53,13 +53,16 @@
         {
             $this->studentList = array();
 
-            if(file_exists('Data/students.json'))
-            {
-                $jsonContent = file_get_contents('Data/students.json');
+            $apiStudent = curl_init(API_URL .'Student');
 
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+            curl_setopt($apiStudent, CURLOPT_HTTPHEADER, array('x-api-key: '.API_KEY));
+            curl_setopt($apiStudent, CURLOPT_RETURNTRANSFER, true);
+                    
+            $response = curl_exec($apiStudent);
 
-                foreach($arrayToDecode as $valuesArray)
+            $arrayToDecode = json_decode($response, true);
+
+            foreach($arrayToDecode as $valuesArray)
                 {
                     $student = new Student();
                     $student->setFirstName($valuesArray["firstName"]);
@@ -74,7 +77,7 @@
 
                     array_push($this->studentList, $student);
                 }
-            }
+            
         }
     }
 ?>
