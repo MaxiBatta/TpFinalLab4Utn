@@ -14,27 +14,30 @@
         }
    
 
-        public function ShowLoguinView($message = '')
+        public function ShowLoginView($message = '')
         {
-            require_once(VIEWS_PATH."loguin.php");
+            require_once(VIEWS_PATH."login.php");
         }
 
 
 
-        public function Loguin ($userName)
+        /*public function Login ($userName)
         {
-            if( $userName == "admin@utn.com" ){
+        if( $userName == "admin@utn.com" && $password =="admin"){
        
-
+                die("llegue")
                 require_once(VIEWS_PATH."index.php");
 
-        }else
+        }
+       if else()
         {
-            $message= "Invalid Loguin";
-            $this->ShowLoguinView($message);
+            
 
+        }else{
+         $message= "Invalid Login";
+        $this->ShowLoginView($message);
         }
-        }
+        }*/
 
     }
 ?>

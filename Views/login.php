@@ -1,8 +1,6 @@
-<?php
-    require_once('nav.php');
-?>
+
 <main class="py-5">
-<section id="listado" class="mb-5">
+     <section id="listado" class="mb-5">
           <div class="container">
                <h2 class="mb-4">login</h2>
                <div class="content text-center">
@@ -22,4 +20,9 @@
           </div>
           </div>
      </section>
+     <?php
+          if (isset ($message))
+          echo $message;
+     ?>
+
 </main>
