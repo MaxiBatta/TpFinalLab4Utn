@@ -72,5 +72,20 @@
                 }
             }
         }
+
+        public function Remove(Company $removingCompany){
+            //Get array from data file
+            $this->RetrieveData();
+        
+            //Search Company in the array
+        
+            if(($index = array_search($removingCompany, $this->companyList)) != false){
+                //Remove it from array if found 
+                unset($this->companyList[$index]);
+            }
+        
+            //Save array to data file
+            $this->SaveData();
+        }
     }
 ?>

@@ -5,6 +5,8 @@
 
     class Student extends Person
     {
+        private $studentId;
+        private $careerId;
         private $dni;
         private $fileNumber;
         private $gender;
@@ -14,6 +16,26 @@
         private $active;
 
 
+        public function getStudentId()
+        {
+            return $this->studentId;
+        }
+
+        public function setStudentId($studentId)
+        {
+            $this->studentId = $studentId;
+        }
+
+        public function getCareerId()
+        {
+            return $this->careerId;
+        }
+
+        public function setCareerId($careerId)
+        {
+            $this->careerId = $careerId;
+        }
+        
         public function getDni()
         {
             return $this->dni;

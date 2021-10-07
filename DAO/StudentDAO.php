@@ -30,6 +30,8 @@
 
             foreach($this->studentList as $student)
             {
+                $valuesArray["studentId"] = $student->getStudentId();
+                $valuesArray["careerId"] = $student->getCareerId();
                 $valuesArray["firstName"] = $student->getFirstName();
                 $valuesArray["lastName"] = $student->getLastName();
                 $valuesArray["dni"] = $student->getDni();
@@ -65,6 +67,8 @@
             foreach($arrayToDecode as $valuesArray)
                 {
                     $student = new Student();
+                    $student->setStudentId($valuesArray["studentId"]);
+                    $student->setCareerId($valuesArray["careerId"]);
                     $student->setFirstName($valuesArray["firstName"]);
                     $student->setLastName($valuesArray["lastName"]);
                     $student->setDni($valuesArray["dni"]);
