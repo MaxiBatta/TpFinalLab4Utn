@@ -21,23 +21,5 @@
 
 
 
-        /*public function Login ($userName)
-        {
-        if( $userName == "admin@utn.com" && $password =="admin"){
-       
-                die("llegue")
-                require_once(VIEWS_PATH."index.php");
-
-        }
-       if else()
-        {
-            
-
-        }else{
-         $message= "Invalid Login";
-        $this->ShowLoginView($message);
-        }
-        }*/
-
     }
 ?>

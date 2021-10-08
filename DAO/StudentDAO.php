@@ -38,7 +38,7 @@
                 $valuesArray["fileNumber"] = $student->getFileNumber();
                 $valuesArray["gender"] = $student->getGender();
                 $valuesArray["birthDate"] = $student->getBirthDate();
-                $valuesArray["email"] = $student->email();
+                $valuesArray["email"] = $student->getEmail();
                 $valuesArray["phoneNumber"] = $student->getPhoneNumber();
                 $valuesArray["active"] = $student->active();
                 

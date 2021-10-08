@@ -9,14 +9,9 @@
                <form action="<?php echo FRONT_ROOT.'Login/Login '?>" method="POST" class="bg-light-alpha p-5">
                     
                               <div class="form-group">
-                                   <label for="">Email</label>
+                                   <label for="">email</label>
                                    <input type="text" name="email" value="" class="form-control" placeholder="Ingresar email" required>
-                              </div>
-                              <div class="form-group">
-                                   <label for="">Password</label>
-                                   <input type="password" name="password" placeholder="contraseña" class="form-control" required>
-                              </div>
-                        
+                              </div>           
                     <button type="submit" class="btn btn-dark ml-auto d-block">Login</button>
                </form>
           </div>
