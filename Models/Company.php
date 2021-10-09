@@ -25,7 +25,7 @@
 
         public function getYearFoundation()
         {
-            return $this->getYearFoundation;
+            return $this->yearFoundation;
         }
 
         public function setYearFoundation($yearFoundation)

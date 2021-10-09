@@ -21,6 +21,12 @@
             require_once(VIEWS_PATH."company-list.php");  //crear en views vista con listado de empresas
         }
 
+        public function ShowAddCompanyView($message = '')
+        {
+            require_once(VIEWS_PATH."company-add.php");
+        }
+
+
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
             $company = new Company();
@@ -35,9 +41,10 @@
             
             $this->companyDAO->Add($company);
 
-           
-            /*$this->ShowAddCompanyView();   // crear en views vista "ShowAddCompanyView" para agregar empresas*/
+            $message= "Company Added!!";
+            $this->ShowAddCompanyView($message);   
         }
+        
         
         public function Remove(Company $company)
         {

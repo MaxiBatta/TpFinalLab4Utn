@@ -11,7 +11,7 @@
         public function LogOut()
         {
             require_once(VIEWS_PATH."logout.php");
-            require_once(VIEWS_PATH."login.php");
+            $this->Index();
 
         }      
     }
