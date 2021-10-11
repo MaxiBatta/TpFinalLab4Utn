@@ -8,19 +8,20 @@
               <table>
                 <thead>
                     <th>Legajo</th>
-                    <th>Apellido</th>
                     <th>Nombre</th>
+                    <th>Apellido</th>
+                    
                 </thead>
                 <tbody>
                     <?php
-                     $Students = new StudentDAO();
-                    $Students->GetAll();
-                     foreach($Students as $key => $value){ 
-                     if($value->getActive()==1){
+                     $Students;
+                     $Studentslist = $Students->GetAll();
+                     foreach($Studentslist as $key => $value){ 
+                     if($value->getActive()==true){
                            ?> <tr>
                                <td><?php echo $value->getStudentId()?></td>
                                <td><?php echo $value->getFirstName()?></td>
-                               <td><?php echo $value->getFirstName()?></td>
+                               <td><?php echo $value->getlastName()?></td>
                            </tr>
                            <?php
                          }

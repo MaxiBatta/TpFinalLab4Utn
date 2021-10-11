@@ -8,10 +8,9 @@
     $StudentsList = $Students->GetAll();
     foreach($StudentsList as $key => $value){ 
             if($email == $value->getEmail()){
-            die("llegue");
-            require_once(VIEWS_PATH."prueba.php");
+            require_once(VIEWS_PATH."listStudents.php");
         }else{
-            echo("Sin coincidencia");
+            
         }
 
     }
