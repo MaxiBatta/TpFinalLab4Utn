@@ -2,7 +2,7 @@
 
 define("ROOT", dirname(__DIR__) . "/");
 //Path to your project's root folder
-define("FRONT_ROOT", "");
+define("FRONT_ROOT", "/dashboard/proyectos/TpFinalLab4Utn/");
 define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
