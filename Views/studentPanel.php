@@ -1,40 +1,41 @@
 <?php
-    require_once('nav.php');
+require_once('nav.php');
 ?>
 <main class="py-5">
-<section id="listado" class="mb-5">
-          <div class="container">
-              <h2 class="mb-4">Bienvenido <?= $_SESSION["activeStudent"]->getFirstName() . " " . $_SESSION["activeStudent"]->getLastName(); ?></h2>
-              <table>
-                <thead>
-                    <th>Legajo</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    
-                </thead>
-                <tbody>
-                    <?php
-                     $Students;
-                     $Studentslist = $Students->GetAll();
-                     foreach($Studentslist as $key => $value){ 
-                     if($value->getActive()==true){
-                           ?> <tr>
-                               <td><?php echo $value->getStudentId()?></td>
-                               <td><?php echo $value->getFirstName()?></td>
-                               <td><?php echo $value->getlastName()?></td>
-                               <td><?php echo $value->getEmail()?></td>
-                           </tr>
-                           <?php
-                         }
-                 
-                     }
-                     ?>
-                     
-                     
-                </tbody>
-              </table>
-          </div>
-          
-     </section>
+    <section id="listado" class="mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="mb-4">Bienvenido <?= $_SESSION["activeStudent"]->getFirstName() . " " . $_SESSION["activeStudent"]->getLastName(); ?></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="mb-4">Menú de Acciones</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ver mis datos</h5>
+                            <p class="card-text">Ficha de mis datos personales detallados.</p>
+                            <a href="<?php echo FRONT_ROOT.'Student/ShowPersonalDataView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar Empresas</h5>
+                            <p class="card-text">Mirá la lista de empresas disponibles y postulate ya!</p>
+                            <a href="<?php echo FRONT_ROOT.'Student/ShowCompaniesView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 </main>

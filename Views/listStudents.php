@@ -3,7 +3,7 @@
 ?>
 <main class="py-5">
 <section id="listado" class="mb-5">
-          <div class="container">
+          <div class="container bg-light-alpha p-5">
               <h2 class="mb-4">Listado de estudiantes</h2>
               <table>
                 <thead>
