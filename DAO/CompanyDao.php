@@ -37,6 +37,8 @@
                 $valuesArray["logo"] = $company->getLogo();
                 $valuesArray["email"] = $company->getEmail();
                 $valuesArray["phoneNumber"] = $company->getPhoneNumber();
+                $valuesArray["active"] = $company->getActive();
+
                 
 
                 array_push($arrayToEncode, $valuesArray);
@@ -67,6 +69,8 @@
                     $company->setLogo($valuesArray["logo"]);
                     $company->setEmail($valuesArray["email"]);
                     $company->setPhoneNumber($valuesArray["phoneNumber"]);
+                    $company->setActive($valuesArray["active"]);
+                    
                     
                     array_push($this->companyList, $company);
                 }

@@ -14,7 +14,7 @@
         }
 
        
-        public function ShowListCompaniesView()
+        public function ShowListCompanyView()
         {
             $companyList = $this->companyDAO->GetAll();
 
@@ -46,14 +46,27 @@
         }
         
         
-        public function Remove(Company $company)
+
+        public function Select($name) //usuario mb
         {
             
-            $this->companyDAO->Remove($company);
-            
-           /* $this->ShowAddCompanyView();   // crear vista a donde direcciona luego de eliminar una empresa*/
-        }
+            $companyList = $this->companyDAO->GetAll();
 
+            foreach ($companyList as $eachCompany){
+                    if ($name == $eachCompany->getName() ){
+                        echo $eachCompany;
+                    }else{
+                        echo "No hay coincidencias";
+                          }
+                    }
+            
+         $this->ShowSelectCompanyView();   
+        }
+        
+        public function ShowSelectCompanyView($message = '')//usuario mb
+        {
+            require_once(VIEWS_PATH."company-filter.php");
+        }
 
 
 

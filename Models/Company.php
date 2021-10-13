@@ -11,6 +11,7 @@
         private $logo;
         private $email;
         private $phoneNumber;
+        private $active = true;
 
 
         public function getName()
@@ -76,6 +77,15 @@
         public function setPhoneNumber($phoneNumber)
         {
             $this->phoneNumber= $phoneNumber;
+        }
+        public function getActive()
+        {
+            return $this->active;
+        }
+
+        public function setActive($active)
+        {
+            $this->active = $active;
         }
         
         

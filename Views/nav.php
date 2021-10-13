@@ -7,6 +7,8 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/LogOut">Log out</a>
           </li> 
+
+         
      </ul>
 
 </nav>
