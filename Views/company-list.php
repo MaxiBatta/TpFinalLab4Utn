@@ -45,13 +45,13 @@ if (!$companiesList) {
 
                                 foreach ($companiesList as $key => $value) { ?> 
                                     <tr>
-                                        <td><?php echo $value->getName() ?></td>
-                                        <td><?php echo $value->getYearFoundation() ?></td>
-                                        <td><?php echo $value->getCity() ?></td>
-                                        <td><?php echo $value->getDescription() ?></td>
-                                        <td><?php echo $value->getlogo() ?></td>
-                                        <td><?php echo $value->getEmail() ?></td>
-                                        <td><?php echo $value->getPhoneNumber() ?></td>
+                                        <td><?= $value->getName() ?></td>
+                                        <td><?= $value->getYearFoundation() ?></td>
+                                        <td><?= $value->getCity() ?></td>
+                                        <td><?= $value->getDescription() ?></td>
+                                        <td><?= $value->getlogo() ?></td>
+                                        <td><?= $value->getEmail() ?></td>
+                                        <td><?= $value->getPhoneNumber() ?></td>
                                     </tr>
                                 <?php } ?>
 

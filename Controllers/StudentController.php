@@ -33,6 +33,10 @@
         {
             require_once(VIEWS_PATH."company-list.php");
         }
-
+        
+        public function ShowCompaniesCatalogueView($message = '')
+        {
+            require_once(VIEWS_PATH."company-list-catalogue.php");
+        }
     }
 ?>
