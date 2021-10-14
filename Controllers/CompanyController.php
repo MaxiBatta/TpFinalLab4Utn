@@ -47,25 +47,20 @@
         
         
 
-        public function Select($name) //usuario mb
-        {
+        public function CompanySearch(){
+            if ($_POST){  
+        echo "Hacer logica para buscar compania, no llega por post la info";
+            }
             
-            $companyList = $this->companyDAO->GetAll();
-
-            foreach ($companyList as $eachCompany){
-                    if ($name == $eachCompany->getName() ){
-                        echo $eachCompany;
-                    }else{
-                        echo "No hay coincidencias";
-                          }
-                    }
-            
-         $this->ShowSelectCompanyView();   
+            $this->ShowListCompanyView();   
         }
+        
+        
         
         public function ShowSelectCompanyView($message = '')//usuario mb
         {
-            require_once(VIEWS_PATH."company-filter.php");
+            
+            require_once(VIEWS_PATH."company-select.php");
         }
 
 
