@@ -14,7 +14,7 @@
         }
 
        
-        public function ShowListCompaniesView()
+        public function ShowListCompanyView()
         {
             $companyList = $this->companyDAO->GetAll();
 
@@ -46,14 +46,22 @@
         }
         
         
-        public function Remove(Company $company)
+
+        public function CompanySearch(){
+            if ($_POST){  
+        echo "Hacer logica para buscar compania, no llega por post la info";
+            }
+            
+            $this->ShowListCompanyView();   
+        }
+        
+        
+        
+        public function ShowSelectCompanyView($message = '')//usuario mb
         {
             
-            $this->companyDAO->Remove($company);
-            
-           /* $this->ShowAddCompanyView();   // crear vista a donde direcciona luego de eliminar una empresa*/
+            require_once(VIEWS_PATH."company-select.php");
         }
-
 
 
 
