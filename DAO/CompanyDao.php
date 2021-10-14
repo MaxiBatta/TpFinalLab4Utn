@@ -91,5 +91,20 @@
             //Save array to data file
             $this->SaveData();
         }
+        
+        public function returnCompanyByName($name)
+        {
+            $this->RetrieveData();
+
+            foreach($this->companyList as $company)
+            {  
+                if($company->getName() == $name)
+                {
+                    return $company;
+                }
+            }
+            
+            return false;
+        }
     }
 ?>
