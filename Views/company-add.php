@@ -9,48 +9,56 @@
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Name</label>
-                                   <input type="text" name="name" value="" class="form-control" required>
+                                   <label for="name">Nombre</label>
+                                   <input type="text" name="name" id= "name" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Year of Foundation</label>
-                                   <input type="date" name="yearFoundation" value="" class="form-control" required>
+                                   <label for="yearFoundation">Año de fundacion</label>
+                                   <input type="date" name="yearFoundation" id = "yearFoundation" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">City</label>
-                                   <input type="text" name="city" value="" class="form-control" required>
+                                   <label for="city">Ciudad</label>
+                                   <input type="text" name="city" id= "city" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Description</label>
-                                   <input type="text" name="description" value="" class="form-control" required>
+                                   <label for="descripcion">Descripcion</label>
+                                   <input type="text" name="description" id= "descripcion" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Logo</label>
-                                   <input type="file" name="logo" value="" class="form-control">
+                                   <label for="logo">Logo</label>
+                                   <input type="file" name="logo" id="logo" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Email</label>
-                                   <input type="email" name="email" value="" class="form-control" required>
+                                   <label for="email">Email</label>
+                                   <input type="email" name="email" id="email" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Phone number</label>
-                                   <input type="text" name="phoneNumber" value="" class="form-control" required>
+                                   <label for="phoneNumber">Numero de Celular</label>
+                                   <input type="text" name="phoneNumber" id="phoneNumber" value="" class="form-control" required>
                               </div>
                          </div>
                     </div>
-                    <button type="submit" class="btn btn-dark ml-auto d-block">Agregar</button>
+                    <div class="d-flex justify-content-end mt-3">
+                
+                    <a href="<?php echo FRONT_ROOT . 'Student/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
+                    <button type="submit" class="btn btn-dark ml-auto d-block">Agregar</button> 
+               </div>
+
+           
+               
+                   
                </form>
           </div>
      </section>

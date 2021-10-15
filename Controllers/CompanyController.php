@@ -36,13 +36,13 @@
         
         public function ShowAddCompanyView($message = '')
         {
-            Utils::CheckSession();
+            Utils::CheckAdmin();
             require_once(VIEWS_PATH."company-add.php");
         }
 
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
-            Utils::CheckSession();
+            Utils::CheckAdmin();
             
             $lastCompany = $this->companyDAO->getLast();
             $lastId = 1;

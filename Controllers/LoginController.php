@@ -29,7 +29,7 @@ class LoginController {
             
             Utils::CheckAdmin();
             
-            require_once(VIEWS_PATH . "adminPanel.php");
+            require_once(VIEWS_PATH . "admin-panel.php");
         } else {
             $existingMail = 0;
             foreach ($StudentsList as $key => $value) {
