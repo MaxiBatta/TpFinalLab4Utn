@@ -5,7 +5,15 @@ use Controllers\Company as Company;
 use DAO\CompanyDao as CompanyDAO;
 
 $companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAll(true ,false);
+$companiesList = ""; 
+
+if (isset($_SESSION["activeCondition"])) {
+    $companiesList = $companyDAO->GetAll($_SESSION["activeCondition"]);
+    unset($_SESSION["activeCondition"]);
+}
+else {
+    $companiesList = $companyDAO->GetAll(3);
+}
 
 if (!$companiesList) {
     $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';

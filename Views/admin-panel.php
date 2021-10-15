@@ -28,7 +28,7 @@ require_once('nav.php');
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver Empresas </h5>
-                            <p class="card-text">ABM Empresas</p>
+                            <p class="card-text">Ver y Modificar Empresas</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>

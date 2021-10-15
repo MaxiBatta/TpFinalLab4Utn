@@ -18,6 +18,7 @@ require_once('nav.php');
                 </div>
             </div>
             <?php
+            $_SESSION["activeCondition"] = 2;
             require_once('company-list.php');
             ?>
         </div>

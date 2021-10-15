@@ -16,11 +16,9 @@ require_once('nav.php');
                         <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Eliminar</button>
                     </form>
                 </div>
-                <div class="col-md-2">
-                    <a href="<?= FRONT_ROOT.'Administrator/ShowPanelView'; ?>" class="btn btn-primary">Volver</a>
-                </div>
             </div>
             <?php
+            $_SESSION["activeCondition"] = 1;
             require_once('company-list.php');
             ?>
         </div>
