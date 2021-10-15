@@ -21,12 +21,12 @@
         
         public function ShowPanelView($message = '')
         {
-            require_once(VIEWS_PATH."studentPanel.php");
+            require_once(VIEWS_PATH."student-panel.php");
         }
         
         public function ShowPersonalDataView($message = '')
         {
-            require_once(VIEWS_PATH."personalStudentData.php");
+            require_once(VIEWS_PATH."student-personal-data.php");
         }
         
         public function ShowCompaniesView($message = '')
