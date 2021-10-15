@@ -31,25 +31,6 @@
         {
             require_once(VIEWS_PATH."company-add.php");
         }
-        
-        public function ShowFilteredCompanyListView($message = '') {
-            if (!$_REQUEST["name"]) {
-                require_once(VIEWS_PATH."company-list-catalogue.php");
-                return;
-            }
-            else {
-                $newCompanyList = $this->companyDAO->SearchCompany($_REQUEST["name"]);
-                if (!$newCompanyList) {
-                    require_once(VIEWS_PATH."company-list-catalogue.php");
-                    return;
-                }
-                else {
-                    $_SESSION["found_companies"] = $newCompanyList;
-                    require_once(VIEWS_PATH."company-list-catalogue.php");
-                }
-            }
-        }
-        
 
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
@@ -86,7 +67,24 @@
             
             require_once(VIEWS_PATH."company-select.php");
         }
-
+        
+        public function ShowFilteredCompanyListView($message = '') {
+            if (!$_REQUEST["name"]) {
+                require_once(VIEWS_PATH."company-list-catalogue.php");
+                return;
+            }
+            else {
+                $newCompanyList = $this->companyDAO->SearchCompany($_REQUEST["name"]);
+                if (!$newCompanyList) {
+                    require_once(VIEWS_PATH."company-list-catalogue.php");
+                    return;
+                }
+                else {
+                    $_SESSION["found_companies"] = $newCompanyList;
+                    require_once(VIEWS_PATH."company-list-catalogue.php");
+                }
+            }
+        }
 
     }
 ?>
