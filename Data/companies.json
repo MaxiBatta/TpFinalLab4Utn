@@ -4,32 +4,43 @@
         "name": "Globant",
         "yearFoundation": "2012-02-02",
         "city": "Mar del Plata",
-        "description": "Empresa de tecnología",
+        "description": "Empresa de tecnolog\u00eda",
         "logo": "glob.png",
         "email": "globant@gmail.com.ar",
         "phoneNumber": "2233333333",
         "active": true
     },
     {
-        "companyId": 1,
+        "companyId": 2,
         "name": "Rubicom",
         "yearFoundation": "2019-02-01",
         "city": "Mar del Plata",
-        "description": "Empresa de tecnología",
+        "description": "Empresa de tecnolog\u00eda",
         "logo": "rubicom.png",
         "email": "rubicom@gmail.com.ar",
         "phoneNumber": "2233333333",
         "active": true
     },
     {
-        "companyId": 1,
-        "name": "Grupo Núcleo",
+        "companyId": 3,
+        "name": "Grupo N\u00facleo",
         "yearFoundation": "2010-02-01",
         "city": "Mar del Plata",
-        "description": "Empresa de tecnología",
-        "logo": "gc.png",
+        "description": "Empresa de tecnolog\u00eda",
+        "logo": "gc.jpg",
         "email": "gc@gmail.com.ar",
         "phoneNumber": "22323489",
         "active": true
+    },
+    {
+        "companyId": 4,
+        "name": "Glavinare",
+        "yearFoundation": "2018-01-15",
+        "city": "Miramar",
+        "description": "Desarrollo tecnol\u00f3gico",
+        "logo": "glavinare.png",
+        "email": "glavinare@yahoo.com.ch",
+        "phoneNumber": "2234567543",
+        "active": false
     }
 ]
