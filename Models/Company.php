@@ -4,6 +4,7 @@
 
     class Company 
     {
+        private $companyId;
         private $name;
         private $yearFoundation;
         private $city;
@@ -13,6 +14,15 @@
         private $phoneNumber;
         private $active = true;
 
+
+        public function getCompanyId()
+        {
+            return $this->companyId;
+        }
+        public function setCompanyId($companyId)
+        {
+            $this->companyId = $companyId;
+        }
 
         public function getName()
         {
