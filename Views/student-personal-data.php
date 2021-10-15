@@ -42,29 +42,43 @@ require_once('nav.php');
                 </div>
             </div>
             <hr>
-            <span style="font-size: 14px;">Datos Adicionales</span>
-            <div class="row mt-4">
-                <div class="col-md-3">
-                    <label>Número de expediente</label>
-                    <h5><?= $_SESSION["activeStudent"]->getFileNumber() ?></h5>
-                </div>
-                <div class="col-md-3">
-                    <label>Id del estudiante</label>
-                    <h5><?= $_SESSION["activeStudent"]->getStudentId() ?></h5>
-                </div>
-                <div class="col-md-3">
-                    <label>Id de la carrera</label>
-                    <h5><?= $_SESSION["activeStudent"]->getCareerId() ?></h5>
+            <div id="accordion">
+                <div class="card" style="background-color: #fff0">
+                    <div id="aditional_data_heading">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#aditional_data" aria-expanded="true" aria-controls="aditional_data">
+                                <strong>Datos Adicionales</strong>
+                            </button>
+                        </h6>
+                    </div>
+
+                    <div id="aditional_data" class="collapse" aria-labelledby="aditional_data_heading" data-parent="#accordion">
+                        <div class="card-body" style="">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Número de expediente</label>
+                                    <h5><?= $_SESSION["activeStudent"]->getFileNumber() ?></h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Id del estudiante</label>
+                                    <h5><?= $_SESSION["activeStudent"]->getStudentId() ?></h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Id de la carrera</label>
+                                    <h5><?= $_SESSION["activeStudent"]->getCareerId() ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-md-12 text-right">
-                   <a href="<?php echo FRONT_ROOT.'Student/ShowPanelView'?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'Student/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
                 </div>
             </div>
         </div>
-        
+
 
     </section>
 </main>

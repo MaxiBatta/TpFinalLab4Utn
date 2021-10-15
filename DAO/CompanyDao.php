@@ -16,10 +16,19 @@
 
             $this->SaveData();
         }
-
-        public function GetAll()
+        
+        /**
+         * @param bool $active Por defecto trae empresas inactivas, pasarle false para que traiga sólo activas
+         * @return companyList Retorna la lista
+         */
+        public function GetAll($active = true)
         {
-            $this->RetrieveData();
+            if (!$active) {
+                $this->RetrieveData(false);
+            }
+            else {
+                $this->RetrieveData();
+            }
 
             return $this->companyList;
         }
@@ -39,8 +48,6 @@
                 $valuesArray["phoneNumber"] = $company->getPhoneNumber();
                 $valuesArray["active"] = $company->getActive();
 
-                
-
                 array_push($arrayToEncode, $valuesArray);
             }
 
@@ -49,7 +56,7 @@
             file_put_contents('Data/companies.json', $jsonContent);
         }
 
-        private function RetrieveData()
+        private function RetrieveData($active = true)
         {
             $this->companyList = array();
 
@@ -61,6 +68,10 @@
 
                 foreach($arrayToDecode as $valuesArray)
                 {
+                    if ($valuesArray["active"] == false && !$active) {
+                        continue;
+                    }
+                    
                     $company = new Company();
                     $company->setName($valuesArray["name"]);
                     $company->setYearFoundation($valuesArray["yearFoundation"]);
@@ -106,5 +117,26 @@
             
             return false;
         }
+        
+        public function SearchCompany($name)
+        {
+            $this->RetrieveData();
+            $companyList = [];
+
+            foreach($this->companyList as $company)
+            {
+                if (!$company->getActive()) {
+                    continue;
+                }
+                if (stristr($company->getName(), strval($name)) === FALSE) {
+                    continue;
+                }
+
+                array_push($companyList, $company);
+            }
+        
+            return count($companyList) > 0 ? $companyList : false;
+        }
+        
     }
 ?>

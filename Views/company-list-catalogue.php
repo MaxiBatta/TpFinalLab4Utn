@@ -5,7 +5,14 @@ use Controllers\Company as Company;
 use DAO\CompanyDao as CompanyDAO;
 
 $companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAll();
+$companiesList = $companyDAO->GetAll(false);
+$removeSearch = false;
+
+if (isset($_SESSION["found_companies"])) {
+    $companiesList = $_SESSION["found_companies"];
+    unset($_SESSION["found_companies"]);
+    $removeSearch = '<a href="'. FRONT_ROOT.'Student/ShowCompaniesCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+}
 
 if (!$companiesList) {
     $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
@@ -14,7 +21,8 @@ if (!$companiesList) {
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-            <div class="row mt-3">
+            
+            <div class="row">
                 <div class="col-md-10">
                     <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>
                 </div>
@@ -22,10 +30,27 @@ if (!$companiesList) {
                     <a href="<?php echo FRONT_ROOT.'Student/ShowPanelView'?>" class="btn btn-primary">Volver</a>
                 </div>
             </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <form action="<?= FRONT_ROOT ?>Company/ShowFilteredCompanyListView" method="post">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <input type="text" class="flex-grow-1 form-control" name="name" placeholder="Busca una empresa...">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>
+                            </div>
+                            <div class="col-md-2">
+                                <?= $removeSearch ? $removeSearch : "" ?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
             <?php
-            $companyDAO = new CompanyDAO();
-            $companiesList = $companyDAO->GetAll();
-
+            
             if (!$companiesList) {
                 echo "No hay ninguna compañía cargada o disponible";
             } else {
