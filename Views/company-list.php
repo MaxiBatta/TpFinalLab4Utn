@@ -5,7 +5,7 @@ use Controllers\Company as Company;
 use DAO\CompanyDao as CompanyDAO;
 
 $companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAll();
+$companiesList = $companyDAO->GetAll(true ,false);
 
 if (!$companiesList) {
     $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
@@ -25,6 +25,7 @@ if (!$companiesList) {
                     else { ?>
                     <table style="width: 100%;">
                             <thead>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Año de fundación</th>
                             <th>Ciudad</th>
@@ -32,19 +33,14 @@ if (!$companiesList) {
                             <th>Logo</th>
                             <th>Email</th>
                             <th>Número de teléfono</th>
+                            <th>Activo</th>
                             </thead>
                             <tbody>
                                 <?php
-                                $companyDAO = new CompanyDAO();
-                                $companiesList = $companyDAO->GetAll();
-
-                                if (!$companiesList) {
-                                    echo "No hay ninguna compañía cargada o disponible";
-                                }
-
-
+                               
                                 foreach ($companiesList as $key => $value) { ?> 
                                     <tr>
+                                        <td><?= $value->getCompanyId() ?></td>
                                         <td><?= $value->getName() ?></td>
                                         <td><?= $value->getYearFoundation() ?></td>
                                         <td><?= $value->getCity() ?></td>
@@ -52,6 +48,7 @@ if (!$companiesList) {
                                         <td><?= $value->getlogo() ?></td>
                                         <td><?= $value->getEmail() ?></td>
                                         <td><?= $value->getPhoneNumber() ?></td>
+                                        <td><?=$value->getActive() ? "Activo" : "<strong class='text-danger'> Inactivo</strong>"?></td>
                                     </tr>
                                 <?php } ?>
 

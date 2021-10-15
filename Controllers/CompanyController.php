@@ -4,6 +4,7 @@
     use DAO\CompanyDAO as CompanyDAO;
     use Models\Company as Company;
     use Utils\Utils as Utils;
+    
 
     class CompanyController
     {
@@ -29,15 +30,70 @@
         
         public function ShowCompanyDetailView($message = '')
         {
-            Utils::CheckBothSessions();
-            $_SESSION["actual_company"] = $_REQUEST["name"];
+            //Utils::CheckBothSessions();
+            $_SESSION["actual_company"] = $_REQUEST["company-id"];
             require_once(VIEWS_PATH."company-detail.php");
         }
-        
+        public function ShowCompanyModifyView($message = '')
+        {
+            
+            $_SESSION["actual_company"] = $_REQUEST["company-id"];
+            require_once(VIEWS_PATH."company-modify.php");
+        } 
+        public function DeleteCompany($companyId) {
+            $this->companyDAO->Delete($companyId);
+
+            $this->ShowCompaniesCatalogueView();
+        }
+        public function ShowDeleteCompanyView($message = '')
+        {
+            Utils::CheckAdmin();
+            require_once(VIEWS_PATH."company-delete.php");
+        }
+        public function ActiveCompany($companyId) {
+            $this->companyDAO->Active($companyId);
+
+            $this->ShowCompaniesCatalogueView();
+        }
+        public function ShowActiveCompanyView($message = '')
+        {
+            Utils::CheckAdmin();
+            require_once(VIEWS_PATH."company-active.php");
+        }
         public function ShowAddCompanyView($message = '')
         {
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."company-add.php");
+        }
+        public function ModifyCompany($companyId, $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber) {
+            $company = new Company();
+            $company = $this->companyDAO->returnCompanyById($companyId);
+
+            if ($name) {
+                $company->setName($name);
+            }
+            if ($yearFoundation) {
+                $company->setYearFoundation($yearFoundation);
+            }
+            if ($city) {
+                $company->setCity($city);
+            }
+            if ($description) {
+                $company->setDescription($city);
+            }
+            if ($logo) {
+                $company->setLogo($logo);
+            }
+            if ($email) {
+                $company->setEmail($email);
+            }
+            if ($phoneNumber) {
+                $company->setPhoneNumber($phoneNumber);
+            }
+
+            $this->companyDAO->Modify($company);
+
+            $this->ShowCompaniesCatalogueView();
         }
 
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)

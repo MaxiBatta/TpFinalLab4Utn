@@ -1,13 +1,24 @@
 [
     {
         "companyId": 1,
-        "name": "Rubicom",
-        "yearFoundation": "2019-05-01",
-        "city": "Mar del plata",
+        "name": "nashe",
+        "yearFoundation": "2222-02-02",
+        "city": "Giorigia",
         "description": "Empresa re piola",
         "logo": "",
         "email": "r@com.ar",
         "phoneNumber": "2233333333",
+        "active": true
+    },
+    {
+        "companyId": 2,
+        "name": "Glavinare",
+        "yearFoundation": "2018-01-01",
+        "city": "Mar del plata",
+        "description": "fiumba",
+        "logo": "fernet.jpg",
+        "email": "qcyo@com",
+        "phoneNumber": "1111111111111111111",
         "active": true
     }
 ]

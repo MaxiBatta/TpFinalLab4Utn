@@ -22,6 +22,8 @@ if (!$companiesList) {
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
             
+           
+            
             <div class="row">
                 <div class="col-md-10">
                     <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>
@@ -69,9 +71,17 @@ if (!$companiesList) {
                             </div>
                             <div class="row">
                                 <form action="<?= FRONT_ROOT ?>Company/ShowCompanyDetailView" method="post">
-                                    <input type="hidden" name="name" value="<?= $value->getName() ?>">
+                                    <input type="hidden" name="company-id" value="<?= $value->getCompanyId() ?>">
                                     <div class="d-flex align-item-center">
                                         <button type="submit" class="btn btn-primary">Ver detalle</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <form action="<?= FRONT_ROOT ?>Company/ShowCompanyModifyView" method="post">
+                                    <input type="hidden" name="company-id" value="<?= $value->getCompanyId() ?>">
+                                    <div class="d-flex align-item-center">
+                                        <button type="submit" class="btn btn-primary">Modificar</button>
                                     </div>
                                 </form>
                             </div>

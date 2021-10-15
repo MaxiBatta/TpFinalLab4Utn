@@ -27,8 +27,12 @@
          * @param bool $active Por defecto trae empresas inactivas, pasarle false para que traiga sólo activas
          * @return companyList Retorna la lista
          */
-        public function GetAll($active = true)
+        public function GetAll($active = true, $onlyInactive=false)
         {
+            if($onlyInactive){
+              $this->RetrieveData(true , true);
+            }
+            else{
             if (!$active) {
                 $this->RetrieveData(false);
             }
@@ -36,6 +40,8 @@
                 $this->RetrieveData();
             }
 
+            
+            }
             return $this->companyList;
         }
         
@@ -68,7 +74,7 @@
             file_put_contents($this->fileName, $jsonContent);
         }
 
-        private function RetrieveData($active = true)
+        private function RetrieveData($active = true,$onlyInactive=false)
         {
             $this->companyList = array();
 
@@ -80,10 +86,16 @@
 
                 foreach($arrayToDecode as $valuesArray)
                 {
+                    if($onlyInactive)
+                    {
+                        if ($valuesArray["active"] == false) {
+                            continue;
+                        }
+                    }else{
                     if ($valuesArray["active"] == false && !$active) {
                         continue;
                     }
-                    
+                    }
                     $company = new Company();
                     $company->setCompanyId($valuesArray["companyId"]);
                     $company->setName($valuesArray["name"]);
@@ -149,6 +161,68 @@
             }
         
             return count($companyList) > 0 ? $companyList : false;
+        }
+        public function returnCompanyById($id)
+        {
+            $this->RetrieveData();
+
+            foreach($this->companyList as $company)
+            {
+                if($company->getCompanyId() == $id)
+                {
+                    return $company;
+                }
+            }
+
+            return false;
+        }
+        public function returnKeyById($id)
+        {
+            $this->RetrieveData();
+
+            foreach($this->companyList as $key => $company)
+            {
+                if($company->getCompanyId() == $id) {
+                    return $key;
+                }
+            }
+
+            return false;
+        }
+
+        public function Delete($id) 
+        {
+            $this->RetrieveData();
+            $key = $this->returnKeyById($id);
+
+            if (!$key) {
+                $_SESSION["companyNotFound"] = 1;
+                return;
+            }
+
+            $this->companyList[$key]->setActive(false);
+            $this->SaveData();
+        }
+        public function Active($id) 
+        {
+            $this->RetrieveData();
+            $key = $this->returnKeyById($id);
+
+            if (!$key) {
+                $_SESSION["companyNotFound"] = 1;
+                return;
+            }
+
+            $this->companyList[$key]->setActive(true);
+            $this->SaveData();
+        }
+
+        public function Modify(Company $company)
+        {
+            $this->RetrieveData();
+            $key = $this->returnKeyById($company->getCompanyId());
+            $this->companyList[$key] = $company;
+            $this->SaveData();
         }
         
     }

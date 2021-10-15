@@ -33,8 +33,38 @@ require_once('nav.php');
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Eliminar Empresas </h5>
+                            <p class="card-text">Eliminar una empresa por ID</p>
+                            <a href="<?php echo FRONT_ROOT.'Company/ShowDeleteCompanyView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ver Tabla Empresas </h5>
+                            <p class="card-text">Listar empresas como tabla</p>
+                            <a href="<?php echo FRONT_ROOT.'Company/ShowListCompanyView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                    </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Reactivar una empresa </h5>
+                            <p class="card-text">Da de alta a una empresa inactiva</p>
+                            <a href="<?php echo FRONT_ROOT.'Company/ShowActiveCompanyView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
     </section>
