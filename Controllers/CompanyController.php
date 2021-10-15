@@ -53,8 +53,18 @@
 
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
+            Utils::CheckAdmin();
+            $lastCompany = $companyDao->GetLast();
+            $lastId = 1;
+    
+            if ($lastCompany) {
+             $lastId = $lastCompany->getId();
+             $lastId++;
+                               }
+            
             $company = new Company();
             
+            $company->setCompanyId($lastId);
             $company->setName($name);
             $company->setYearFoundation($yearFoundation);
             $company->setCity($city);
@@ -67,16 +77,6 @@
 
             $message= "Company Added!!";
             $this->ShowAddCompanyView($message);   
-        }
-        
-        
-
-        public function CompanySearch(){
-            if ($_POST){  
-        echo "Hacer logica para buscar compania, no llega por post la info";
-            }
-            
-            $this->ShowListCompanyView();   
         }
         
         
