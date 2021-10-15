@@ -58,7 +58,7 @@ if (!$companiesList) {
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-3">
-                            <img class="" src="<?= '../' . VIEWS_PATH . 'img/bg.png' ?>" width="183" height="180">
+                            <img class="" src="<?= '../' . VIEWS_PATH . 'img/' . $value->getLogo() ?>" width="183" height="180">
                         </div>
                         <div class="col-md-9">
                             <div class="row">

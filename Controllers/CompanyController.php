@@ -3,6 +3,7 @@
 
     use DAO\CompanyDAO as CompanyDAO;
     use Models\Company as Company;
+    use Utils\Utils as Utils;
 
     class CompanyController
     {
@@ -10,38 +11,46 @@
 
         public function __construct()
         {
-            $this->companyDAO = new companyDAO();
+            $this->companyDAO = new CompanyDAO();
         }
 
        
         public function ShowListCompanyView()
         {
-            $companyList = $this->companyDAO->GetAll();
-
+            Utils::CheckBothSessions();
             require_once(VIEWS_PATH."company-list.php");  //crear en views vista con listado de empresas
+        }
+        
+        public function ShowCompaniesCatalogueView($message = '')
+        {
+            Utils::CheckBothSessions();
+            require_once(VIEWS_PATH."company-list-catalogue.php");
         }
         
         public function ShowCompanyDetailView($message = '')
         {
+            Utils::CheckBothSessions();
             $_SESSION["actual_company"] = $_REQUEST["name"];
             require_once(VIEWS_PATH."company-detail.php");
         }
         
         public function ShowAddCompanyView($message = '')
         {
+            Utils::CheckSession();
             require_once(VIEWS_PATH."company-add.php");
         }
 
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
-            Utils::CheckAdmin();
-            $lastCompany = $companyDao->GetLast();
+            Utils::CheckSession();
+            
+            $lastCompany = $this->companyDAO->getLast();
             $lastId = 1;
-    
+            
             if ($lastCompany) {
-             $lastId = $lastCompany->getId();
-             $lastId++;
-                               }
+                $lastId = $lastCompany->getCompanyId();
+                $lastId++;
+            }
             
             $company = new Company();
             
@@ -59,8 +68,6 @@
             $message= "Company Added!!";
             $this->ShowAddCompanyView($message);   
         }
-        
-        
         
         public function ShowSelectCompanyView($message = '')//usuario mb
         {

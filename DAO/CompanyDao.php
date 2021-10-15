@@ -6,8 +6,14 @@
 
     class CompanyDao implements ICompanyDAO
     {
-        private $companyList = array();
-
+        private $fileName;
+        private $companyList;
+        
+        public function __construct() {
+            $this->companyList = array();
+            $this->fileName = dirname(__DIR__)."/Data/companies.json";
+        }
+        
         public function Add(Company $company)
         {
             $this->RetrieveData();
@@ -32,6 +38,11 @@
 
             return $this->companyList;
         }
+        
+        public function getLast() {
+            $this->RetrieveData();
+            return end($this->companyList);
+        }
 
         private function SaveData()
         {
@@ -39,6 +50,7 @@
 
             foreach($this->companyList as $company)
             {
+                $valuesArray["companyId"] = $company->getCompanyId();
                 $valuesArray["name"] = $company->getName();
                 $valuesArray["yearFoundation"] = $company->getYearFoundation();
                 $valuesArray["city"] = $company->getCity();
@@ -53,16 +65,16 @@
 
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
             
-            file_put_contents('Data/companies.json', $jsonContent);
+            file_put_contents($this->fileName, $jsonContent);
         }
 
         private function RetrieveData($active = true)
         {
             $this->companyList = array();
 
-            if(file_exists('Data/companies.json'))
+            if(file_exists($this->fileName))
             {
-                $jsonContent = file_get_contents('Data/companies.json');
+                $jsonContent = file_get_contents($this->fileName);
 
                 $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
@@ -73,6 +85,7 @@
                     }
                     
                     $company = new Company();
+                    $company->setCompanyId($valuesArray["companyId"]);
                     $company->setName($valuesArray["name"]);
                     $company->setYearFoundation($valuesArray["yearFoundation"]);
                     $company->setCity($valuesArray["city"]);

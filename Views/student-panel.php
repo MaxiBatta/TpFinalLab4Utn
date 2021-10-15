@@ -29,7 +29,7 @@ require_once('nav.php');
                         <div class="card-body">
                             <h5 class="card-title">Buscar Empresas</h5>
                             <p class="card-text">Mirá la lista de empresas disponibles y postulate ya!</p>
-                            <a href="<?php echo FRONT_ROOT.'Student/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
+                            <a href="<?php echo FRONT_ROOT.'Company/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>

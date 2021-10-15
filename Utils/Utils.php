@@ -3,23 +3,39 @@ namespace Utils;
 
 class Utils{
 
-
+    /*
+     * Checkea la sesión de Administrador.
+     */
     public static function CheckAdmin(){
-        $esAdmin = isset($_SESSION["activeAdministrator"]) ? $_SESSION["activeAdministrator"] : false;
-        if (!$esAdmin) {
-            //redirect to homepage
-            header("location:".FRONT_ROOT);
+        if (!isset($_SESSION["activeAdministrator"])) {
+            $_SESSION["notLogged"] = true;
+            header("location:".FRONT_ROOT."index.php");
         
-            //exit previene que se ejecute el codigo que continuaría
             exit;
         }
     }
-
     
+    /*
+     * Checkea la sesión de Estudiante.
+     */
     public static function CheckSession(){
         if (!isset($_SESSION["activeStudent"])) {
-            //redirect to homepage
-            header("location:".FRONT_ROOT."Login");
+            $_SESSION["notLogged"] = true;
+            header("location:".FRONT_ROOT."index.php");
+            
+            exit;
+        }
+    }
+    
+    /*
+     * Checkea ambas sesiones, se utiliza con la intención de acceder a vistas compartidas en ambos usuarios.
+     */
+    public static function CheckBothSessions(){
+        if (!isset($_SESSION["activeAdministrator"]) && !isset($_SESSION["activeStudent"])) {
+            $_SESSION["notLogged"] = true;
+            header("location:".FRONT_ROOT."index.php");
+            
+            exit;
         }
     }
 }

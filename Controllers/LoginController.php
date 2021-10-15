@@ -5,6 +5,7 @@ namespace Controllers;
 use DAO\StudentDAO as StudentDAO;
 use Models\Student as Student;
 use Models\Administrator as Administrator;
+use Utils\Utils as Utils;
 
 class LoginController {
 
@@ -12,6 +13,9 @@ class LoginController {
         
         if (isset($_SESSION["loginError"])) {
             unset($_SESSION["loginError"]);
+        }
+        if (isset($_SESSION["notLogged"])) {
+            unset($_SESSION["notLogged"]);
         }
         
         $Students = new StudentDAO();
@@ -22,6 +26,8 @@ class LoginController {
             $administrator->setEmail($email);
 
             $_SESSION["activeAdministrator"] = $administrator;
+            
+            Utils::CheckAdmin();
             
             require_once(VIEWS_PATH . "adminPanel.php");
         } else {
@@ -43,6 +49,8 @@ class LoginController {
                     $student->setPhoneNumber($value->getPhoneNumber());
                     
                     $_SESSION["activeStudent"] = $student;
+                    
+                    Utils::CheckSession();
                     
                     require_once(VIEWS_PATH . "student-panel.php");
                 }
