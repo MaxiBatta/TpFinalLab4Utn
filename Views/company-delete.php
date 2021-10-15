@@ -10,11 +10,14 @@ require_once('nav.php');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <form action="<?= FRONT_ROOT ?>Company/DeleteCompany" method="post">
                         <input type="number" name="id-company">
                         <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Eliminar</button>
                     </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="<?= FRONT_ROOT.'Administrator/ShowPanelView'; ?>" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             <?php

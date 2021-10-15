@@ -23,7 +23,7 @@ if (!$companiesList) {
                         echo $nullCompanies;
                     }
                     else { ?>
-                    <table style="width: 100%;">
+                    <table>
                             <thead>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -56,6 +56,9 @@ if (!$companiesList) {
                         </table>
                     <?php } ?>
                 </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
             </div>
         </div>
 

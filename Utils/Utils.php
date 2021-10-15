@@ -13,6 +13,9 @@ class Utils{
         
             exit;
         }
+        else {
+            $_SESSION["adminLogged"] = true;
+        }
     }
     
     /*
@@ -25,6 +28,9 @@ class Utils{
             
             exit;
         }
+        else {
+            $_SESSION["studentLogged"] = true;
+        }
     }
     
     /*
@@ -36,6 +42,14 @@ class Utils{
             header("location:".FRONT_ROOT."index.php");
             
             exit;
+        }
+        else {
+            if (isset($_SESSION["activeAdministrator"])) {
+                $_SESSION["adminLogged"] = true;
+            }
+            else {
+                $_SESSION["studentLogged"] = true;
+            }
         }
     }
 }

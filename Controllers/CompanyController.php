@@ -4,6 +4,7 @@
     use DAO\CompanyDAO as CompanyDAO;
     use Models\Company as Company;
     use Utils\Utils as Utils;
+    use Controllers\AdministratorController as AdministratorController;
     
 
     class CompanyController
@@ -30,30 +31,20 @@
         
         public function ShowCompanyDetailView($message = '')
         {
-            //Utils::CheckBothSessions();
+            Utils::CheckBothSessions();
             $_SESSION["actual_company"] = $_REQUEST["company-id"];
             require_once(VIEWS_PATH."company-detail.php");
         }
         public function ShowCompanyModifyView($message = '')
         {
-            
+            Utils::CheckAdmin();
             $_SESSION["actual_company"] = $_REQUEST["company-id"];
             require_once(VIEWS_PATH."company-modify.php");
         } 
-        public function DeleteCompany($companyId) {
-            $this->companyDAO->Delete($companyId);
-
-            $this->ShowCompaniesCatalogueView();
-        }
         public function ShowDeleteCompanyView($message = '')
         {
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."company-delete.php");
-        }
-        public function ActiveCompany($companyId) {
-            $this->companyDAO->Active($companyId);
-
-            $this->ShowCompaniesCatalogueView();
         }
         public function ShowActiveCompanyView($message = '')
         {
@@ -64,6 +55,16 @@
         {
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."company-add.php");
+        }
+        public function DeleteCompany($companyId) {
+            $this->companyDAO->Delete($companyId);
+            
+            $this->ShowListCompanyView();
+        }
+        public function ActiveCompany($companyId) {
+            $this->companyDAO->Active($companyId);
+
+            $this->ShowListCompanyView();
         }
         public function ModifyCompany($companyId, $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber) {
             $company = new Company();
@@ -121,14 +122,7 @@
             
             $this->companyDAO->Add($company);
 
-            $message= "Company Added!!";
-            $this->ShowAddCompanyView($message);   
-        }
-        
-        public function ShowSelectCompanyView($message = '')//usuario mb
-        {
-            
-            require_once(VIEWS_PATH."company-select.php");
+            $this->ShowCompaniesCatalogueView();
         }
         
         public function ShowFilteredCompanyListView($message = '') {

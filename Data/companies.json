@@ -1,7 +1,7 @@
 [
     {
         "companyId": 1,
-        "name": "nashe",
+        "name": "nashee",
         "yearFoundation": "2222-02-02",
         "city": "Giorigia",
         "description": "Empresa re piola",
@@ -19,6 +19,50 @@
         "logo": "fernet.jpg",
         "email": "qcyo@com",
         "phoneNumber": "1111111111111111111",
+        "active": true
+    },
+    {
+        "companyId": 3,
+        "name": "Rubicom",
+        "yearFoundation": "2021-10-07",
+        "city": "Mar del Plata",
+        "description": "eefeffefe",
+        "logo": "171673962c2adf0981b441da0354816f.png",
+        "email": "mateoopisso@gmail.com",
+        "phoneNumber": "02236934606",
+        "active": true
+    },
+    {
+        "companyId": 4,
+        "name": "Mateo Opisso2",
+        "yearFoundation": "2021-10-15",
+        "city": "Mar del Plata",
+        "description": "efefef",
+        "logo": "",
+        "email": "mateoopisso@gmail.com",
+        "phoneNumber": "02236934606",
+        "active": true
+    },
+    {
+        "companyId": 5,
+        "name": "nashe 2 bis xd",
+        "yearFoundation": "2021-10-15",
+        "city": "Mar del Plata",
+        "description": "Mateo OpissoMateo OpissoMateo OpissoMateo Opisso",
+        "logo": "171673962c2adf0981b441da0354816f.png",
+        "email": "matefeefoopisso@gmail.com",
+        "phoneNumber": "123",
+        "active": true
+    },
+    {
+        "companyId": 6,
+        "name": "Mateo Opisso",
+        "yearFoundation": "2021-10-15",
+        "city": "Mar del Plata",
+        "description": "feeff",
+        "logo": "",
+        "email": "mateoopisso@gmail.com",
+        "phoneNumber": "02236934606",
         "active": true
     }
 ]

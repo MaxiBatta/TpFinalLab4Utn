@@ -10,6 +10,8 @@ $actual_company = $companyDAO->returnCompanyById($_SESSION["actual_company"]);
 if (!$actual_company) {
     echo '<h4 class="text-danger">Ha ocurrido un error, la empresa no ha podido identificarse correctamente.</h4>';
 }
+
+$back = FRONT_ROOT.'Company/ShowCompaniesCatalogueView';
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
@@ -53,11 +55,13 @@ if (!$actual_company) {
             </div>
             <div class="row mt-3">
                 <div class="col-md-2">
-                    <a href="<?php echo FRONT_ROOT.'Student/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?= $back ?>" class="btn btn-primary">Volver</a>
                 </div>
+                <?php if(isset($_SESSION["studentLogged"])) { ?>
                 <div class="col-md-10 text-right">
-                    <button id='btn-postulate' class="btn btn-primary" data-toggle="modal" data-target="#proximaEntregaModal">¡Postulate!</button>
+                    <button id='btn-postulate' class="btn btn-danger" data-toggle="modal" data-target="#proximaEntregaModal">¡Postulate!</button>
                 </div>
+                <?php } ?>
             </div>
         </div>
 

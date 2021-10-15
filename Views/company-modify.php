@@ -4,7 +4,7 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">ADD COMPANY</h2>
+               <h2 class="mb-4">Modificando Empresa</h2>
                <form action="<?php echo FRONT_ROOT ?>Company/ModifyCompany" method="post" class="bg-light-alpha p-5">
                     <input type="hidden" name="company-id" value="<?= $_SESSION["actual_company"] ?>">
                     <div class="row">                         
@@ -51,7 +51,10 @@
                               </div>
                          </div>
                     </div>
-                    <button type="submit" class="btn btn-dark ml-auto d-block">Modificar</button>
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
+                        <button type="submit" class="btn btn-dark ml-auto d-block">Modificar</button>
+                    </div>
                </form>
           </div>
      </section>
