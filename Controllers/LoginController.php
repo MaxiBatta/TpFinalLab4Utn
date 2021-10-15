@@ -44,7 +44,7 @@ class LoginController {
                     
                     $_SESSION["activeStudent"] = $student;
                     
-                    require_once(VIEWS_PATH . "studentPanel.php");
+                    require_once(VIEWS_PATH . "student-panel.php");
                 }
             }
             if (!$existingMail) {

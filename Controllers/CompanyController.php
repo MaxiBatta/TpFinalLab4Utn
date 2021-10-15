@@ -20,7 +20,13 @@
 
             require_once(VIEWS_PATH."company-list.php");  //crear en views vista con listado de empresas
         }
-
+        
+        public function ShowCompanyDetailView($message = '')
+        {
+            $_SESSION["actual_company"] = $_REQUEST["name"];
+            require_once(VIEWS_PATH."company-detail.php");
+        }
+        
         public function ShowAddCompanyView($message = '')
         {
             require_once(VIEWS_PATH."company-add.php");
@@ -62,9 +68,6 @@
             
             require_once(VIEWS_PATH."company-select.php");
         }
-
-
-
 
 
     }

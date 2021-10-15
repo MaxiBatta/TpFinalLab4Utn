@@ -14,11 +14,17 @@ if (!$companiesList) {
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-            <h2 class="mb-5">Empresas disponibles</h2>
+            <div class="row mt-3">
+                <div class="col-md-10">
+                    <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>
+                </div>
+                <div class="col-md-2">
+                    <a href="<?php echo FRONT_ROOT.'Student/ShowPanelView'?>" class="btn btn-primary">Volver</a>
+                </div>
+            </div>
             <?php
             $companyDAO = new CompanyDAO();
             $companiesList = $companyDAO->GetAll();
-            $count = 1;
 
             if (!$companiesList) {
                 echo "No hay ninguna compañía cargada o disponible";
@@ -37,44 +43,16 @@ if (!$companiesList) {
                                 <p><?= $value->getDescription() ?></p>
                             </div>
                             <div class="row">
-                                <p>
-                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?= $count ?>" aria-expanded="false" aria-controls="collapse<?= $count ?>">
-                                        Ver detalle
-                                    </button>
-                                </p>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12" style="padding-left: 0px !important;">
-                                    <div class="collapse" id="collapse<?= $count ?>">
-                                        <div class="card card-body">
-                                            <div class="row mt-3">
-                                                <div class="col-md-6">
-                                                    <label>Ciudad</label>
-                                                    <h5><?= $value->getCity() ?></h5>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Año de fundación</label>
-                                                    <h5><?= $value->getYearFoundation() ?></h5>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-6">
-                                                    <label>Número de teléfono</label>
-                                                    <h5><a href="tel:"><?= $value->getPhoneNumber() ?></a></h5>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Correo</label>
-                                                    <h5><a href="mailto:"><?= $value->getEmail() ?></a></h5>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <form action="<?= FRONT_ROOT ?>Company/ShowCompanyDetailView" method="post">
+                                    <input type="hidden" name="name" value="<?= $value->getName() ?>">
+                                    <div class="d-flex align-item-center">
+                                        <button type="submit" class="btn btn-primary">Ver detalle</button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <?php
-                    $count++;
                 }
             }
             ?>
@@ -82,19 +60,3 @@ if (!$companiesList) {
 
     </section>
 </main>
-
-<script>
-    $(".detalle-empresa").click(
-            function () {
-                $.post(
-                        $(this).data("url"),
-                        {
-                            "data_id": $(this).data("id")
-                        },
-                        function (response) {
-                            alert("hola");
-                        }
-                );
-            }
-    );
-</script>
