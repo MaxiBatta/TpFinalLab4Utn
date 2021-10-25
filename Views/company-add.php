@@ -16,11 +16,11 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="yearFoundation">Año de fundacion</label>
-                                   <input type="date" name="yearFoundation" id = "yearFoundation" value="" class="form-control" required>
+                                   <input type="date" name="yearFoundation" id = "yearFoundation" value="" class="form-control" min="1950-01-01" step="1" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
-                              <div class="form-group">
+                              <div class="form-group"> 
                                    <label for="city">Ciudad</label>
                                    <input type="text" name="city" id= "city" value="" class="form-control" required>
                               </div>
@@ -40,13 +40,13 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="email">Email</label>
-                                   <input type="email" name="email" id="email" value="" class="form-control" required>
+                                   <input type="email" name="email" id="email" value="" class="form-control" minlength="16" maxlength="40" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="phoneNumber">Numero de Celular</label>
-                                   <input type="text" name="phoneNumber" id="phoneNumber" value="" class="form-control" required>
+                                   <input type="text" name="phoneNumber" id="phoneNumber" value="" class="form-control" minlength="10" required>
                               </div>
                          </div>
                     </div>
