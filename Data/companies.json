@@ -31,16 +31,5 @@
         "email": "gc@gmail.com.ar",
         "phoneNumber": "22323489",
         "active": true
-    },
-    {
-        "companyId": 4,
-        "name": "Glavinare",
-        "yearFoundation": "2018-01-15",
-        "city": "Miramar",
-        "description": "Desarrollo tecnol\u00f3gico",
-        "logo": "glavinare.png",
-        "email": "glavinare@yahoo.com.ch",
-        "phoneNumber": "2234567543",
-        "active": false
     }
 ]

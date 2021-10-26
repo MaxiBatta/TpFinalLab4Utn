@@ -14,7 +14,10 @@
         private $phoneNumber;
         private $active = true;
 
-
+        function __construct() {
+        
+        }
+        
         public function getCompanyId()
         {
             return $this->companyId;
