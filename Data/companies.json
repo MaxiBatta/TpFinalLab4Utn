@@ -31,5 +31,38 @@
         "email": "gc@gmail.com.ar",
         "phoneNumber": "22323489",
         "active": true
+    },
+    {
+        "companyId": 4,
+        "name": "Pearson srl",
+        "yearFoundation": "2001-05-01",
+        "city": "Buenos Aires",
+        "description": "Empresa de ingenieria de software",
+        "logo": "",
+        "email": "pearson@pearson.com",
+        "phoneNumber": "0112225522",
+        "active": true
+    },
+    {
+        "companyId": 5,
+        "name": "Bayton Tecnologia",
+        "yearFoundation": "1998-01-01",
+        "city": "Tandil",
+        "description": "Software y comunicaciones",
+        "logo": "",
+        "email": "bayton@bayton.com",
+        "phoneNumber": "2232225550",
+        "active": true
+    },
+    {
+        "companyId": 6,
+        "name": "Movistar",
+        "yearFoundation": "1994-01-01",
+        "city": "Buenos Aires",
+        "description": "Empresa de telecomunicaciones",
+        "logo": "",
+        "email": "movistar@gmail.com",
+        "phoneNumber": "0112225566",
+        "active": true
     }
 ]

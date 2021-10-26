@@ -101,17 +101,17 @@
         {
             Utils::CheckAdmin();
             
-            $lastCompany = $this->companyDAO->getLast();
+            /*$lastCompany = $this->companyDAO->getLast();
             $lastId = 1;
             
             if ($lastCompany) {
                 $lastId = $lastCompany->getCompanyId();
                 $lastId++;
             }
-            
+            */
             $company = new Company();
             
-            $company->setCompanyId($lastId);
+            //$company->setCompanyId($lastId);
             $company->setName($name);
             $company->setYearFoundation($yearFoundation);
             $company->setCity($city);
@@ -120,7 +120,7 @@
             $company->setEmail($email);
             $company->setPhoneNumber($phoneNumber);
             
-            $this->companyDAO->Add($company);
+            $this->companyDAO->AddMySql($company);
 
             $this->ShowCompaniesCatalogueView();
         }

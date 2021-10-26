@@ -8,11 +8,11 @@ $companyDAO = new CompanyDAO();
 $companiesList = ""; 
 
 if (isset($_SESSION["activeCondition"])) {
-    $companiesList = $companyDAO->GetAll($_SESSION["activeCondition"]);
+    $companiesList = $companyDAO->GetAllMySql($_SESSION["activeCondition"]);
     unset($_SESSION["activeCondition"]);
 }
 else {
-    $companiesList = $companyDAO->GetAll(3);
+    $companiesList = $companyDAO->GetAllMySql(3);
 }
 
 if (!$companiesList) {

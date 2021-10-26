@@ -4,11 +4,15 @@ namespace DAO;
 
 use DAO\ICompanyDao as ICompanyDAO;
 use Models\Company as Company;
+use \Exception as Exception;
+use DAO\Connection as Connection;
 
 class CompanyDao implements ICompanyDAO {
 
     private $fileName;
     private $companyList;
+    private $connection;
+    private $tableName = "companies";
 
     public function __construct() {
         $this->companyList = array();
@@ -200,6 +204,71 @@ class CompanyDao implements ICompanyDAO {
         $this->SaveData();
     }
 
-}
+
+
+/// Base de datos
+
+public function AddMySql(Company $company)
+        {
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." ( name, yearFoundation,city,description,logo,email,phoneNumber,active) VALUES ( :name, :yearFoundation, :city, :description, :logo, :email, :phoneNumber, :active);";
+                
+                
+                $parameters["name"] = $company->getName();
+                $parameters["yearFoundation"] = $company->getYearFoundation();
+                $parameters["city"] = $company->getCity();
+                $parameters["description"] = $company->getDescription();
+                $parameters["logo"] = $company->getLogo();
+                $parameters["email"] = $company->getEmail();
+                $parameters["phoneNumber"] = $company->getPhoneNumber();
+                $parameters["active"] = $company->getActive();
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetAllMySql()
+        {
+            try
+            {
+                $companyList = array();
+
+                $query = "SELECT * FROM ".$this->tableName;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setCompanyId($row["companyId"]);
+                    $company->setName($row["name"]);
+                    $company->setYearFoundation($row["yearFoundation"]);
+                    $company->setCity($row["city"]);
+                    $company->setDescription($row["description"]);
+                    $company->setLogo($row["logo"]);
+                    $company->setEmail($row["email"]);
+                    $company->setPhoneNumber($row["phoneNumber"]);
+                    $company->setActive($row["active"]);
+
+                    array_push($companyList, $company);
+                }
+
+                return $companyList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+    }
 
 ?>
