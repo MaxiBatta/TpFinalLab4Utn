@@ -37,5 +37,26 @@
             Utils::CheckSession();
             require_once(VIEWS_PATH."company-list-catalogue.php");
         }
+
+        public function Add($careerId, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber)
+        {
+            Utils::CheckSession();
+            
+        
+            $student = new Student();
+            
+            // agregar set studentId autoincremental tomando el ultimo de la base
+            $Student->setCareerId($careerId);
+            $student->setDni($dni);
+            $student->setFileNumber($fileNumber);
+            $student->setGender($gender);
+            $student->setBirthDate($birthDate);
+            $student->setEmail($email);
+            $student->setPhoneNumber($phoneNumber);
+            
+            $this->studentDAO->AddMySql($student);
+
+            $this->ShowLoginView();  
+        }
     }
 ?>

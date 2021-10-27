@@ -3,10 +3,14 @@
 
     use DAO\IStudentDAO as IStudentDAO;
     use Models\Student as Student;
+    use \Exception as Exception;
+    use DAO\Connection as Connection;
 
     class StudentDAO implements IStudentDAO
     {
         private $studentList = array();
+        private $connection;
+        private $tableName = "students";
 
         public function Add(Student $student)
         {
@@ -83,5 +87,69 @@
                 }
             
         }
+
+        /// Base de datos
+
+public function AddMySql(Student $student)
+{
+    try
+    {
+        $query = "INSERT INTO ".$this->tableName." ( careerId, dni, fileNumber, gender, birthDate, email, phoneNumber,active) VALUES ( :carrerId, :dni, :fileNumber, :gender, :birthDate, :email, :phoneNumber, :active);";
+        
+        
+        $parameters["careerId"] = $student->getCareerId();
+        $parameters["dni"] = $student->getDni();
+        $parameters["fileNumber"] = $student->getFileNumber();
+        $parameters["gender"] = $student->getGender();
+        $parameters["birthDate"] = $student->getBirthDate();
+        $parameters["email"] = $student->getEmail();
+        $parameters["phoneNumber"] = $student->getPhoneNumber();
+        $parameters["active"] = $student->getActive();
+
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query, $parameters);
+    }
+    catch(Exception $ex)
+    {
+        throw $ex;
+    }
+}
+
+public function GetAllMySql()
+{
+    try
+    {
+        $studentList = array();
+
+        $query = "SELECT * FROM ".$this->tableName;
+
+        $this->connection = Connection::GetInstance();
+
+        $resultSet = $this->connection->Execute($query);
+        
+        foreach ($resultSet as $row)
+        {                
+            $student = new Student();
+            $student->setStudentId($row["studentId"]);
+            $student->setCareerId($row["careerId"]);
+            $student->setDni($row["dni"]);
+            $student->setFileNumber($row["fileNumber"]);
+            $student->setGender($row["gender"]);
+            $student->setBirthDate($row["birthDate"]);
+            $student->setEmail($row["email"]);
+            $student->setPhoneNumber($row["phoneNumber"]);
+            $student->setActive($row["active"]);
+
+            array_push($studentList, $student);
+        }
+
+        return $studentList;
+    }
+    catch(Exception $ex)
+    {
+        throw $ex;
+    }
+}
     }
 ?>
