@@ -8,11 +8,20 @@ Class JobOffer {
     private $dateTime;
     private $limitDate;
     private $state;
+    private $companyId;
+    private $jobPosition;
     
     function __construct() {
         
     }
+
+    public function getCompanyId() {
+        return $this->CompanyId;
+    }
     
+    public function setCompanyId($newCompanyId) {
+        $this->CompanyId = $newCompanyId;
+    }
     public function getJobOfferId() {
         return $this->jobOfferId;
     }
@@ -43,6 +52,13 @@ Class JobOffer {
 
     public function setState($state) {
         $this->state = $state;
+    }
+    public function setJobPosition($JobPosition) {
+        $this->JobPosition = $JobPosition;
+    }
+
+    public function setJobPosition($JobPosition) {
+        $this->JobPosition = $JobPosition;
     }
 }
 
