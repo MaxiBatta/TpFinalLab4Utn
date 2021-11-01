@@ -12,14 +12,7 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Views/company-delete.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Controllers/CompanyController.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Models/Company.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/DAO/CompanyDao.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Views/company-list-catalogue.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Views/admin-panel.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Views/company-active.php</file>
-            <file>file:/C:/xampp/htdocs/dashboard/proyectos/TpFinalLab4Utn/Views/company-list.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Config/Config.php</file>
         </group>
     </open-files>
 </project-private>

@@ -9,23 +9,17 @@ Class JobOffer {
     private $limitDate;
     private $state;
     private $companyId;
-    private $jobPosition;
+    private $jobPositionId;
+    private $studentId;
     
     function __construct() {
         
     }
-
-    public function getCompanyId() {
-        return $this->CompanyId;
-    }
     
-    public function setCompanyId($newCompanyId) {
-        $this->CompanyId = $newCompanyId;
-    }
     public function getJobOfferId() {
         return $this->jobOfferId;
     }
-    
+
     public function getDateTime() {
         return $this->dateTime;
     }
@@ -37,28 +31,45 @@ Class JobOffer {
     public function getState() {
         return $this->state;
     }
-    
-    public function setJobOfferId($jobOfferId) {
+
+    public function getCompanyId() {
+        return $this->companyId;
+    }
+
+    public function getJobPositionId() {
+        return $this->jobPositionId;
+    }
+
+    public function getStudentId() {
+        return $this->studentId;
+    }
+
+    public function setJobOfferId($jobOfferId): void {
         $this->jobOfferId = $jobOfferId;
     }
-    
-    public function setDateTime($dateTime) {
+
+    public function setDateTime($dateTime): void {
         $this->dateTime = $dateTime;
     }
 
-    public function setLimitDate($limitDate) {
+    public function setLimitDate($limitDate): void {
         $this->limitDate = $limitDate;
     }
 
-    public function setState($state) {
+    public function setState($state): void {
         $this->state = $state;
     }
-    public function setJobPosition($JobPosition) {
-        $this->JobPosition = $JobPosition;
+
+    public function setCompanyId($companyId): void {
+        $this->companyId = $companyId;
     }
 
-    public function setJobPosition($JobPosition) {
-        $this->JobPosition = $JobPosition;
+    public function setJobPositionId($jobPositionId): void {
+        $this->jobPositionId = $jobPositionId;
+    }
+
+    public function setStudentId($studentId): void {
+        $this->studentId = $studentId;
     }
 }
 
