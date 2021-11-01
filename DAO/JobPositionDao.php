@@ -49,7 +49,7 @@
                 foreach ($resultSet as $row)
                 {                
                     $jobPosition = new JobPosition();
-                    $jobPosition->setJobPosittionId($row["jobPositionId"]);
+                    $jobPosition->setJobPositionId($row["jobPositionId"]);
                     $jobPosition->setCareerId($row["careerId"]);
                     $jobPosition->setDescription($row["description"]);
                    
