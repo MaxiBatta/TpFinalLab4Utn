@@ -249,14 +249,14 @@ public function AddMySql(Company $company)
                 foreach ($resultSet as $row)
                 {                
                     $company = new Company();
-                    $company->setCompanyId($row["companyid"]);
+                    $company->setCompanyId($row["companyId"]);
                     $company->setName($row["name"]);
-                    $company->setYearFoundation($row["yearfoundation"]);
+                    $company->setYearFoundation($row["yearFoundation"]);
                     $company->setCity($row["city"]);
                     $company->setDescription($row["description"]);
                     $company->setLogo($row["logo"]);
                     $company->setEmail($row["email"]);
-                    $company->setPhoneNumber($row["phonenumber"]);
+                    $company->setPhoneNumber($row["phoneNumber"]);
                     $company->setActive($row["active"]);
 
                     array_push($companyList, $company);

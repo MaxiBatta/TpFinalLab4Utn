@@ -6,7 +6,13 @@
     
     class JobOfferController
     {
-        
+        public function ShowOffersCatalogueView($message = '')
+        {
+            Utils::CheckBothSessions();
+            require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
+        }
+
+
         public function Add($jobPosition, $dateCreation, $dateLimit, $description, $company)
         {
             Utils::CheckAdmin();
@@ -20,7 +26,7 @@
             
             $this->JobOfferDAO->AddMySql($JobOffer);
 
-            $this->ShowCompaniesCatalogueView();
+            $this->ShowOffersCatalogueView();
         }
         public function ShowAddJobOfferView($message = '')
         {
@@ -73,6 +79,13 @@
             $_SESSION["actual_job-offer"] = $_REQUEST["job-offer-id"];
             require_once(VIEWS_PATH."job-offer-modify.php");
         } 
+
+        public function ShowJobOfferDetailView($message = '')
+        {
+            Utils::CheckBothSessions();
+            $_SESSION["actual_jobOffer"] = $_REQUEST["jobOffer-id"];
+            require_once(VIEWS_PATH."jobOffer-detail.php");
+        }
         
     }
 ?>

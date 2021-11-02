@@ -22,6 +22,12 @@
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."company-list-catalogue.php");
         }
+
+        public function ShowOffersCatalogueView($message = '')
+        {
+            Utils::CheckSession();
+            require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
+        }
         
         
     }
