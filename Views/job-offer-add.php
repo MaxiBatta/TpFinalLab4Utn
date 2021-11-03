@@ -47,7 +47,15 @@
                               <div class="form-group">
                                    <label for="companyId">Empresa</label><br>
                                    <select name="select">
-                                   <option value="6" selected>Jail Ismael Valenzuela </option>
+                                   <?php
+
+                                   foreach ($companiesList as $key => $a) { ?>
+                                   <option value="<?=$a->getCompanyId();?>"> <?=$a->getName(); ?> </option>
+                                   <?php
+
+                                   }
+
+                                   ?>
                                    </select>
                               </div>
                          </div>
