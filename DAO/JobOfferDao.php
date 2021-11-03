@@ -22,12 +22,13 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." ( dateTime, limitDate, state) VALUES ( :dateTime, :limitDate, :state);";
+                $query = "INSERT INTO ".$this->tableName." ( jobPositionId, dateTime, limitDate, state, companyId) VALUES ( :jobPositionId, :dateTime, :limitDate, :state, :companyId);";
                 
-                
+                $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
                 $parameters["dateTime"] = $jobOffer->getDateTime();
                 $parameters["limitDate"] = $jobOffer->getLimitDate();
                 $parameters["state"] = $jobOffer->getState();
+                $parameters["companyId"] = $jobOffer->getCompanyId();
                 
         
                 $this->connection = Connection::GetInstance();

@@ -25,16 +25,17 @@
         }
 
 
-        public function Add($dateTime, $limitDate, $state)
+        public function Add($jobPositionId,$companyId,$dateTime, $limitDate, $state)
         {
             Utils::CheckAdmin();
             
             $jobOffer = new JobOffer();
             
-            
+            $jobOffer->setJobPositionId($jobPositionId);
             $jobOffer->setDateTime($dateTime);
             $jobOffer->setLimitDate($limitDate);
             $jobOffer->setState($state);
+            $jobOffer->setCompanyId($companyId);
             
             
             $this->jobOfferDAO->AddMySql($jobOffer);
