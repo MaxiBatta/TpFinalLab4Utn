@@ -2,31 +2,32 @@
     namespace DAO;
 
     
-    use Models\JobPosition as JobPosition;
+    use Models\Career as Career;
     use \Exception as Exception;
     use DAO\Connection as Connection;
 
-    class JobPositionDAO
+    class CareerDAO
     {
-        private $jobPositionList = array();
+        private $careerList = array();
         private $connection;
-        private $tableName = "jobPositions";
+        private $tableName = "careers";
 
         public function __construct() {
-            $this->jobPositionList = array();
+            $this->careerList = array();
             
         }
+    
 
-    public function AddMySql(JobPosition $jobPosition)
+    public function AddMySql(Career $career)
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." ( careerId, description) VALUES ( :careerId, :description);";
+                $query = "INSERT INTO ".$this->tableName." ( careerId, description, active) VALUES ( :careerId, :description, :active);";
                 
                 
-                $parameters["careerId"] = $jobPosition->getCareerId();
-                $parameters["description"] = $jobPosition->getDescription();
-                
+                $parameters["careerId"] = $career->getCareerId();
+                $parameters["description"] = $career->getDescription();
+                $parameters["active"] = $career->getActive();
                 
         
                 $this->connection = Connection::GetInstance();
@@ -43,7 +44,7 @@
         {
             try
             {
-                $jobPositionList = array();
+                $careerList = array();
         
                 $query = "SELECT * FROM ".$this->tableName;
         
@@ -53,22 +54,23 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $jobPosition = new JobPosition();
-                    $jobPosition->setJobPositionId($row["jobPositionId"]);
-                    $jobPosition->setCareerId($row["careerId"]);
-                    $jobPosition->setDescription($row["description"]);
+                    $career = new Career();
+                    $career->setCareerId($row["careerId"]);
+                    $career->setDescription($row["description"]);
+                    $career->setActive($row["active"]);
                    
-                    
         
-                    array_push($jobPositionList, $jobPosition);
+                    array_push($careerList, $career);
                 }
         
-                return $jobPositionList;
+                return $careerList;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
         }
+
    }
  ?>
+
