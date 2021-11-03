@@ -59,6 +59,15 @@ use DAO\Connection as Connection;
                         </div>
                     </div>
                     </div>
+                    <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Crear una Oferta Laboral </h5>
+                            <p class="card-text">Da de alta una nueva Oferta Laboral</p>
+                            <a href="<?php echo FRONT_ROOT.'JobOffer/ShowAddJobOfferView'?>" class="btn btn-primary">Crear</a>
+                        </div>
+                    </div>
+                    </div>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">

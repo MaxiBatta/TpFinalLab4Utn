@@ -11,7 +11,7 @@ if (!$actual_jobOffer) {
     echo '<h4 class="text-danger">Ha ocurrido un error, la oferta no ha podido identificarse correctamente.</h4>';
 }
 
-$back = FRONT_ROOT.'JobOffer/ShowOffersCatalogueView';
+$back = FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView';
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">

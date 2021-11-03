@@ -12,6 +12,12 @@
         private $connection;
         private $tableName = "jobOffers";
 
+        public function __construct() {
+            $this->jobOfferList = array();
+            
+        }
+    
+
     public function AddMySql(JobOffer $jobOffer)
         {
             try
@@ -51,8 +57,11 @@
                     $jobOffer = new JobOffer();
                     $jobOffer->setJobOfferId($row["jobOfferId"]);
                     $jobOffer->setDateTime($row["dateTime"]);
-                    $jobOffer->setLimitDate($row["limitdate"]);
+                    $jobOffer->setLimitDate($row["limitDate"]);
                     $jobOffer->setState($row["state"]);
+                    $jobOffer->setCompanyId($row["companyId"]);
+                    $jobOffer->setJobPositionId($row["jobPositionId"]);
+                    $jobOffer->setStudentId($row["studentId"]);
                     
         
                     array_push($jobOfferList, $jobOffer);
@@ -64,6 +73,18 @@
             {
                 throw $ex;
             }
+        }
+
+        public function returnJobOfferById($id) {
+            $jobOfferList= $this->GetAllMySql();
+    
+            foreach ($jobOfferList as $jobOffer) {
+                if ($jobOffer->getJObOfferId() == $id) {
+                    return $jobOffer;
+                }
+            }
+    
+            return false;
         }
    }
  ?>

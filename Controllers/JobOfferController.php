@@ -1,32 +1,45 @@
 <?php
     namespace Controllers;
 
-    use Models\JobOffer as JobOffer;
+    use DAO\JobOfferDAO as JobOfferDAO;
     use Utils\Utils as Utils;
+    use Controllers\AdministratorController as AdministratorController;
+    use Models\JobOffer as JobOffer;
+    
     
     class JobOfferController
     {
-        public function ShowOffersCatalogueView($message = '')
+
+    private $jobOfferDAO;
+
+        public function __construct()
+        {
+            $this->jobOfferDAO = new JobOfferDAO();
+        }
+
+    
+        public function ShowJobOffersCatalogueView($message = '')
         {
             Utils::CheckBothSessions();
             require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
         }
 
 
-        public function Add($jobPosition, $dateCreation, $dateLimit, $description, $company)
+        public function Add($dateTime, $limitDate, $state)
         {
             Utils::CheckAdmin();
-            $JobOffer = new JobOffer();
             
-            $JobOffer->setjobPosition($jobPosition);
-            $JobOffer->setdateCreation($dateCreation);
-            $JobOffer->setdateLimit($dateLimit);
-            $JobOffer->setDescription($description);
-            $JobOffer->setcompany($company);
+            $jobOffer = new JobOffer();
             
-            $this->JobOfferDAO->AddMySql($JobOffer);
+            
+            $jobOffer->setDateTime($dateTime);
+            $jobOffer->setLimitDate($limitDate);
+            $jobOffer->setState($state);
+            
+            
+            $this->jobOfferDAO->AddMySql($jobOffer);
 
-            $this->ShowOffersCatalogueView();
+            $this->ShowJobOffersCatalogueView();
         }
         public function ShowAddJobOfferView($message = '')
         {
