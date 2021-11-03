@@ -1,16 +1,15 @@
 <?php
-require_once('nav.php');
+    require_once('nav.php');
+    
+    use Controllers\DataController as DataController;
 
-use Controllers\DataController as DataController;
-
-$data = new DataController();
-$data->getAllData();
-$companiesList = $data->getCompaniesList();
+    $data = $_SESSION["allData"];
+    $companyList = $data->getCompaniesList();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-            <h2 class="mb-4">Listado de empresas</h2>
+            <h2 class="mb-4">DATA PIOLA</h2>
             <div class="row">
                 <div class="col-md-12">
                     <table>
@@ -28,7 +27,7 @@ $companiesList = $data->getCompaniesList();
                         <tbody>
                             <?php
 
-                            foreach ($companiesList as $key => $value) { ?> 
+                            foreach ($companyList as $key => $value) { ?> 
                                 <tr>
                                     <td><?= $value->getCompanyId() ?></td>
                                     <td><?= $value->getName() ?></td>

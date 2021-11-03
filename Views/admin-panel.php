@@ -1,12 +1,17 @@
 <?php
 require_once('nav.php');
+
+use DAO\Connection as Connection;
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h2 class="mb-4">Bienvenido <?= $_SESSION["activeAdministrator"]->getEmail() ?></h2>
+                </div>
+                <div class="col-md-8">
+                    <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar BDD</a> 
                 </div>
             </div>
             <div class="row">

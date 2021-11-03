@@ -12,7 +12,15 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Config/Config.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/DAO/CompanyDao.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Views/succefully-data.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/DAO/JobOfferDao.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Views/admin-panel.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Controllers/AdministratorController.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Views/company-add.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Views/company-list.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Controllers/DataController.php</file>
+            <file>file:/C:/xampp/htdocs/TpFinalLab4Utn/Controllers/LoginController.php</file>
         </group>
     </open-files>
 </project-private>

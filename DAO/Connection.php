@@ -6,7 +6,7 @@
     use DAO\QueryType as QueryType;
 
     class Connection
-    {
+    { 
         private $pdo = null;
         private $pdoStatement = null;
         private static $instance = null;
