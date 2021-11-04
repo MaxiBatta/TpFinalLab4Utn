@@ -1,11 +1,15 @@
 <?php
 require_once('nav.php');
 
-use Controllers\DataController as DataController;
 
-$data = new DataController();
-$data->getAllData();
-$companiesList = $data->getCompaniesList();
+use Controllers\Company as Company;
+use DAO\CompanyDao as CompanyDAO;
+
+
+
+
+$companyDAO = new CompanyDAO();
+$companiesList = $companyDAO->GetAllMySql();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">

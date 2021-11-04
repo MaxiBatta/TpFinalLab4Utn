@@ -60,7 +60,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="limitDate">Fecha Limite</label>
-                                   <input type="date" name="limitDate" id = "limitDate" value="" class="form-control" min="1950-01-01" step="1" required>
+                                   <input type="date" name="limitDate" id = "limitDate" value="" class="form-control" min="tomorrow" step="1" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
