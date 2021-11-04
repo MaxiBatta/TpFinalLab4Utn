@@ -37,16 +37,18 @@
             Utils::CheckSession();
             require_once(VIEWS_PATH."company-list-catalogue.php");
         }
-
-        public function Add($careerId, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber)
+        
+        public function Add($careerId, $firstName, $lastName, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber)
         {
-            Utils::CheckSession();
+            //Utils::CheckSession();
             
         
             $student = new Student();
             
             // agregar set studentId autoincremental tomando el ultimo de la base
             $Student->setCareerId($careerId);
+            $Student->setFirstName($firstName);
+            $Student->setLastName($lastName);
             $student->setDni($dni);
             $student->setFileNumber($fileNumber);
             $student->setGender($gender);
@@ -64,5 +66,6 @@
             Utils::CheckSession();
             require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
         }
+        
     }
 ?>
