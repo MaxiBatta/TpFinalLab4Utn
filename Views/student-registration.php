@@ -1,5 +1,7 @@
 <?php
 require_once('nav.php');
+
+use DAO\CompanyDao as CompanyDAO;
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -11,7 +13,17 @@ require_once('nav.php');
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
-                            <input type="number" name="careerId" id= "careerId" value="" class="form-control">
+                            <select id="careerId" name="careerId" class="form-control" required>
+                                <option value="0">Seleccionar...</option>
+                                <?php
+                                    $companyDAO = new CompanyDAO();
+                                    $companiesList = $companyDAO->GetAllMySql(); 
+                                    
+                                    foreach ($companiesList as $key => $value) {
+                                        echo "<option value=" . $value->getCompanyId() . ">" . $value->getName() . "</option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-4">
