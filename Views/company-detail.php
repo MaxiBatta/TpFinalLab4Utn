@@ -5,7 +5,7 @@ use Controllers\Company as Company;
 use DAO\CompanyDao as CompanyDAO;
 
 $companyDAO = new CompanyDAO();
-$actual_company = $companyDAO->returnCompanyById($_SESSION["actual_company"]);
+$actual_company = $companyDAO->returnCompanyByIdMySql($_SESSION["actual_company"]);
 
 if (!$actual_company) {
     echo '<h4 class="text-danger">Ha ocurrido un error, la empresa no ha podido identificarse correctamente.</h4>';

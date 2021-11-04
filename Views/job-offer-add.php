@@ -16,7 +16,7 @@
                          <div class="col-lg-4 ml-10">
                               <div class="form-group">
                                    <label for="jobPositionId">Posicion de trabajo</label>
-                                   <select name="select">
+                                   <select name="jobPositionId">
                                    <option value="1" selected>Ingeniero naval jr</option>
                                    <option value="2" >Ingeniero naval ssr</option>
                                    <option value="3">Ingeniero naval sr</option>
@@ -46,7 +46,7 @@
                          <div class="col-lg-4 ">
                               <div class="form-group">
                                    <label for="companyId">Empresa</label><br>
-                                   <select name="select">
+                                   <select name="companyId">
                                    <option value="6" selected>Jail Ismael Valenzuela </option>
                                    </select>
                               </div>

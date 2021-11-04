@@ -33,6 +33,16 @@ require_once('nav.php');
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar Ofertas Laborales</h5>
+                            <p class="card-text">Mirá las ofertas disponibles y postulate ya!</p>
+                            <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

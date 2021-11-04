@@ -70,5 +70,21 @@
                 throw $ex;
             }
         }
+
+        public function SearchJobPosition($description) {
+            
+            $jobPositionList = $this->GetAllMySql();
+    
+            foreach ($jobPositionList as $jobPosition) {
+                
+                if (stristr($jobPosition->getDescription(), strval($description)) === FALSE) {
+                    continue;
+                }
+    
+                array_push($jobPositionList, $jobPosition);
+            }
+    
+            return count($jobPositionList) > 0 ? $jobPositionList : false;
+        }
    }
  ?>

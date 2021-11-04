@@ -49,10 +49,10 @@ else {
             
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <form action="<?= FRONT_ROOT ?>Company/ShowFilteredCompanyListView" method="get">
+                    <form action="<?= FRONT_ROOT ?>JobPosition/ShowFilteredJobPositionListView" method="get">
                         <div class="row mb-3">
                             <div class="col-md-8">
-                                <input type="text" class="flex-grow-1 form-control" name="name" placeholder="Busca una empresa...">
+                                <input type="text" class="flex-grow-1 form-control" name="description" placeholder="Busca por posición de trabajo...">
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>
@@ -76,9 +76,11 @@ else {
                         
                         <div class="col-md-9">
                             <div class="row">
+                            
                                 <h4><?= $value->getDateTime() ?></h4>
                             </div>
                             <div class="row">
+                            
                                 <p><?= $value->getLimitDate() ?></p>
                             </div>
                             <div class="row">
@@ -91,8 +93,8 @@ else {
                             </div>
                             <?php if(isset($_SESSION["adminLogged"])) { ?>  
                                 <div class="row">
-                                    <form action="<?= FRONT_ROOT ?>Company/ShowCompanyModifyView" method="get">
-                                        <input type="hidden" name="company-id" value="<?= $value->getCompanyId() ?>">
+                                    <form action="<?= FRONT_ROOT ?>JobOffer/ShowOfferModifyView" method="get">
+                                        <input type="hidden" name="jobOffer-id" value="<?= $value->getJobOfferId() ?>">
                                         <button type="submit" class="btn btn-primary mt-2">Modificar</button>
                                     </form>
                                 </div>

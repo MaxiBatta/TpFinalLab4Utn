@@ -269,6 +269,18 @@ public function AddMySql(Company $company)
                 throw $ex;
             }
         }
+
+        public function returnCompanyByIdMySql($id) {
+            $companyList= $this->GetAllMySql();
+    
+            foreach ($companyList as $company) {
+                if ($company->getCompanyId() == $id) {
+                    return $company;
+                }
+            }
+    
+            return false;
+        }
     }
 
 ?>
