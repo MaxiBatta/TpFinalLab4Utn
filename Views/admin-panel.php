@@ -77,6 +77,10 @@ use DAO\Connection as Connection;
                         </div>
                     </div>
                 </div>
+                
+                
+            </div>
+            <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -86,8 +90,7 @@ use DAO\Connection as Connection;
                         </div>
                     </div>
                 </div>
-                
-            </div>
+                </div>
             
         </div>
 

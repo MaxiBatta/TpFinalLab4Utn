@@ -16,8 +16,38 @@
             $this->jobPositionList = array();
             
         }
+        public function GetAll() {
+            $this->RetrieveData();
+    
+            return $this->jobPositionList;
+        }
+        private function RetrieveData()
+        {
+            $this->jobPositionList = array();
 
-    public function AddMySql(JobPosition $jobPosition)
+            $apiJobPosition = curl_init(API_URL .'JobPosition');
+
+            curl_setopt($apiJobPosition, CURLOPT_HTTPHEADER, array('x-api-key: '.API_KEY));
+            curl_setopt($apiJobPosition, CURLOPT_RETURNTRANSFER, true);
+                    
+            $response = curl_exec($apiJobPosition);
+
+            $arrayToDecode = json_decode($response, true);
+
+            foreach($arrayToDecode as $valuesArray)
+                {
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setJobPositionId($valuesArray["jobPositionId"]);
+                    $jobPosition->setCareerId($valuesArray["careerId"]);
+                    $jobPosition->setDescription($valuesArray["description"]);
+                  
+                    array_push($this->jobPositionList, $jobPosition);
+                }
+            
+        }
+        
+
+        public function AddMySql(JobPosition $jobPosition)
         {
             try
             {

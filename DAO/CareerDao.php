@@ -17,6 +17,37 @@
             
         }
     
+        public function GetAll() {
+            $this->RetrieveData();
+    
+            return $this->careerList;
+        }
+        private function RetrieveData()
+        {
+            $this->careerList = array();
+
+            $apiCareer = curl_init(API_URL .'Career');
+
+            curl_setopt($apiCareer, CURLOPT_HTTPHEADER, array('x-api-key: '.API_KEY));
+            curl_setopt($apiCareer, CURLOPT_RETURNTRANSFER, true);
+                    
+            $response = curl_exec($apiCareer);
+
+            $arrayToDecode = json_decode($response, true);
+
+            foreach($arrayToDecode as $valuesArray)
+                {
+                    $career = new Career();
+                    $career->setCareerId($valuesArray["careerId"]);
+                    $career->setDescription($valuesArray["description"]);
+                    $career->setActive($valuesArray["active"]);
+                    
+                    
+                  
+                    array_push($this->careerList, $career);
+                }
+            
+        }
 
     public function AddMySql(Career $career)
         {
