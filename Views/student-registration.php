@@ -14,6 +14,7 @@ use DAO\CareerDAO as CareerDAO;
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
                             <select id="careerId" name="careerId" class="form-control" required>
+                                <option value="0">Seleccionar...</option>
                                 <?php
                                     $careerDAO = new CareerDAO();
                                     $careersList = $careerDAO->GetAllMySql(); 
