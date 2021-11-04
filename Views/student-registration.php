@@ -19,14 +19,11 @@ $careerLists = $careerDAO->getAll();
                             <select id="careerId" name="careerId" class="form-control" required>
                                 <option value="0">Seleccionar...</option>
                                 <?php
-
-                                foreach ($careerLists as $key => $value) { if($value->isActive()==true){?>
-                                
-                                <option value="<?=$value->getCareerId();?>"> <?=$value->getDescription(); ?> </option>
-                                <?php
+                                    foreach ($careerLists as $key => $value) {
+                                        if($value->isActive()==true){
+                                        echo "<option value=" . $value->getCareerId() . ">" . $value->getDescription() . "</option>";
+                                    }
                                 }
-                                }
-
                                 ?>
                             </select>
                         </div>

@@ -19,15 +19,11 @@
                          <div class="col-lg-4 ml-10">
                               <div class="form-group">
                                    <label for="jobPositionId">Posicion de trabajo</label>
-                                   <select name="jobPositionId">
+                                   <select name="jobPositionId" class="form-control" required>
                                    <?php
-
-                                   foreach ($jobPositionLists as $key => $value) { ?>
-                                   <option value="<?=$value->getJobPositionId();?>"> <?=$value->getDescription(); ?> </option>
-                                   <?php
-
-                                   }
-
+                                    foreach ($jobPositionLists as $key => $value) {
+                                        echo "<option value=" . $value->getJobPositionId() . ">" . $value->getDescription() . "</option>";
+                                    }
                                    ?>
                                    </select>
                               </div>
@@ -35,15 +31,11 @@
                          <div class="col-lg-4 ">
                               <div class="form-group">
                                    <label for="companyId">Empresa</label><br>
-                                   <select name="companyId">
+                                   <select name="companyId" class="form-control" required>
                                    <?php
-
-                                   foreach ($companiesList as $key => $value) { ?>
-                                   <option value="<?=$value->getCompanyId();?>"> <?=$value->getName(); ?> </option>
-                                   <?php
-
-                                   }
-
+                                    foreach ($companiesList as $key => $value) {
+                                        echo "<option value=" . $value->getCompanyId() . ">" . $value->getName() . "</option>";
+                                    }
                                    ?>
                                    </select>
                               </div>
