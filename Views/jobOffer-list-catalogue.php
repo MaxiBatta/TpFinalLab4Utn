@@ -14,11 +14,11 @@ if (isset($_SESSION["found_jobOffers"])) {
     $jobOfferList = $_SESSION["found_jobOffers"];
     unset($_SESSION["found_jobOffers"]);
 
-    $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+    $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOffersCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 
     if (isset($_SESSION["adminLogged"])) {
         $back = FRONT_ROOT . 'Administrator/ShowPanelView';
-        $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+        $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowOffersCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
     }
 }
 
