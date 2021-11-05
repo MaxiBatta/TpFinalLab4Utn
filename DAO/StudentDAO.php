@@ -289,7 +289,7 @@ class StudentDAO implements IStudentDAO {
         {
             $studentList = array();
     
-            $query = "SELECT * FROM .$this->tableName  WHERE dni = '$dni'" ;
+            $query = "SELECT * FROM .$this->tableName  WHERE dni LIKE '%$dni%'" ;
     
             $this->connection = Connection::GetInstance();
     
