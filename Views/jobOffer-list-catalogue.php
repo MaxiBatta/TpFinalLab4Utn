@@ -135,7 +135,7 @@ if (isset($_SESSION["adminLogged"])) {
                     <?php
                     }
                 }
-                echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera") . "</p>";
+                echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera.") . "</p>";
             }
             ?>
         </div>

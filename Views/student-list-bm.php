@@ -7,36 +7,20 @@ use DAO\StudentDAO as StudentDAO;
 $studentDAO = new StudentDAO();
 $studentList = $studentDAO->GetAllMySql();
 
-//use Controllers\JobOffer as JobOffer;
-//use DAO\JobOfferDAO as JobOfferDAO;
-//use DAO\JobPositionDAO as JobPositionDAO;
-//use DAO\CompanyDao as CompanyDao;
-//
 $studentDAO = new studentDAO();
 $studentList = $studentDAO->GetAllMySql();
 
+$removeSearch = false;
+
 if (isset($_SESSION["found_students"])) {
-   $studentList = $_SESSION["found_students"];
-   unset($_SESSION["found_students"]);
+    $studentList = $_SESSION["found_students"];
+    unset($_SESSION["found_students"]);
 
-//$removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-
-if (isset($_SESSION["adminLogged"])) {
- $back = FRONT_ROOT . 'Administrator/ShowPanelView';
- $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-  }
+    $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
 
 if (!$studentList) {
- $nullStudents = '<h4 class="text-danger">No hay alumnos con ese dni.</h4>';
-}
-
-$back = VIEWS_PATH . "index.php";
-
-if (isset($_SESSION["adminLogged"])) {
- $back = FRONT_ROOT . 'Administrator/ShowPanelView';
-} else {
-    $back = FRONT_ROOT . 'Student/ShowPanelView';
+    $nullStudents = '<h4 class="text-danger">No hay alumnos con ese dni.</h4>';
 }
 ?>
 <main class="py-5">
@@ -48,7 +32,7 @@ if (isset($_SESSION["adminLogged"])) {
                     <p class="mb-5" style="font-size: 28px;">Lista de estudiantes registrados</p>
                 </div>
             </div>
-            
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <form action="<?= FRONT_ROOT ?>Student/ShowFilteredStudentListView" method="get">
@@ -60,6 +44,7 @@ if (isset($_SESSION["adminLogged"])) {
                                 <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>
                             </div>
                             <div class="col-md-2 text-right">
+                                <?= $removeSearch ? $removeSearch : "" ?>
                             </div>
                         </div>
                     </form>
@@ -76,23 +61,18 @@ if (isset($_SESSION["adminLogged"])) {
                 foreach ($studentList as $key => $student) {
                     ?>
                     <div class="row mt-3">
-                        <div class="col-md-12">
-                            <h5><?= "Dni: " . $student->getDni(). " / " . $student->getFirstName() . " " . $student->getLastName() ?></h5>
+                        <div class="col-md-6">
+                            <h5><?= "Dni: " . $student->getDni() . " / " . $student->getFirstName() . " " . $student->getLastName() ?></h5>
                         </div>
-                    </div>
-                    <div class="row mt-1">
-                        <div class="col-md-3">
+                        <div class="col-md-6 text-right">
                             <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminModifyView" method="get">
                                 <input type="hidden" name="student-id" value="<?= $student->getStudentId() ?>">
-                                <button type="submit" class="btn btn-primary mt-2">Modificar</button>
-                            </form>
-                            <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminModifyView" method="get">
-                                <input type="hidden" name="student-id" value="<?= $student->getStudentId() ?>">
-                                <button type="submit" class="btn btn-danger mt-2">Dar de baja</button>
+                                <button type="submit" class="btn btn-primary">Modificar</button>
                             </form>
                         </div>
                     </div>
-                <?php
+                    <hr>
+                    <?php
                 }
             }
             ?>
