@@ -2,16 +2,32 @@
 require_once('nav.php');
 
 use DAO\Connection as Connection;
+
+if (isset($_SESSION["dbState"]) && $_SESSION["dbState"] == 1) {
+    $registerState = '<h5 class="text-success">La API ha sido actualizada exitosamente.</h5>';
+    unset($_SESSION["dbState"]);
+}
+else if (isset($_SESSION["dbState"]) && $_SESSION["dbState"] == 0) {
+    $registerState = '<h5 class="text-danger">ERROR: '.$_SESSION["dbFailMessage"].'</h5>';
+    unset($_SESSION["dbState"]);
+    unset($_SESSION["dbFailMessage"]);
+}
+else {
+    /***/
+}
+
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <h2 class="mb-4">Bienvenido <?= $_SESSION["activeAdministrator"]->getEmail() ?></h2>
+                    <?= isset($registerState) ? $registerState : "" ?>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-8">
-                    <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar BDD</a> 
+                    <h2 class="mb-4">Bienvenido <?= $_SESSION["activeAdministrator"]->getEmail() ?></h2>
                 </div>
             </div>
             <div class="row">
@@ -77,6 +93,8 @@ use DAO\Connection as Connection;
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -86,7 +104,15 @@ use DAO\Connection as Connection;
                         </div>
                     </div>
                 </div>
-                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">ACTUALIZAR API</h5>
+                            <p class="card-text">Actualiza los datos de la API</p>
+                            <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar BDD</a> 
+                        </div>
+                    </div>
+                </div>
             </div>
             
         </div>

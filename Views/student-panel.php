@@ -44,6 +44,17 @@ require_once('nav.php');
                     </div>
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Modificar mis datos</h5>
+                            <p class="card-text">Modifica tus datos personales.</p>
+                            <a href="<?php echo FRONT_ROOT.'Student/ShowModifyView'?>" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
