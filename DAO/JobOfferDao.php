@@ -19,18 +19,19 @@ class JobOfferDAO {
 
     public function AddMySql(JobOffer $jobOffer) {
         try {
-            $query = "INSERT INTO " . $this->tableName . " ( jobPositionId, dateTime, limitDate, state, companyId) VALUES ( :jobPositionId, :dateTime, :limitDate, :state, :companyId);";
+            $query = "INSERT INTO " . $this->tableName . " ( dateTime, limitDate, state, companyId, jobPositionId) VALUES ( :dateTime, :limitDate, :state, :companyId, :jobPositionId);";
 
-            $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
             $parameters["dateTime"] = $jobOffer->getDateTime();
             $parameters["limitDate"] = $jobOffer->getLimitDate();
             $parameters["state"] = $jobOffer->getState();
             $parameters["companyId"] = $jobOffer->getCompanyId();
-
+            $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
 
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
+            
+            return true;
         } catch (Exception $ex) {
             throw $ex;
         }

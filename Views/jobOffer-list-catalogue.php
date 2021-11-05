@@ -71,8 +71,10 @@ if (isset($_SESSION["adminLogged"])) {
                 $count = 0;
                 foreach ($jobOfferList as $key => $jobOffer) {
                     
-                    if ($jobOffer->getStudentId() > 0 || !$jobOffer->getState()) {
-                        continue;
+                    if (!isset($_SESSION["adminLogged"])) {
+                        if ($jobOffer->getStudentId() > 0 || !$jobOffer->getState()) {
+                            continue;
+                        }
                     }
                     
                     $notCurrentCareer = true;

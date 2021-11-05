@@ -104,16 +104,8 @@
             $validateName= $this->companyDAO->ValidateCompanyNameMySql($name);
            
             
-            /*$lastCompany = $this->companyDAO->getLast();
-            $lastId = 1;
-            
-            if ($lastCompany) {
-                $lastId = $lastCompany->getCompanyId();
-                $lastId++;
-            }
-            */
-            If ($validateName){
-            If ($validate){
+            if ($validateName){
+            if ($validate){
             $company = new Company();
             
             //$company->setCompanyId($lastId);
