@@ -100,6 +100,24 @@ class StudentController {
             echo $e->getMessage();
         }
     }
+
+    public function ShowFilteredStudentListView($message = '') {
+        if (!$_REQUEST["dni"]) {
+            require_once(VIEWS_PATH."student-list-bm.php");
+            return;
+        }
+        else {
+            $newStudentList = $this->studentDAO->SearchStudentMySql($_REQUEST["dni"]);
+            if (!$newStudentList) {
+                require_once(VIEWS_PATH."student-list-bm.php");
+                return;
+            }
+            else {
+                $_SESSION["found_students"] = $newStudentList;
+                require_once(VIEWS_PATH."student-list-bm.php");
+            }
+        }
+    }
 }
 
 ?>

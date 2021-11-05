@@ -283,6 +283,43 @@ class StudentDAO implements IStudentDAO {
 
         return $resp;
     }
+
+    public function SearchStudentMySql($dni) {
+        try
+        {
+            $studentList = array();
+    
+            $query = "SELECT * FROM .$this->tableName  WHERE dni = '$dni'" ;
+    
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet = $this->connection->Execute($query);
+            
+            foreach ($resultSet as $row) {
+                $student = new Student();
+                $student->setStudentId($row["studentid"]);
+                $student->setCareerId($row["careerid"]);
+                $student->setFirstName($row["firstname"]);
+                $student->setLastName($row["lastname"]);
+                $student->setDni($row["dni"]);
+                $student->setFileNumber($row["filenumber"]);
+                $student->setGender($row["gender"]);
+                $student->setBirthDate($row["birthdate"]);
+                $student->setEmail($row["email"]);
+                $student->setPhoneNumber($row["phonenumber"]);
+                $student->setActive($row["active"]);
+
+                array_push($studentList, $student);
+            }
+
+            return $studentList;
+    
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+}
 }
 
 ?>

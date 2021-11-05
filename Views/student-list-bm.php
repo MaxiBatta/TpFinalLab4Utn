@@ -12,32 +12,32 @@ $studentList = $studentDAO->GetAllMySql();
 //use DAO\JobPositionDAO as JobPositionDAO;
 //use DAO\CompanyDao as CompanyDao;
 //
-//$jobOfferDAO = new JobOfferDAO();
-//$jobOfferList = $jobOfferDAO->GetAllMySql();
-//
-//if (isset($_SESSION["found_jobOffers"])) {
-//    $jobOfferList = $_SESSION["found_jobOffers"];
-//    unset($_SESSION["found_jobOffers"]);
-//
-//    $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-//
-//    if (isset($_SESSION["adminLogged"])) {
-//        $back = FRONT_ROOT . 'Administrator/ShowPanelView';
-//        $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-//    }
-//}
-//
-//if (!$jobOfferList) {
-//    $nullJObOffers = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
-//}
-//
-//$back = VIEWS_PATH . "index.php";
-//
-//if (isset($_SESSION["adminLogged"])) {
-//    $back = FRONT_ROOT . 'Administrator/ShowPanelView';
-//} else {
-//    $back = FRONT_ROOT . 'Student/ShowPanelView';
-//}
+$studentDAO = new studentDAO();
+$studentList = $studentDAO->GetAllMySql();
+
+if (isset($_SESSION["found_students"])) {
+   $studentList = $_SESSION["found_students"];
+   unset($_SESSION["found_students"]);
+
+//$removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOfferCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+
+if (isset($_SESSION["adminLogged"])) {
+ $back = FRONT_ROOT . 'Administrator/ShowPanelView';
+ $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+  }
+}
+
+if (!$studentList) {
+ $nullStudents = '<h4 class="text-danger">No hay alumnos con ese dni.</h4>';
+}
+
+$back = VIEWS_PATH . "index.php";
+
+if (isset($_SESSION["adminLogged"])) {
+ $back = FRONT_ROOT . 'Administrator/ShowPanelView';
+} else {
+    $back = FRONT_ROOT . 'Student/ShowPanelView';
+}
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
