@@ -391,31 +391,6 @@ public function mapJobOfferData($jobOffers) {
 
     return $resp;
 }
-public function UpdateJobOffer($jobOfferId, JobOffer $newJobOffer) {
-    try
-    {
-        $query = "UPDATE " . $this->tableName . " SET dateTime = :dateTime, limitDate = :limitDate, state = :state, jobPositionId = :jobPositionId, companyId = :companyId, studentId = :studentId, active = :active WHERE (jobOfferId = :jobOfferId);";
-
-        $this->connection = Connection::GetInstance();
-        
-        $parameters["jobOfferId"] = $jobOfferId;
-        $parameters["dateTime"] = $newJobOffer->getDateTime();
-        $parameters["limitDate"] = $newJobOffer->getLimitDate();
-        $parameters["state"] = $newJobOffer->getState();
-        $parameters["companyId"] = $newJobOffer->getCompanyId();
-        $parameters["jobPositionId"] = $newJobOffer->getJobPositionId();
-        $parameters["studentId"] = $newJobOffer->getStudentId();     
-        
-        $cantRows = $this->connection->ExecuteNonQuery($query,$parameters);
-
-        return $cantRows;
-
-    }
-    catch(PDOException $e)
-    {
-        throw new PDOException($e->getMessage());
-    }
-} 
 }
 
 ?>

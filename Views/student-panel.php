@@ -1,10 +1,23 @@
 <?php
 require_once('nav.php');
+
+if (isset($_SESSION["applyState"]) && $_SESSION["applyState"] == 0) {
+    $applyState = "<h4 class='text-danger mb-2'>Se ha producido un error y no fue posible postularte</h4>";
+    unset($_SESSION["applyState"]);
+}
+else if (isset($_SESSION["applyState"]) && $_SESSION["applyState"] == 1) {
+    $applyState = "<h3 class='text-success mb-2'>¡Felicitaciones! Tu postulación se ha registrado satisfactoriamente.</h3>";
+    unset($_SESSION["applyState"]);
+}
+else {
+    /***/
+}
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
-            <div class="row">
+            <?= isset($applyState) ? $applyState : "" ?>
+            <div class="row mt-2">
                 <div class="col-md-12">
                     <h2 class="mb-4">Bienvenido <?= $_SESSION["activeStudent"]->getFirstName() . " " . $_SESSION["activeStudent"]->getLastName(); ?></h2>
                 </div>
@@ -28,7 +41,7 @@ require_once('nav.php');
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Buscar Empresas</h5>
-                            <p class="card-text">Mirá la lista de empresas disponibles y postulate ya!</p>
+                            <p class="card-text">Mirá la lista de empresas disponibles cercanas.</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
@@ -38,7 +51,7 @@ require_once('nav.php');
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Buscar Ofertas Laborales</h5>
-                            <p class="card-text">Mirá las ofertas disponibles y postulate ya!</p>
+                            <p class="card-text">Mira las ofertas laborales y postulate ya!</p>
                             <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>

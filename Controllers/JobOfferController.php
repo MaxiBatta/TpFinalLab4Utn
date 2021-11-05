@@ -111,5 +111,21 @@
             require_once(VIEWS_PATH."jobOffer-detail.php");
         }
         
+        public function ApplyJob($studentId, $jobOfferId) {
+            $_SESSION["toApply-student"] = $studentId;
+            
+            $jobOfferDAO = new JobOfferDAO();
+            $jobOfferDAO = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, 0);
+            
+            if ($jobOfferDAO) {
+                $_SESSION["applyState"] = 1;
+            }
+            else {
+                $_SESSION["applyState"] = 0;
+            }
+            require_once(VIEWS_PATH."student-panel.php");
+            
+        }
+        
     }
 ?>

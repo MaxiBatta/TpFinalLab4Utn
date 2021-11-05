@@ -71,7 +71,7 @@ if (isset($_SESSION["adminLogged"])) {
                 $count = 0;
                 foreach ($jobOfferList as $key => $jobOffer) {
                     
-                    if ($jobOffer->getStudentId() > 0) {
+                    if ($jobOffer->getStudentId() > 0 || !$jobOffer->getState()) {
                         continue;
                     }
                     
@@ -160,14 +160,3 @@ if (isset($_SESSION["adminLogged"])) {
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $(".postulated-job").click(
-            function() {
-                $('#proximaEntregaModal').modal('show');
-            }
-        );
-    });
-</script>
-    

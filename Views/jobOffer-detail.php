@@ -23,8 +23,10 @@ $studentList = $studentDAO->GetAllMySql();
 $applydJob = false;
 
 foreach ($jobOfferList as $key => $jobOffer) {
-    if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
-        $applydJob = true;
+    if (!isset($_SESSION["adminLogged"])) {
+        if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
+            $applydJob = true;
+        }
     }
 }
 
@@ -143,6 +145,7 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
                     <div class="col-md-10 text-right">
                         <form action="<?= FRONT_ROOT ?>JobOffer/ApplyJob" method="get">
                             <input type="hidden" name="studentId" value="<?= $_SESSION["activeStudent"]->getStudentId() ?>">
+                            <input type="hidden" name="jobOfferId" value="<?= $actual_jobOffer->getJobOfferId() ?>">
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-danger" <?= $applydJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a una oferta laboral'" : "" ?>>¡Me postulo!</button>
