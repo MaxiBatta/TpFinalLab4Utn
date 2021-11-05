@@ -23,7 +23,7 @@
                 return;
             }
             else {
-                $newJobOfferList = $this->jobPositionDAO->SearchJobPosition($_REQUEST["description"]);
+                $newJobOfferList = $this->jobOfferDAO->SearchJobPosition($_REQUEST["description"]);
                 if (!$newJobOfferList) {
                     require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
                     return;
