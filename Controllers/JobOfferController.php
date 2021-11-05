@@ -57,43 +57,53 @@
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."job-offer-delete.php");
         }
-        public function ModifyJobOffer($jobOfferId, $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber) {
-            $jobOffer = new JobOffer();
-            $jobOffer = $this->jobOfferDAO->returnjobOfferById($jobOfferId);
-
-            if ($name) {
-                $jobOffer->setName($name);
-            }
-            if ($yearFoundation) {
-                $jobOffer->setYearFoundation($yearFoundation);
-            }
-            if ($city) {
-                $jobOffer->setCity($city);
-            }
-            if ($description) {
-                $jobOffer->setDescription($city);
-            }
-            if ($logo) {
-                $jobOffer->setLogo($logo);
-            }
-            if ($email) {
-                $jobOffer->setEmail($email);
-            }
-            if ($phoneNumber) {
-                $jobOffer->setPhoneNumber($phoneNumber);
-            }
-
-            $this->jobOfferDAO->Modify($jobOffer);
-
-            $this->ShowJobOffersCatalogueView();
-        }
+       
         public function ShowJobOfferModifyView($message = '')
         {
             Utils::CheckAdmin();
             $_SESSION["actual_job-offer"] = $_REQUEST["job-offer-id"];
             require_once(VIEWS_PATH."job-offer-modify.php");
         } 
-
+        public function ShowOfferModifyView($jobofferid){
+            Utils::CheckAdmin();
+            if ($_GET) {
+                $_SESSION["toModifyJobOffer"] = $jobofferid;
+                require_once(VIEWS_PATH . "job-offer-modify.php");
+                exit();
+            }
+        }
+        public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
+            try
+            {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($jobOfferId);
+                
+                $foundJobOffer = $this->jobOfferDAO->GetJobOfferById($jobOfferId);
+                
+                $dateTime ? $jobOffer->setDateTime($dateTime) : $jobOffer->setDateTime($foundJobOffer->getDateTime());
+                $limitDate ? $jobOffer->setLimitDate($limitDate) : $jobOffer->setLimitDate($foundJobOffer->getLimitDate());
+                $state ? $jobOffer->setState($state) : $jobOffer->setState($foundJobOffer->getState());
+                $companyId ? $jobOffer->setCompanyId($companyId) : $jobOffer->setCompanyId($foundJobOffer->getCompanyId());
+                $jobPositionId ? $jobOffer->setJobPositionId($jobPositionId) : $jobOffer->setJobPositionId($foundJobOffer->getJobPositionId());
+                $studentId ? $jobOffer->setStudentId($studentId) : $jobOffer->setStudentId($foundJobOffer->getStudentId());
+                
+                $_SESSION["activeJobOffer"] = $jobOffer;
+                
+                $this->jobOfferDAO->UpdateJobOffer($jobOfferId, $jobOffer);
+                
+                if (isset($_SESSION["adminLogged"])) {
+                    require_once(VIEWS_PATH."admin-panel.php");
+                    exit();
+                }
+                else {
+                    $this->ShowPanelView();
+                }
+            }
+            catch(Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }
         public function ShowJobOfferDetailView($message = '')
         {
             Utils::CheckBothSessions();

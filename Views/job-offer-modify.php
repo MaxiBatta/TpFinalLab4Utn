@@ -1,48 +1,118 @@
 <?php
-    require_once('nav.php');
+     require_once('nav.php');
+
+     use Controllers\Company as Company;
+     use DAO\CompanyDao as CompanyDAO;
+     use DAO\JobPositionDao as JobPositionDAO;
+     use DAO\StudentDao as StudentDAO;
+     use DAO\JobOfferDao as JobOfferDAO;
+     
+     $jobOfferDAO = new JobOfferDAO();
+     $toModifyJobOffer = $jobOfferDAO->GetjobOfferById($_SESSION["toModifyJobOffer"]);
+
+     unset($_SESSION["toModifyJobOffer"]);
+
+     $studentDAO= new StudentDAO();
+     $studentsList=$studentDAO->GetAllMySql();
+     $jobPositionDAO = new JobPositionDAO();
+     $jobPositionLists = $jobPositionDAO->getAll();
+     $companyDAO = new CompanyDAO();
+     $companiesList = $companyDAO->GetAllMySql();
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Modificando Ofertas de trabajo</h2>
+               <h2 class="mb-4">Modificando Oferta laboral</h2>
                <form action="<?php echo FRONT_ROOT ?>JobOffer/ModifyJobOffer" method="post" class="bg-light-alpha p-5">
-                    <input type="hidden" name="joboffer-id" value="<?= $_SESSION["actual_company"] ?>">
-                    <div class="row">                         
-                         <div class="col-lg-4">
+                    <div class="row">
+                    <input type="hidden" name="jobOfferId" value="<?= $toModifyJobOffer->getJobOfferId() ?>">
+                    <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Posicion de trabajo</label>
-                                   <input type="text" name="jobPosition" value="" class="form-control">
+                                   <label for="dateTime">Fecha de comienzo</label>
+                                   <input type="date" name="dateTime" id = "dateTime" value="<?=$toModifyJobOffer->getDateTime(); ?>" class="form-control" min="1950-01-01" step="1" >
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Fecha de comienzo</label>
-                                   <input type="date" name="dateCreation" value="" class="form-control">
+                                   <label for="limitDate">Fecha Limite</label>
+                                   <input type="date" name="limitDate" id = "limitDate" value="<?=$toModifyJobOffer->getLimitDate(); ?>" class="form-control" min="tomorrow" step="1" >
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Fecha Limite</label>
-                                   <input type="date" name="dateLimit" value="" class="form-control">
+                                   <label for="state">Estado</label>
+                                   <select name="state" class="form-control" >
+                                   <option value="1" <?= $toModifyJobOffer->getState() == 1 ? "selected='selected'" : "" ?>>Activo</option>
+                                   <option value="0" <?= $toModifyJobOffer->getState() == 0 ? "selected='selected'" : "" ?>>Inactivo</option>
+                                   </select>
+                              </div>
+                         </div>                         
+                         <div class="col-lg-4 ml-10">
+                              <div class="form-group">
+                                   <label for="jobPositionId">Posicion de trabajo</label>
+                                   <select name="jobPositionId" class="form-control" >
+                                   <?php
+                                    foreach ($jobPositionLists as $key => $value) {
+                                        if ($toModifyJobOffer->getJobPositionId() == $value->getJobPositionId()) {
+                                             echo '<option value="'. $value->getJobPositionId() . '" selected="selected">' . $value->getDescription() . '</option>';
+                                         }
+                                         else {
+                                             echo '<option value="'. $value->getJobPositionId() . '">' . $value->getDescription() . '</option>';
+                                         }
+                                    }
+                                   ?>
+                                   </select>
                               </div>
                          </div>
+                         <div class="col-lg-4 ">
+                              <div class="form-group">
+                                   <label for="companyId">Empresa</label><br>
+                                   <select name="companyId" class="form-control" >
+                                   <?php
+                                    foreach ($companiesList as $key => $value) {
+                                        if ($toModifyJobOffer->getCompanyId() == $value->getCompanyId()) {
+                                             echo '<option value="'. $value->getCompanyId() . '" selected="selected">' . $value->getName() . '</option>';
+                                         }
+                                         else {
+                                             echo '<option value="'. $value->getCompanyId() . '">' . $value->getName() . '</option>';
+                                         }
+                                    }
+                                    
+                                   ?>
+                                   </select>
+                              </div>
+                         </div>
+
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Description</label>
-                                   <input type="text" name="description" value="" class="form-control">
+                                   <label for="studentId">Student</label>
+                                   <select name="studentId" class="form-control" >
+                                   <?php
+                                    foreach ($studentsList as $key => $value) {
+                                        if ($toModifyJobOffer->getStudentId() == $value->getStudentId()) {
+                                             echo '<option value="'. $value->getStudentId() . '" selected="selected">' . $value->getFirstName() . " ". $value->getLastName() . '</option>';
+                                         }
+                                         else {
+                                             echo '<option value="'. $value->getStudentId() . '">' . $value->getFirstName() . " ". $value->getLastName(). '</option>';
+                                         }
+                                    }
+                                   ?>
+                                   </select>
                               </div>
                          </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Compañia</label>
-                                   <input type="file" name="company" value="" class="form-control">
-                              </div>
-                         </div>
+                         
+                      
                     </div>
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
-                        <button type="submit" class="btn btn-dark ml-auto d-block">Modificar</button>
-                    </div>
+                
+                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
+                    <button type="submit" class="btn btn-dark ml-auto d-block">Agregar</button> 
+               </div>
+                    
+               </div>
+
+               
+                   
                </form>
           </div>
      </section>
