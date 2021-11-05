@@ -40,7 +40,6 @@ class StudentController {
     }
 
     public function ShowModifyView($message = '') {
-        Utils::CheckSession();
         require_once(VIEWS_PATH . "student-modify.php");
     }
 
@@ -88,8 +87,14 @@ class StudentController {
             $_SESSION["activeStudent"] = $student;
             
             $this->studentDAO->UpdateStudent($studentId, $student);
-
-            $this->ShowPanelView();
+            
+            if (isset($_SESSION["adminLogged"])) {
+                require_once(VIEWS_PATH."admin-panel.php");
+                exit();
+            }
+            else {
+                $this->ShowPanelView();
+            }
         }
         catch(Exception $e)
         {

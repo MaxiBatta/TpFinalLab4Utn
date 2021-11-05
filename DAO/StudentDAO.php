@@ -178,6 +178,8 @@ class StudentDAO implements IStudentDAO {
                 $student = new Student();
                 $student->setStudentId($row["studentid"]);
                 $student->setCareerId($row["careerid"]);
+                $student->setFirstName($row["firstname"]);
+                $student->setLastName($row["lastname"]);
                 $student->setDni($row["dni"]);
                 $student->setFileNumber($row["filenumber"]);
                 $student->setGender($row["gender"]);
@@ -251,8 +253,7 @@ class StudentDAO implements IStudentDAO {
 
             if ($resultSet) {
                 $_SESSION["existingMail"] = 1;
-                require_once(VIEWS_PATH . "index.php");
-                exit;
+                return false;
             }
 
             return true;

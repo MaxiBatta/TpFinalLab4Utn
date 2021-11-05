@@ -65,7 +65,7 @@ $careerLists = $careerDAO->getAll();
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="birthDate">Fecha de nacimiento</label>
-                            <input type="date" name="birthDate" id = "birthDate" value="" class="form-control" min="1920-01-01" step="1" required>
+                            <input type="datetime-local" name="birthDate" id = "birthDate" value="" class="form-control" min="1920-01-01" step="1" required>
                        </div>
                     </div>
                     <div class="col-lg-4">

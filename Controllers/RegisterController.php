@@ -16,8 +16,12 @@ class RegisterController {
             $studentDAO = new StudentDAO();
             $student = $studentDAO->checkStudentByMail($email);
             
+            if (!$student) {
+                require_once(VIEWS_PATH . "admin-panel.php");
+                exit;
+            }
+            
             $studentToAdd = new Student();
-
             $studentToAdd->setCareerId($careerId);
             $studentToAdd->setFirstName($firstName);
             $studentToAdd->setLastName($lastName);
@@ -37,9 +41,8 @@ class RegisterController {
                 $_SESSION["registerState"] = 1; //"El usuario ha sido registrado exitosamente"
             }
 
-            require_once(VIEWS_PATH . "index.php");
+            require_once(VIEWS_PATH . "admin-panel.php");
         }
-        
     }
 }
 ?>

@@ -29,6 +29,18 @@
             require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
         }
         
+        public function ShowAdminModifyView($id) {
+            Utils::CheckAdmin();
+            if ($_GET) {
+                $_SESSION["toModifyStudent"] = $id;
+                require_once(VIEWS_PATH . "student-modify-admin.php");
+                exit();
+            }
+        }
         
+        public function ShowStudentListBmView($message = '') {
+            Utils::CheckAdmin();
+            require_once(VIEWS_PATH . "student-list-bm.php");
+        }
     }
 ?>

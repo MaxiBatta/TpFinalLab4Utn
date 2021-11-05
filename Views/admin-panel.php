@@ -4,11 +4,11 @@ require_once('nav.php');
 use DAO\Connection as Connection;
 
 if (isset($_SESSION["dbState"]) && $_SESSION["dbState"] == 1) {
-    $registerState = '<h5 class="text-success">La API ha sido actualizada exitosamente.</h5>';
+    $dbState = '<h5 class="text-success">La API ha sido actualizada exitosamente.</h5>';
     unset($_SESSION["dbState"]);
 }
 else if (isset($_SESSION["dbState"]) && $_SESSION["dbState"] == 0) {
-    $registerState = '<h5 class="text-danger">ERROR: '.$_SESSION["dbFailMessage"].'</h5>';
+    $dbState = '<h5 class="text-danger">ERROR: '.$_SESSION["dbFailMessage"].'</h5>';
     unset($_SESSION["dbState"]);
     unset($_SESSION["dbFailMessage"]);
 }
@@ -16,13 +16,30 @@ else {
     /***/
 }
 
+if (isset($_SESSION["existingMail"])) {
+    $errorExistingMail = '<h5 class="text-danger mt-3">Ya existe un usuario con ese mail registrado.</h5>';
+    unset($_SESSION["existingMail"]);
+}
+
+if (isset($_SESSION["registerState"]) && $_SESSION["registerState"] == 0) {
+    $registerState = '<h5 class="text-danger">Ocurrió un error al registrar el usuario.</h5>';
+    unset($_SESSION["registerState"]);
+}
+else if (isset($_SESSION["registerState"]) && $_SESSION["registerState"] == 1) {
+    $registerState = '<h5 class="text-success">El usuario ha sido registrado exitosamente.</h5>';
+    unset($_SESSION["registerState"]);
+}
+else { /***/ }
+
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
+                    <?= isset($errorExistingMail) ? $errorExistingMail : "" ?>
                     <?= isset($registerState) ? $registerState : "" ?>
+                    <?= isset($dbState) ? $dbState : "" ?>
                 </div>
             </div>
             <div class="row">
@@ -30,9 +47,10 @@ else {
                     <h2 class="mb-4">Bienvenido <?= $_SESSION["activeAdministrator"]->getEmail() ?></h2>
                 </div>
             </div>
+            <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <h5 class="mb-4">Menú de Acciones</h5>
+                    <h5 class="mb-4">Acciones de Empresas</h5>
                 </div>
             </div>
             <div class="row">
@@ -63,7 +81,6 @@ else {
                         </div>
                     </div>
                 </div>
-                
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
@@ -74,7 +91,7 @@ else {
                             <a href="<?php echo FRONT_ROOT.'Company/ShowListCompanyView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
-                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -84,6 +101,14 @@ else {
                         </div>
                     </div>
                 </div>
+            </div>
+            <hr>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5 class="mb-4">Acciones de Ofertas Laborales</h5>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -93,8 +118,6 @@ else {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -104,6 +127,40 @@ else {
                         </div>
                     </div>
                 </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="mb-4">Acciones de Estudiantes</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Registrar un estudiante</h5>
+                            <p class="card-text">Da de alta un nuevo estudiante</p>
+                            <a href="<?php echo FRONT_ROOT.'Register/ShowRegisterView'?>" class="btn btn-primary">Crear</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ver estudiantes</h5>
+                            <p class="card-text">Modificá y/o Eliminá un estudiante.</p>
+                            <a href="<?php echo FRONT_ROOT.'Administrator/ShowStudentListBmView'?>" class="btn btn-primary">Modificar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5 class="mb-4">Misc</h5>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
