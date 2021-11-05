@@ -68,6 +68,7 @@ if (isset($_SESSION["adminLogged"])) {
             if (!$jobOfferList) {
                 echo "No hay ninguna oferta laboral disponible";
             } else {
+                $count = 0;
                 foreach ($jobOfferList as $key => $jobOffer) {
                     
                     if ($jobOffer->getStudentId() > 0) {
@@ -102,6 +103,7 @@ if (isset($_SESSION["adminLogged"])) {
                         if ($company->getCompanyId() == $jobOffer->getCompanyId()) {
                             $companyName = $company->getName();
                             $companyDescription = $company->getDescription();
+                            $count++;
                         }
                     }
                     ?>
@@ -133,8 +135,39 @@ if (isset($_SESSION["adminLogged"])) {
                     <?php
                     }
                 }
+                echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera") . "</p>";
             }
             ?>
         </div>
     </section>
 </main>
+
+<div class="modal fade" id="proximaEntregaModal" tabindex="-1" role="dialog" aria-labelledby="proximaEntregaModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¡Casi casi!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ya te encuentras postulado a una oferta laboral.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".postulated-job").click(
+            function() {
+                $('#proximaEntregaModal').modal('show');
+            }
+        );
+    });
+</script>
+    

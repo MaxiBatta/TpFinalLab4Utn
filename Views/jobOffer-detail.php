@@ -8,6 +8,7 @@ use DAO\CompanyDao as CompanyDao;
 use DAO\StudentDao as StudentDao;
 
 $jobOfferDAO = new JobOfferDAO();
+$jobOfferList = $jobOfferDAO->GetAllMySql();
 $actual_jobOffer = $jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
 
 $jobPositionDAO = new JobPositionDAO();
@@ -19,7 +20,16 @@ $companyList = $companyDAO->GetAllMySql();
 $studentDAO = new StudentDAO();
 $studentList = $studentDAO->GetAllMySql();
 
+$applydJob = false;
+
+foreach ($jobOfferList as $key => $jobOffer) {
+    if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
+        $applydJob = true;
+    }
+}
+
 foreach ($jobPositionList as $key => $jobPosition) {
+    
     if ($jobPosition->getJobPositionId() == $actual_jobOffer->getJobPositionId()) {
         $jobPositionDescription = $jobPosition->getDescription();
         break;
@@ -131,7 +141,14 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
                 </div>
                 <?php if (isset($_SESSION["studentLogged"])) { ?>
                     <div class="col-md-10 text-right">
-                        <button id='btn-postulate' class="btn btn-danger" data-toggle="modal" data-target="#proximaEntregaModal">¡Postulate!</button>
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ApplyJob" method="get">
+                            <input type="hidden" name="studentId" value="<?= $_SESSION["activeStudent"]->getStudentId() ?>">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-danger" <?= $applydJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a una oferta laboral'" : "" ?>>¡Me postulo!</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 <?php } ?>
             </div>
@@ -139,22 +156,3 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
 
     </section>
 </main>
-
-<div class="modal fade" id="proximaEntregaModal" tabindex="-1" role="dialog" aria-labelledby="proximaEntregaModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Mas despacio velocista</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Esta función estará disponible en la próxima entrega.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
