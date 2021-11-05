@@ -107,73 +107,7 @@ class StudentDAO implements IStudentDAO {
 
         return true;
     }
-    public function UpdateDataFromApi() {
-        $this->studentList = array();
 
-        $apiStudent = curl_init(API_URL . 'Student');
-
-        curl_setopt($apiStudent, CURLOPT_HTTPHEADER, array('x-api-key: ' . API_KEY));
-        curl_setopt($apiStudent, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($apiStudent);
-
-        $arrayToDecode = json_decode($response, true);
-
-        foreach ($arrayToDecode as $valuesArray) {
-            $student = new Student();
-            $student->setStudentId($valuesArray["studentId"]);
-            $student->setCareerId($valuesArray["careerId"]);
-            $student->setFirstName($valuesArray["firstName"]);
-            $student->setLastName($valuesArray["lastName"]);
-            $student->setDni($valuesArray["dni"]);
-            $student->setFileNumber($valuesArray["fileNumber"]);
-            $student->setGender($valuesArray["gender"]);
-            $student->setBirthDate($valuesArray["birthDate"]);
-            $student->setEmail($valuesArray["email"]);
-            $student->setPhoneNumber($valuesArray["phoneNumber"]);
-            $student->setActive($valuesArray["active"]);
-
-            array_push($this->studentList, $student);
-        }
-
-        try {
-            foreach ($this->studentList as $student) {
-                $this->UpdateStudent($student->getStudentId(), $student->getCareerId, $student->getFirstName, $student->getLastName, $student->getDni, $student->getFileNumber, $student->getGender, $student->getBirthDate, $student->getEmail, $student->getPhoneNumber, $student->getActive);
-            }
-            return 1;
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
-
-        return true;
-    }
-
-    public function UpdateStudent2($studentId, $careerId, $firstName, $lastName, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber, $active) {
-        try {
-            $query = "UPDATE " . $this->tableName . " SET careerId = :careerId, firstName = :firstName, lastName = :lastName, dni = :dni, fileNumber = :fileNumber, gender = :gender, birthDate = :birthDate, email = :email, phoneNumber = :phoneNumber, active = :active WHERE (studentId = :studentId);";
-            
-            $parameters["studentId"] = $studentId;
-            $parameters["careerId"] = $careerId;
-            $parameters["firstName"] = $firstName;
-            $parameters["lastName"] = $lastName;
-            $parameters["dni"] = $dni;
-            $parameters["fileNumber"] = $fileNumber;
-            $parameters["gender"] = $gender;
-            $parameters["birthDate"] = $birthDate;
-            $parameters["email"] = $email;
-            $parameters["phoneNumber"] = $phoneNumber;
-            $parameters["active"] = $active;
-
-            $this->connection = Connection::GetInstance();
-            $this->connection->ExecuteNonQuery($query, $parameters);
-            
-            return "Tus datos han sido modificados correctamente";
-        } catch (Exception $ex) {
-            throw $ex;
-            //return "Ha ocurrido un error al intentar actualizar tus datos: " . $e->getMessage();
-        }
-    }
-    
     public function UpdateStudent($studentId, Student $newStudent) {
         try
         {

@@ -107,9 +107,9 @@ else {
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">ACTUALIZAR API</h5>
-                            <p class="card-text">Actualiza los datos de la API</p>
-                            <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar BDD</a> 
+                            <h5 class="card-title">API a DB</h5>
+                            <p class="card-text">Sube los datos de la API a la DB</p>
+                            <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar</a> 
                         </div>
                     </div>
                 </div>

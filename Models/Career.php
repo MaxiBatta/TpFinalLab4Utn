@@ -11,7 +11,6 @@ Class Career
     function __construct() {
         
     }
-    
     public function getCareerId()
     {
         return $this->careerId;
@@ -20,8 +19,7 @@ Class Career
     {
         return $this->description;
     }
-    public function isActive()
-    {
+    public function getActive() {
         return $this->active;
     }
     public function setCareerId($careerId)
