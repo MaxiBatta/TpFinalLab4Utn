@@ -86,6 +86,43 @@
     
             return false;
         }
+
+        public function SearchJobPosition($description) {
+            
+            try
+            {
+                $jobOfferList = array();
+        
+                $query = "SELECT * FROM .$this->tableName o  INNER JOIN .$this->tableName1 p  ON o.jobPositionId = p.jobPositionId WHERE description = '$description'" ;
+        
+                $this->connection = Connection::GetInstance();
+        
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setDateTime($row["dateTime"]);
+                    $jobOffer->setLimitDate($row["limitDate"]);
+                    $jobOffer->setState($row["state"]);
+                    $jobOffer->setCompanyId($row["companyId"]);
+                    $jobOffer->setJobPositionId($row["jobPositionId"]);
+                    $jobOffer->setStudentId($row["studentId"]);
+                    
+                    
+                    
+        
+                    array_push($jobOfferList, $jobOffer);
+                }
+        
+                return $jobOfferList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
    }
  ?>
 
