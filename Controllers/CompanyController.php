@@ -100,6 +100,9 @@
         public function Add($name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber)
         {
             Utils::CheckAdmin();
+            $validate = Utils :: validateFormCompany($name,$city,$phoneNumber);
+            $validateName= $this->companyDAO->ValidateCompanyNameMySql($name);
+           
             
             /*$lastCompany = $this->companyDAO->getLast();
             $lastId = 1;
@@ -109,6 +112,8 @@
                 $lastId++;
             }
             */
+            If ($validateName){
+            If ($validate){
             $company = new Company();
             
             //$company->setCompanyId($lastId);
@@ -121,6 +126,13 @@
             $company->setPhoneNumber($phoneNumber);
             
             $this->companyDAO->AddMySql($company);
+            }
+            else{
+                echo "Error de carga";
+            }}
+            else{
+                echo "Empresa ya registrada";
+            }
 
             $this->ShowCompaniesCatalogueView();
         }
@@ -142,6 +154,8 @@
                 }
             }
         }
+
+        
 
     }
 ?>

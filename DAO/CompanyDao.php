@@ -316,6 +316,33 @@ public function AddMySql(Company $company)
                 throw $ex;
             }
     }
+
+    public function ValidateCompanyNameMySql($name) {
+        try
+        {
+            $companyList = array();
+            
+            $query = "SELECT * FROM .$this->tableName  WHERE name = '$name'" ;
+    
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet = $this->connection->Execute($query);
+
+            
+            
+         if ($resultSet!= Null){
+             return false;
+         }else{
+             return true;
+         }
+    
+           
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+}
 }
 
 ?>

@@ -52,5 +52,20 @@ class Utils{
             }
         }
     }
+    public static function ValidateFormCompany ($name, $city, $phoneNumber)
+    {
+        
+        $validate= false;
+        
+        if(preg_match("/^[a-zA-Z\s]+$/", $name) && preg_match("/^[a-zA-Z\s]+$/", $city) && is_numeric($phoneNumber)){
+         $validate=true;
+        }
+    
+        
+        return $validate;
+        }
+
+
+    
 }
 ?>
