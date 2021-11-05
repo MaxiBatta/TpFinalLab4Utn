@@ -69,17 +69,35 @@ if (isset($_SESSION["adminLogged"])) {
                 echo "No hay ninguna oferta laboral disponible";
             } else {
                 foreach ($jobOfferList as $key => $jobOffer) {
+                    
+                    if ($jobOffer->getStudentId() > 0) {
+                        continue;
+                    }
+                    
+                    $notCurrentCareer = true;
+                    
                     $jobPositionDAO = new JobPositionDAO();
                     $jobPositionList = $jobPositionDAO->GetAllMySql();
 
-                    $companyDAO = new CompanyDAO();
-                    $companyList = $companyDAO->GetAllMySql();
-
                     foreach ($jobPositionList as $key => $jobPosition) {
                         if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
+                            if (!isset($_SESSION["adminLogged"])) {
+                                if ($jobPosition->getCareerId() != $_SESSION["activeStudent"]->getCareerId()) {
+                                    $notCurrentCareer = false;
+                                    continue;
+                                }
+                            }
                             $jobPositionDescription = $jobPosition->getDescription();
                         }
                     }
+                    
+                    if (!$notCurrentCareer) {
+                        continue;
+                    }
+                    
+                    $companyDAO = new CompanyDAO();
+                    $companyList = $companyDAO->GetAllMySql();
+
                     foreach ($companyList as $key => $company) {
                         if ($company->getCompanyId() == $jobOffer->getCompanyId()) {
                             $companyName = $company->getName();

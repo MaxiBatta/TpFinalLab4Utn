@@ -149,7 +149,7 @@ else { /***/ }
                         <div class="card-body">
                             <h5 class="card-title">Ver estudiantes</h5>
                             <p class="card-text">Modificá y/o Eliminá un estudiante.</p>
-                            <a href="<?php echo FRONT_ROOT.'Administrator/ShowStudentListBmView'?>" class="btn btn-primary">Modificar</a>
+                            <a href="<?php echo FRONT_ROOT.'Administrator/ShowStudentListBmView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ else { /***/ }
             <hr>
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <h5 class="mb-4">Misc</h5>
+                    <h5 class="mb-4">Otros</h5>
                 </div>
             </div>
             <div class="row">
@@ -165,7 +165,8 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">API a DB</h5>
-                            <p class="card-text">Sube los datos de la API a la DB</p>
+                            <p class="card-text">Escribe los datos de la API a la DB.</p>
+                            <p class="card-text">Arrojará un error en el encabezado de la página en caso de keys duplicadas.</p>
                             <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar</a> 
                         </div>
                     </div>
