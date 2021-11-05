@@ -94,7 +94,7 @@
             {
                 $jobOfferList = array();
         
-                $query = "SELECT * FROM .$this->tableName o  INNER JOIN .$this->tableName1 p  ON o.jobPositionId = p.jobPositionId WHERE description = '$description'" ;
+                $query = "SELECT * FROM .$this->tableName o  INNER JOIN .$this->tableName1 p  ON o.jobPositionId = p.jobPositionId WHERE description LIKE '%$description%'" ;
         
                 $this->connection = Connection::GetInstance();
         

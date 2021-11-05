@@ -131,7 +131,7 @@
                 return;
             }
             else {
-                $newCompanyList = $this->companyDAO->SearchCompany($_REQUEST["name"]);
+                $newCompanyList = $this->companyDAO->SearchCompanyMySql($_REQUEST["name"]);
                 if (!$newCompanyList) {
                     require_once(VIEWS_PATH."company-list-catalogue.php");
                     return;

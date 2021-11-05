@@ -281,6 +281,41 @@ public function AddMySql(Company $company)
     
             return false;
         }
+
+        public function SearchCompanyMySql($name) {
+            try
+            {
+                $companyList = array();
+        
+                $query = "SELECT * FROM .$this->tableName  WHERE name LIKE '%$name%'" ;
+        
+                $this->connection = Connection::GetInstance();
+        
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setCompanyId($row["companyid"]);
+                    $company->setName($row["name"]);
+                    $company->setYearFoundation($row["yearfoundation"]);
+                    $company->setCity($row["city"]);
+                    $company->setDescription($row["description"]);
+                    $company->setLogo($row["logo"]);
+                    $company->setEmail($row["email"]);
+                    $company->setPhoneNumber($row["phonenumber"]);
+                    $company->setActive($row["active"]);
+
+                    array_push($companyList, $company);
+                }
+        
+                return $companyList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
     }
+}
 
 ?>
