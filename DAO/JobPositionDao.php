@@ -110,11 +110,9 @@ class JobPositionDAO {
 
             foreach ($resultSet as $row) {
                 $jobPosition = new JobPosition();
-                $jobPosition->setJobPositionId($row["jobPositionId"]);
-                $jobPosition->setCareerId($row["careerId"]);
+                $jobPosition->setJobPositionId($row["jobpositionid"]);
+                $jobPosition->setCareerId($row["careerid"]);
                 $jobPosition->setDescription($row["description"]);
-
-
 
                 array_push($jobPositionList, $jobPosition);
             }

@@ -1,8 +1,6 @@
 <?php
 require_once('nav.php');
 
-$actualId = $_SESSION["activeStudent"]->getStudentId();
-
 use DAO\CareerDAO as CareerDAO;
 ?>
 <main class="py-5">
@@ -17,19 +15,17 @@ use DAO\CareerDAO as CareerDAO;
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
                             <select id="careerId" name="careerId" class="form-control">
-                                <option value="1" selected></option>
                                 <?php
-//                                    $careerDAO = new CareerDAO();
-//                                    $careersList = $careerDAO->GetAllMySql(); 
-//                                    
-//                                    foreach ($careersList as $key => $value) {
-//                                        if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
-//                                            echo "<option value=" . $value->getCareerId() . " selected>" . $value->getDescription() . "</option>";
-//                                        }
-//                                        else {
-//                                            echo "<option value=" . $value->getCareerId() . ">" . $value->getDescription() . "</option>";
-//                                        }
-//                                    }
+                                    $careerDAO = new CareerDAO();
+                                    $careersList = $careerDAO->GetAllMySql(); 
+                                    foreach ($careersList as $key => $value) {
+                                        if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
+                                            echo '<option value="'. $value->getCareerId() . '" selected="selected">' . $value->getDescription() . '</option>';
+                                        }
+                                        else {
+                                            echo '<option value="'. $value->getCareerId() . '">' . $value->getDescription() . '</option>';
+                                        }
+                                    }
                                 ?>
                             </select>
                         </div>
@@ -89,7 +85,8 @@ use DAO\CareerDAO as CareerDAO;
                     <input type="number" name="active" id= "active" value="1" class="form-control" style="display: none;">
                 </div>
                 <div class="d-flex justify-content-end mt-3">
-                    <button type="submit" class="btn btn-dark ml-auto d-block">Modificar</button> 
+                    <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button> 
+                    <a href="<?php echo FRONT_ROOT . 'Student/ShowPanelView' ?>" class="btn btn-primary ml-2">Volver</a> 
                 </div>
             </form>
         </div>

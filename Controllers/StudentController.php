@@ -65,13 +65,6 @@ class StudentController {
         $this->ShowLoginView();
     }
 
-    public function UpdateStudent2($studentId, $careerId, $firstName, $lastName, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber, $active) {
-
-            $this->studentDAO->UpdateStudent($studentId, $careerId, $firstName, $lastName, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber, $active);
-
-            $this->ShowPanelView();
-    }
-    
     public function UpdateStudent($studentId, $careerId, $firstName, $lastName, $dni, $fileNumber, $gender, $birthDate, $email, $phoneNumber, $active) {   
         try
         {
@@ -91,6 +84,8 @@ class StudentController {
             $email ? $student->setEmail($email) : $student->setEmail($foundStudent->getEmail());
             $phoneNumber ? $student->setPhoneNumber($phoneNumber) : $student->setPhoneNumber($foundStudent->getPhoneNumber());
             $active ? $student->setActive($active) : $student->setActive($foundStudent->getActive());
+            
+            $_SESSION["activeStudent"] = $student;
             
             $this->studentDAO->UpdateStudent($studentId, $student);
 

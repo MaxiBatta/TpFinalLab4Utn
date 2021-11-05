@@ -56,15 +56,14 @@
                 foreach ($resultSet as $row)
                 {                
                     $jobOffer = new JobOffer();
-                    $jobOffer->setJobOfferId($row["jobOfferId"]);
-                    $jobOffer->setDateTime($row["dateTime"]);
-                    $jobOffer->setLimitDate($row["limitDate"]);
+                    $jobOffer->setJobOfferId($row["jobofferid"]);
+                    $jobOffer->setDateTime($row["datetime"]);
+                    $jobOffer->setLimitDate($row["limitdate"]);
                     $jobOffer->setState($row["state"]);
-                    $jobOffer->setCompanyId($row["companyId"]);
-                    $jobOffer->setJobPositionId($row["jobPositionId"]);
-                    $jobOffer->setStudentId($row["studentId"]);
+                    $jobOffer->setCompanyId($row["companyid"]);
+                    $jobOffer->setJobPositionId($row["jobpositionid"]);
+                    $jobOffer->setStudentId($row["studentid"]);
                     
-        
                     array_push($jobOfferList, $jobOffer);
                 }
         
@@ -75,7 +74,7 @@
                 throw $ex;
             }
         }
-
+        
         public function returnJobOfferById($id) {
             $jobOfferList= $this->GetAllMySql();
     

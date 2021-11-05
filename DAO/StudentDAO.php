@@ -176,14 +176,14 @@ class StudentDAO implements IStudentDAO {
 
             foreach ($resultSet as $row) {
                 $student = new Student();
-                $student->setStudentId($row["studentId"]);
-                $student->setCareerId($row["careerId"]);
+                $student->setStudentId($row["studentid"]);
+                $student->setCareerId($row["careerid"]);
                 $student->setDni($row["dni"]);
-                $student->setFileNumber($row["fileNumber"]);
+                $student->setFileNumber($row["filenumber"]);
                 $student->setGender($row["gender"]);
-                $student->setBirthDate($row["birthDate"]);
+                $student->setBirthDate($row["birthdate"]);
                 $student->setEmail($row["email"]);
-                $student->setPhoneNumber($row["phoneNumber"]);
+                $student->setPhoneNumber($row["phonenumber"]);
                 $student->setActive($row["active"]);
 
                 array_push($studentList, $student);
@@ -282,7 +282,6 @@ class StudentDAO implements IStudentDAO {
 
         return $resp;
     }
-
 }
 
 ?>

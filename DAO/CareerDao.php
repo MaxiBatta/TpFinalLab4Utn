@@ -116,10 +116,9 @@ class CareerDAO {
 
             foreach ($resultSet as $row) {
                 $career = new Career();
-                $career->setCareerId($row["careerId"]);
+                $career->setCareerId($row["careerid"]);
                 $career->setDescription($row["description"]);
                 $career->setActive($row["active"]);
-
 
                 array_push($careerList, $career);
             }
@@ -129,7 +128,6 @@ class CareerDAO {
             throw $ex;
         }
     }
-
 }
 ?>
 

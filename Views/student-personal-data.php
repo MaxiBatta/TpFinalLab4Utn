@@ -1,5 +1,9 @@
 <?php
 require_once('nav.php');
+
+use DAO\CareerDAO as CareerDAO;
+use DAO\JobOfferDAO as JobOfferDAO;
+use DAO\JobPositionDAO as JobPositionDAO;
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -56,6 +60,22 @@ require_once('nav.php');
                         <div class="card-body" style="">
                             <div class="row">
                                 <div class="col-md-3">
+                                    <label>Carrera</label>
+                                    <h5>
+                                        <?php
+                                        $_SESSION["activeStudent"]->getCareerId();
+                                        $careerDAO = new CareerDAO();
+                                        $careersList = $careerDAO->GetAllMySql();
+
+                                        foreach ($careersList as $key => $value) {
+                                            if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
+                                                echo $value->getDescription();
+                                            }
+                                        }
+                                        ?>
+                                    </h5>
+                                </div>
+                                <div class="col-md-3">
                                     <label>Número de expediente</label>
                                     <h5><?= $_SESSION["activeStudent"]->getFileNumber() ?></h5>
                                 </div>
@@ -63,15 +83,82 @@ require_once('nav.php');
                                     <label>Id del estudiante</label>
                                     <h5><?= $_SESSION["activeStudent"]->getStudentId() ?></h5>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Id de la carrera</label>
-                                    <h5><?= $_SESSION["activeStudent"]->getCareerId() ?></h5>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php
+            $jobOfferDAO = new JobOfferDAO();
+            $jobOfferList = $jobOfferDAO->GetAllMySql();
+
+            foreach ($jobOfferList as $key => $jobOffer) {
+                if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
+                    $jobPositionDAO = new JobPositionDAO();
+                    $jobPositionList = $jobPositionDAO->GetAllMySql();
+
+                    foreach ($jobPositionList as $key => $jobPosition) {
+                        if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
+
+                            $jobPositionDescription = $jobPosition->getDescription();
+
+                            $companyDAO = new CompanyDAO();
+                            $companyList = $companyDAO->GetAllMySql();
+
+                            foreach ($companyList as $key => $company) {
+                                if ($company->getCareerId() == $jobPosition->getCareerId()) {
+                                    $companyDescription = $company->getDescription();
+                                }
+                            }
+                        }
+                    }
+                    ?>
+                    <hr>
+                    <div id="accordion" class="mt-3">
+                        <div class="card" style="background-color: #fff0">
+                            <div id="aditional_data_heading">
+                                <h6 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#aditional_data" aria-expanded="true" aria-controls="aditional_data">
+                                        <strong>Datos Adicionales</strong>
+                                    </button>
+                                </h6>
+                            </div>
+                            <div id="job_offer" class="collapse" aria-labelledby="job_offer_heading" data-parent="#accordion">
+                                <div class="card-body" style="">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Empresa actual</label>
+                                            <h5>
+                                                <?php
+                                                echo $companyDescription;
+                                                ?>
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Puesto laboral actual</label>
+                                            <h5>
+                                                <?php
+                                                echo $jobPositionDescription;
+                                                ?>
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Número de expediente</label>
+                                            <h5><?= $_SESSION["activeStudent"]->getFileNumber() ?></h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Id del estudiante</label>
+                                            <h5><?= $_SESSION["activeStudent"]->getStudentId() ?></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
             <div class="row mt-3">
                 <div class="col-md-12 text-right">
                     <a href="<?php echo FRONT_ROOT . 'Student/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
