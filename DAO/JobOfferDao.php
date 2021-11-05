@@ -11,6 +11,7 @@
         private $jobOfferList = array();
         private $connection;
         private $tableName = "jobOffers";
+        private $tableName1 = "jobPositions";
 
         public function __construct() {
             $this->jobOfferList = array();
@@ -102,16 +103,13 @@
                 foreach ($resultSet as $row)
                 {                
                     $jobOffer = new JobOffer();
-                    $jobOffer->setJobOfferId($row["jobOfferId"]);
-                    $jobOffer->setDateTime($row["dateTime"]);
-                    $jobOffer->setLimitDate($row["limitDate"]);
+                    $jobOffer->setJobOfferId($row["jobofferid"]);
+                    $jobOffer->setDateTime($row["datetime"]);
+                    $jobOffer->setLimitDate($row["limitdate"]);
                     $jobOffer->setState($row["state"]);
-                    $jobOffer->setCompanyId($row["companyId"]);
-                    $jobOffer->setJobPositionId($row["jobPositionId"]);
-                    $jobOffer->setStudentId($row["studentId"]);
-                    
-                    
-                    
+                    $jobOffer->setCompanyId($row["companyid"]);
+                    $jobOffer->setJobPositionId($row["jobpositionid"]);
+                    $jobOffer->setStudentId($row["studentid"]);
         
                     array_push($jobOfferList, $jobOffer);
                 }

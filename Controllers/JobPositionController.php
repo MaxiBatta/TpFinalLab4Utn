@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use DAO\JobPositionDAO as JobPositionDAO;
+    use DAO\JobOfferDAO as JobOfferDAO;
     use Utils\Utils as Utils;
     use Controllers\AdministratorController as AdministratorController;
     use Models\JobPosition as JobPosition;
@@ -23,7 +24,9 @@
                 return;
             }
             else {
-                $newJobOfferList = $this->jobOfferDAO->SearchJobPosition($_REQUEST["description"]);
+                $jobOfferDAO = new JobOfferDAO();
+                $newJobOfferList = $jobOfferDAO->SearchJobPosition($_REQUEST["description"]);
+                
                 if (!$newJobOfferList) {
                     require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
                     return;
