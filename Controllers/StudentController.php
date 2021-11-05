@@ -35,7 +35,6 @@ class StudentController {
     }
 
     public function ShowOffersCatalogueView($message = '') {
-        Utils::CheckSession();
         require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
     }
 

@@ -14,6 +14,7 @@ unset($_SESSION["toModifyStudent"]);
         <div class="container">
             <h3 class="mb-4">Modificando a <?= $toModifyStudent->getFirstName() . " " . $toModifyStudent->getLastName() . " / " . $toModifyStudent->getDni() ?></h3>
             <form action="<?php echo FRONT_ROOT ?>Student/UpdateStudent" method="post" class="bg-light-alpha p-5">
+                <p class="bg-dark-alpha">Si querés eliminar un alumno cambiá el estado a Inactivo o viceversa.</p>
                 <div class="row mt-3">
                     <input type="hidden" name="studentId" value="<?= $toModifyStudent->getStudentId() ?>">
                     <div class="col-lg-4">

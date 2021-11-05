@@ -17,7 +17,6 @@ if (isset($_SESSION["found_jobOffers"])) {
     $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowOffersCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 
     if (isset($_SESSION["adminLogged"])) {
-        $back = FRONT_ROOT . 'Administrator/ShowPanelView';
         $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowOffersCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
     }
 }
@@ -66,27 +65,27 @@ if (isset($_SESSION["adminLogged"])) {
             </div>
 
             <?php
-                if (!$jobOfferList) {
-                    echo "No hay ninguna oferta laboral disponible";
-                } else {
-                    foreach ($jobOfferList as $key => $jobOffer) {
-                        $jobPositionDAO = new JobPositionDAO();
-                        $jobPositionList = $jobPositionDAO->GetAllMySql();
+            if (!$jobOfferList) {
+                echo "No hay ninguna oferta laboral disponible";
+            } else {
+                foreach ($jobOfferList as $key => $jobOffer) {
+                    $jobPositionDAO = new JobPositionDAO();
+                    $jobPositionList = $jobPositionDAO->GetAllMySql();
 
-                        $companyDAO = new CompanyDAO();
-                        $companyList = $companyDAO->GetAllMySql();
+                    $companyDAO = new CompanyDAO();
+                    $companyList = $companyDAO->GetAllMySql();
 
-                        foreach ($jobPositionList as $key => $jobPosition) {
-                            if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
-                                $jobPositionDescription = $jobPosition->getDescription();
-                            }
+                    foreach ($jobPositionList as $key => $jobPosition) {
+                        if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
+                            $jobPositionDescription = $jobPosition->getDescription();
                         }
-                        foreach ($companyList as $key => $company) {
-                            if ($company->getCompanyId() == $jobOffer->getCompanyId()) {
-                                $companyName = $company->getName();
-                                $companyDescription = $company->getDescription();
-                            }
+                    }
+                    foreach ($companyList as $key => $company) {
+                        if ($company->getCompanyId() == $jobOffer->getCompanyId()) {
+                            $companyName = $company->getName();
+                            $companyDescription = $company->getDescription();
                         }
+                    }
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -110,14 +109,14 @@ if (isset($_SESSION["adminLogged"])) {
                         <div class="row" style="margin-left: 3px;">
                             <form action="<?= FRONT_ROOT ?>JobOffer/ShowOfferModifyView" method="get">
                                 <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
-                                <button type="submit" class="btn btn-primary mt-2">Modificar</button>
+                                <button type="submit" class="btn btn-danger mt-2">Modificar</button>
                             </form>
                         </div>
-                    <?php } ?>
-                </div>
                     <?php
+                    }
                 }
             }
             ?>
+        </div>
     </section>
 </main>
