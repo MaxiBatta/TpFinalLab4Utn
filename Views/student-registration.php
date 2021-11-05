@@ -2,6 +2,9 @@
 require_once('nav.php');
 
 use DAO\CareerDAO as CareerDAO;
+
+$careerDAO = new CareerDAO();
+$careerLists = $careerDAO->getAll();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -16,12 +19,11 @@ use DAO\CareerDAO as CareerDAO;
                             <select id="careerId" name="careerId" class="form-control" required>
                                 <option value="0">Seleccionar...</option>
                                 <?php
-                                    $careerDAO = new CareerDAO();
-                                    $careersList = $careerDAO->GetAllMySql(); 
-                                    
-                                    foreach ($careersList as $key => $value) {
+                                    foreach ($careerLists as $key => $value) {
+                                        if($value->isActive()==true){
                                         echo "<option value=" . $value->getCareerId() . ">" . $value->getDescription() . "</option>";
                                     }
+                                }
                                 ?>
                             </select>
                         </div>

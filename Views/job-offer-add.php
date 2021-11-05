@@ -3,7 +3,10 @@
 
      use Controllers\Company as Company;
      use DAO\CompanyDao as CompanyDAO;
+     use DAO\JobPositionDao as JobPositionDAO;
      
+     $jobPositionDAO = new JobPositionDAO();
+     $jobPositionLists = $jobPositionDAO->getAll();
      $companyDAO = new CompanyDAO();
      $companiesList = $companyDAO->GetAllMySql();
 ?>
@@ -16,38 +19,24 @@
                          <div class="col-lg-4 ml-10">
                               <div class="form-group">
                                    <label for="jobPositionId">Posicion de trabajo</label>
-                                   <select name="jobPositionId">
-                                   <option value="1" selected>Ingeniero naval jr</option>
-                                   <option value="2" >Ingeniero naval ssr</option>
-                                   <option value="3">Ingeniero naval sr</option>
-                                   <option value="4">Ingeniero de pesca jr</option>
-                                   <option value="5">Ingeniero pesquero ssr</option>
-                                   <option value="6">Ingeniero senior de pesca</option>
-                                   <option value="7">Desarrollador Java Jr</option>
-                                   <option value="8">Desarrollador PHP Jr</option>
-                                   <option value="9">Ssr develope</option>
-                                   <option value="10">Full Stack developer</option>
-                                   <option value="11">Sr developer</option>
-                                   <option value="12">Project manager</option>
-                                   <option value="13">Scrum Master</option>
-                                   <option value="14">Jr textile operator</option>
-                                   <option value="15">Textile production assistant manager</option>
-                                   <option value="16">Textile design assistant</option>
-                                   <option value="17">Textile production supervisor</option>
-                                   <option value="18">Head of administration</option>
-                                   <option value="19">Management analyst</option>
-                                   <option value="20">Administration intern</option>
-                                   <option value="21">Environmental management specialist</option>
-                                   <option value="22">Environmental management coordinator</option>
-                                   <option value="23">Received technician</option>
+                                   <select name="jobPositionId" class="form-control" required>
+                                   <?php
+                                    foreach ($jobPositionLists as $key => $value) {
+                                        echo "<option value=" . $value->getJobPositionId() . ">" . $value->getDescription() . "</option>";
+                                    }
+                                   ?>
                                    </select>
                               </div>
                          </div>
                          <div class="col-lg-4 ">
                               <div class="form-group">
                                    <label for="companyId">Empresa</label><br>
-                                   <select name="companyId">
-                                   <option value="6" selected>Jail Ismael Valenzuela </option>
+                                   <select name="companyId" class="form-control" required>
+                                   <?php
+                                    foreach ($companiesList as $key => $value) {
+                                        echo "<option value=" . $value->getCompanyId() . ">" . $value->getName() . "</option>";
+                                    }
+                                   ?>
                                    </select>
                               </div>
                          </div>
