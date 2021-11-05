@@ -20,7 +20,7 @@ $careerLists = $careerDAO->getAll();
                                 <option value="0">Seleccionar...</option>
                                 <?php
                                     foreach ($careerLists as $key => $value) {
-                                        if($value->isActive()==true){
+                                        if($value->getActive()){
                                         echo "<option value=" . $value->getCareerId() . ">" . $value->getDescription() . "</option>";
                                     }
                                 }

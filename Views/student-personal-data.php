@@ -129,17 +129,13 @@ use DAO\JobPositionDAO as JobPositionDAO;
                                         <div class="col-md-3">
                                             <label>Empresa actual</label>
                                             <h5>
-                                                <?php
-                                                echo $companyDescription;
-                                                ?>
+                                                <?= $companyDescription ?>
                                             </h5>
                                         </div>
                                         <div class="col-md-3">
                                             <label>Puesto laboral actual</label>
                                             <h5>
-                                                <?php
-                                                echo $jobPositionDescription;
-                                                ?>
+                                                <?= $jobPositionDescription?>
                                             </h5>
                                         </div>
                                         <div class="col-md-3">

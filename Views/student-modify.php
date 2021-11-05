@@ -14,7 +14,7 @@ use DAO\CareerDAO as CareerDAO;
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
-                            <select id="careerId" name="careerId" class="form-control">
+                            <select id="careerId" name="careerId" class="form-control" <?= !isset($_SESSION["adminLogged"]) ? "disabled='disabled'" : "" ?>>
                                 <?php
                                     $careerDAO = new CareerDAO();
                                     $careersList = $careerDAO->GetAllMySql(); 
