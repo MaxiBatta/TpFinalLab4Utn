@@ -83,22 +83,19 @@ $companiesList = $companyDAO->GetAllMySql();
 
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label for="studentId">Student</label>
-                            <div class="input-group">
-                                <select id="studentId" class="form-control" name="studentId" title="pobre chabón mira que le vas a cambiar la oferta">
-                                    <option value="0">Sin postulación</option>
-                                    <?php
-                                    foreach ($studentsList as $key => $value) {
-                                        if ($toModifyJobOffer->getStudentId() == $value->getStudentId()) {
-                                            echo '<option value="' . $value->getStudentId() . '" selected="selected">' . $value->getFirstName() . " " . $value->getLastName() . '</option>';
-                                        } else {
-                                            echo '<option value="' . $value->getStudentId() . '">' . $value->getFirstName() . " " . $value->getLastName() . '</option>';
-                                        }
+                            <label for="studentId">Estudiante postulado</label>
+                            <select id="studentId" class="form-control" name="studentId" title="pobre chabón mira que le vas a cambiar la oferta">
+                                <option value="0">Sin postulación</option>
+                                <?php
+                                foreach ($studentsList as $key => $value) {
+                                    if ($toModifyJobOffer->getStudentId() == $value->getStudentId()) {
+                                        echo '<option value="' . $value->getStudentId() . '" selected="selected">' . $value->getFirstName() . " " . $value->getLastName() . '</option>';
+                                    } else {
+                                        echo '<option value="' . $value->getStudentId() . '">' . $value->getFirstName() . " " . $value->getLastName() . '</option>';
                                     }
-                                    ?>
-                                </select>
-                                <a id="change-student-offer" class="btn btn-danger ml-auto d-block text-white" title="Cambiar injustamente el alumno que se postuló">Cambiar</a>
-                            </div>
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -113,22 +110,4 @@ $companiesList = $companyDAO->GetAllMySql();
 if (isset($message))
     echo $message;
 ?>
-
 </main>
-
-<script>
-    $(document).ready(function() {
-        
-        $("#change-student-offer").click(
-            function() {
-                if ($(this).hasClass("btn-danger")) {
-                    $("#studentId").removeAttr("disabled");
-                    $(this).removeClass("btn-danger");
-                    $(this).addClass("btn-dark");
-                    $(this).attr("title", ":(");
-                }
-            }
-        );
-        
-    });
-</script>
