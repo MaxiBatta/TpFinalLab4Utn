@@ -68,6 +68,7 @@ class StudentController {
         {
             $student = new Student();
             $student->setStudentId($studentId);
+            $student->setActive($active);
             
             $foundStudent = $this->studentDAO->GetStudentById($studentId);
             
@@ -81,7 +82,6 @@ class StudentController {
             $birthDate ? $student->setBirthDate($birthDate) : $student->setBirthDate($foundStudent->getBirthDate());
             $email ? $student->setEmail($email) : $student->setEmail($foundStudent->getEmail());
             $phoneNumber ? $student->setPhoneNumber($phoneNumber) : $student->setPhoneNumber($foundStudent->getPhoneNumber());
-            $active ? $student->setActive($active) : $student->setActive($foundStudent->getActive());
             
             $_SESSION["activeStudent"] = $student;
             

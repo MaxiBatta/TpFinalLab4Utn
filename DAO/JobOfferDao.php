@@ -129,12 +129,12 @@ class JobOfferDAO {
             throw new PDOException($e->getMessage());
         }
     }
-
+    
     public function mapJobOfferData($jobOffers) {
         $resp = array_map(function($p) {
             $jobOfferToAdd = new JobOffer();
 
-            $jobOfferToAdd->setjobOfferId($p['jobofferid']);
+            $jobOfferToAdd->setJobOfferId($p['jobofferid']);
             $jobOfferToAdd->setDateTime($p['datetime']);
             $jobOfferToAdd->setLimitDate($p['limitdate']);
             $jobOfferToAdd->setState($p['state']);
@@ -150,7 +150,7 @@ class JobOfferDAO {
 
     public function UpdateJobOffer($jobOfferId, JobOffer $newJobOffer) {
         try {
-            $query = "UPDATE " . $this->tableName . " SET dateTime = :dateTime, limitDate = :limitDate, state = :state, jobPositionId = :jobPositionId, companyId = :companyId, studentId = :studentId, active = :active WHERE (jobOfferId = :jobOfferId);";
+            $query = "UPDATE " . $this->tableName . " SET dateTime = :dateTime, limitDate = :limitDate, state = :state, jobPositionId = :jobPositionId, companyId = :companyId, studentId = :studentId, state = :state WHERE (jobOfferId = :jobOfferId);";
 
             $this->connection = Connection::GetInstance();
 

@@ -70,22 +70,22 @@ else {
             if (!$companiesList) {
                 echo "No hay ninguna compañía cargada o disponible";
             } else {
-                foreach ($companiesList as $key => $value) {
+                foreach ($companiesList as $key => $company) {
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-3">
-                            <img class="" src="<?= '../' . VIEWS_PATH . 'img/' . $value->getLogo() ?>" width="183" height="180">
+                            <img class="" src="<?= '../' . VIEWS_PATH . 'img/' . $company->getLogo() ?>" width="183" height="180">
                         </div>
                         <div class="col-md-9">
                             <div class="row">
-                                <h4><?= $value->getName() ?></h4>
+                                <h4><?= $company->getName() ?></h4>
                             </div>
                             <div class="row">
-                                <p><?= $value->getDescription() ?></p>
+                                <p><?= $company->getDescription() ?></p>
                             </div>
                             <div class="row">
                                 <form action="<?= FRONT_ROOT ?>Company/ShowCompanyDetailView" method="get">
-                                    <input type="hidden" name="company-id" value="<?= $value->getCompanyId() ?>">
+                                    <input type="hidden" name="company-id" value="<?= $company->getCompanyId() ?>">
                                     <div class="d-flex align-item-center">
                                         <button type="submit" class="btn btn-primary">Ver detalle</button>
                                     </div>
@@ -93,9 +93,9 @@ else {
                             </div>
                             <?php if(isset($_SESSION["adminLogged"])) { ?>
                                 <div class="row">
-                                    <form action="<?= FRONT_ROOT ?>Company/ShowCompanyModifyView" method="">
-                                        <input type="hidden" name="company-id" value="<?= $value->getCompanyId() ?>">
-                                        <button type="submit" class="btn btn-primary mt-2">Modificar</button>
+                                    <form action="<?= FRONT_ROOT ?>Company/ShowCompanyModifyView" method="get">
+                                        <input type="hidden" name="company-id" value="<?= $company->getCompanyId() ?>">
+                                        <button type="submit" class="btn btn-danger mt-2">Modificar</button>
                                     </form>
                                 </div>
                             <?php } ?>

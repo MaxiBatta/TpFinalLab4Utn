@@ -68,31 +68,35 @@ class JobOfferController {
         }
     }
 
-    public function ModifyJobOffer($jobOfferId, $dateTime, $limitDate, $state, $companyId, $jobPositionId, $studentId) {
-        try {
+    public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
+        try
+        {
             $jobOffer = new JobOffer();
             $jobOffer->setJobOfferId($jobOfferId);
+            $jobOffer->setState($state);
 
             $foundJobOffer = $this->jobOfferDAO->GetJobOfferById($jobOfferId);
 
             $dateTime ? $jobOffer->setDateTime($dateTime) : $jobOffer->setDateTime($foundJobOffer->getDateTime());
             $limitDate ? $jobOffer->setLimitDate($limitDate) : $jobOffer->setLimitDate($foundJobOffer->getLimitDate());
-            $state ? $jobOffer->setState($state) : $jobOffer->setState($foundJobOffer->getState());
             $companyId ? $jobOffer->setCompanyId($companyId) : $jobOffer->setCompanyId($foundJobOffer->getCompanyId());
             $jobPositionId ? $jobOffer->setJobPositionId($jobPositionId) : $jobOffer->setJobPositionId($foundJobOffer->getJobPositionId());
-            $studentId ? $jobOffer->setStudentId($studentId) : $jobOffer->setStudentId($foundJobOffer->getStudentId());
+            $studentId == 0 ? $jobOffer->setStudentId(0) : $jobOffer->setStudentId($studentId);
 
             $_SESSION["activeJobOffer"] = $jobOffer;
 
             $this->jobOfferDAO->UpdateJobOffer($jobOfferId, $jobOffer);
 
             if (isset($_SESSION["adminLogged"])) {
-                require_once(VIEWS_PATH . "admin-panel.php");
+                require_once(VIEWS_PATH."admin-panel.php");
                 exit();
-            } else {
+            }
+            else {
                 $this->ShowPanelView();
             }
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             echo $e->getMessage();
         }
     }

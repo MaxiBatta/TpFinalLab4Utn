@@ -16,7 +16,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="yearFoundation">Año de fundacion</label>
-                                   <input type="date" name="yearFoundation" id = "yearFoundation" value="" class="form-control" min="1950-01-01" step="1" required>
+                                   <input type="datetime-local" name="yearFoundation" id = "yearFoundation" value="" class="form-control" min="1950-01-01" step="1" required>
                               </div>
                          </div>
                          <div class="col-lg-4">

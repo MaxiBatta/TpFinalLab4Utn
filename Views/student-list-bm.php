@@ -67,7 +67,7 @@ if (!$studentList) {
                         <div class="col-md-6 text-right">
                             <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminModifyView" method="get">
                                 <input type="hidden" name="student-id" value="<?= $student->getStudentId() ?>">
-                                <button type="submit" class="btn btn-primary">Modificar</button>
+                                <button type="submit" class="btn btn-danger">Modificar</button>
                             </form>
                         </div>
                     </div>
