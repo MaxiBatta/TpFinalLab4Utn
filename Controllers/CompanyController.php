@@ -115,11 +115,16 @@ class CompanyController {
 
                 $this->companyDAO->AddMySql($company);
             } else {
-                echo "Error de carga";
+               $_SESSION ["validateError"] = 1;
+               $this->ShowCompaniesCatalogueView();
+               exit();
             }
         } else {
-            echo "Empresa ya registrada";
+            $_SESSION ["validateError"] = 2;
+            $this->ShowCompaniesCatalogueView();
+               exit();
         }
+        $_SESSION ["validateError"] = 0;
 
         $this->ShowCompaniesCatalogueView();
     }

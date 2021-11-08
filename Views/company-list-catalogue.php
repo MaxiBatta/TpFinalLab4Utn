@@ -8,6 +8,21 @@ $companyDAO = new CompanyDAO();
 $companiesList = $companyDAO->GetAllMySql();
 $removeSearch = false;
 
+
+if (isset($_SESSION["validateError"])){
+if($_SESSION["validateError"]==0){
+    $validateError= '<h4 class="text-success">La empresa se ha agregada de forma exitosa</h4>';
+}elseif ($_SESSION["validateError"]==1){
+    $validateError= '<h4 class="text-danger">Se han ingresado valores no permitidos</h4>';
+}elseif($_SESSION["validateError"]==2){
+    $validateError= '<h4 class="text-danger">La empresa ya se encuentra registrada</h4>';
+}else {
+    /*...*/
+}
+}
+
+
+
 if (isset($_SESSION["found_companies"])) {
     $companiesList = $_SESSION["found_companies"];
     unset($_SESSION["found_companies"]);
@@ -37,7 +52,11 @@ else {
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-            
+        <div class="row">
+                <div class="col-md-12">
+                    <?= isset ($validateError) ? $validateError : ""  ?>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-10">
                     <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>
