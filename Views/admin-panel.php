@@ -113,7 +113,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Crear una Oferta Laboral </h5>
-                            <p class="card-text">Da de alta una nueva Oferta Laboral</p>
+                            <p class="card-text">Da de alta una nueva oferta laboral</p>
                             <a href="<?php echo FRONT_ROOT.'JobOffer/ShowAddJobOfferView'?>" class="btn btn-primary">Crear</a>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver Ofertas Laborales</h5>
-                            <p class="card-text">Listado de ofertas laborales</p>
+                            <p class="card-text">Ver y Modificar ofertas laborales</p>
                             <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver estudiantes</h5>
-                            <p class="card-text">Modificá y/o Eliminá un estudiante.</p>
+                            <p class="card-text">Ver y Modificar estudiantes.</p>
                             <a href="<?php echo FRONT_ROOT.'Administrator/ShowStudentListBmView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
