@@ -1,8 +1,6 @@
 <?php
 require_once('nav.php');
 
-use Controllers\Company as Company;
-
 
 if (!$actual_company) {
     echo '<h4 class="text-danger">Ha ocurrido un error, la empresa no ha podido identificarse correctamente.</h4>';

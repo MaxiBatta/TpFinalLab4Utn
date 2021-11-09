@@ -1,7 +1,7 @@
 <?php
 require_once('nav.php');
 
-use Controllers\Company as Company;
+
 
 $removeSearch = false;
 
