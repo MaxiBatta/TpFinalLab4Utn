@@ -1,10 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\CompanyDao as CompanyDAO;
-
-$companyDAO = new CompanyDAO();
-$toModifyCompany = $companyDAO->returnCompanyByIdMySql($_SESSION["toModifyCompany"]);
 
 unset($_SESSION["toModifyCompany"]);
 ?>

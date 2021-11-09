@@ -2,10 +2,7 @@
 require_once('nav.php');
 
 use Controllers\Company as Company;
-use DAO\CompanyDao as CompanyDAO;
 
-$companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAllMySql();
 $removeSearch = false;
 
 
@@ -86,10 +83,10 @@ else {
             
             <?php
             
-            if (!$companiesList) {
+            if (!$companyList) {
                 echo "No hay ninguna compañía cargada o disponible";
             } else {
-                foreach ($companiesList as $key => $company) {
+                foreach ($companyList as $key => $company) {
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-3">

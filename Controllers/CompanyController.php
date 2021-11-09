@@ -23,21 +23,24 @@ class CompanyController {
 
     public function ShowCompaniesCatalogueView($message = '') {
         Utils::CheckBothSessions();
+        $companyList = $this->companyDAO->GetAllMySql();
         require_once(VIEWS_PATH . "company-list-catalogue.php");
     }
 
     public function ShowCompanyDetailView($message = '') {
         Utils::CheckBothSessions();
+        $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["actual_company"]);
         $_SESSION["actual_company"] = $_REQUEST["company-id"];
         require_once(VIEWS_PATH . "company-detail.php");
     }
 
     public function ShowCompanyModifyView($companyId) {
         Utils::CheckAdmin();
+        $toModifyCompany = $this->companyDAO->returnCompanyByIdMySql($_SESSION["toModifyCompany"]);
         if ($_GET) {
             $_SESSION["toModifyCompany"] = $companyId;
             require_once(VIEWS_PATH . "company-modify.php");
-            exit();
+            
         }
     }
 
