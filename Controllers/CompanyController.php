@@ -17,6 +17,7 @@ class CompanyController {
 
     public function ShowListCompanyView() {
         Utils::CheckBothSessions();
+        $companyList = $this->companyDAO->GetAllMySql();
         require_once(VIEWS_PATH . "company-list.php");  //crear en views vista con listado de empresas
     }
 

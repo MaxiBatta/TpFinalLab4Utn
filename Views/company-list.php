@@ -2,14 +2,6 @@
 require_once('nav.php');
 
 
-use Controllers\Company as Company;
-use DAO\CompanyDao as CompanyDAO;
-
-
-
-
-$companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAllMySql();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
@@ -32,7 +24,7 @@ $companiesList = $companyDAO->GetAllMySql();
                         <tbody>
                             <?php
 
-                            foreach ($companiesList as $key => $value) { ?> 
+                            foreach ($companyList as $key => $value) { ?> 
                                 <tr>
                                     <td><?= $value->getCompanyId() ?></td>
                                     <td><?= $value->getName() ?></td>
