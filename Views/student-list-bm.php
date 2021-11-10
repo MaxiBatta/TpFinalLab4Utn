@@ -1,22 +1,13 @@
 <?php
 require_once('nav.php');
 
-use DAO\Student as Student;
-use DAO\StudentDAO as StudentDAO;
-
-$studentDAO = new StudentDAO();
-$studentList = $studentDAO->GetAllMySql();
-
-$studentDAO = new studentDAO();
-$studentList = $studentDAO->GetAllMySql();
-
 $removeSearch = false;
 
 if (isset($_SESSION["found_students"])) {
     $studentList = $_SESSION["found_students"];
     unset($_SESSION["found_students"]);
 
-    $removeSearch = '<a href="' . FRONT_ROOT . 'Administrator/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+    $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
 
 if (!$studentList) {
@@ -35,7 +26,7 @@ if (!$studentList) {
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <form action="<?= FRONT_ROOT ?>Student/ShowFilteredStudentListView" method="get">
+                    <form action="<?= FRONT_ROOT ?>Student/ShowFilteredstudentListView" method="get">
                         <div class="row mb-3">
                             <div class="col-md-8">
                                 <input type="text" class="flex-grow-1 form-control" name="dni" placeholder="Busca por dni...">

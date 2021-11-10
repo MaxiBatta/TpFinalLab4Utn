@@ -37,9 +37,6 @@
             }
         }
         
-        public function ShowStudentListBmView($message = '') {
-            Utils::CheckAdmin();
-            require_once(VIEWS_PATH . "student-list-bm.php");
-        }
+       
     }
 ?>

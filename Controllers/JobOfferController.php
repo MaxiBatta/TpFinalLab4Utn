@@ -118,6 +118,7 @@ class JobOfferController {
         } else {
             $_SESSION["applyState"] = 0;
         }
+        
         require_once(VIEWS_PATH . "student-panel.php");
     }
 
