@@ -149,7 +149,7 @@ else { /***/ }
                         <div class="card-body">
                             <h5 class="card-title">Ver estudiantes</h5>
                             <p class="card-text">Ver y Modificar estudiantes.</p>
-                            <a href="<?php echo FRONT_ROOT.'Administrator/ShowStudentListBmView'?>" class="btn btn-primary">Ver</a>
+                            <a href="<?php echo FRONT_ROOT.'Student/ShowStudentListBmView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>

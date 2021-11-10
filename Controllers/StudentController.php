@@ -13,6 +13,11 @@ class StudentController {
     public function __construct() {
         $this->studentDAO = new StudentDAO();
     }
+    public function ShowStudentListBmView($message = '') {
+        Utils::CheckBothSessions();
+        $studentList = $this->studentDAO->GetAllMySql();
+        require_once(VIEWS_PATH . "student-list-bm.php");
+    }
 
     public function ShowLoginView($message = '') {
         Utils::CheckSession();

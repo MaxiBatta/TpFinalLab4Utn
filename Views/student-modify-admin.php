@@ -102,7 +102,7 @@ unset($_SESSION["toModifyStudent"]);
                 </div>
                 <div class="d-flex justify-content-end mt-3">
                     <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button> 
-                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowStudentListBmView' ?>" class="btn btn-primary ml-2">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'Student/ShowStudentListBmView' ?>" class="btn btn-primary ml-2">Volver</a> 
                 </div>
             </form>
         </div>

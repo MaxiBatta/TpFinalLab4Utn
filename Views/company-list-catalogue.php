@@ -21,7 +21,7 @@ if($_SESSION["validateError"]==0){
 
 
 if (isset($_SESSION["found_companies"])) {
-    $companiesList = $_SESSION["found_companies"];
+    $companyList = $_SESSION["found_companies"];
     unset($_SESSION["found_companies"]);
     
     $removeSearch = '<a href="'. FRONT_ROOT.'Student/ShowCompaniesCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
