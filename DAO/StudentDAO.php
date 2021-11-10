@@ -374,6 +374,28 @@ public function GetJobOfferById($jobOfferId) {
         throw new PDOException($e->getMessage());
     }
 }
+public function findEmailById($studentId){
+    try {
+        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".studentId = :studentId";
+
+        $this->connection = Connection::GetInstance();
+
+        $parameters['studentId'] = $studentId;
+
+        $resultSet = $this->connection->Execute($query, $parameters);
+
+        if ($resultSet) {
+            $newResultSet = $this->mapStudentData($resultSet);
+
+            return $newResultSet[0]->getEmail();
+        }
+
+        return false;
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage());
+    }
+}
+
 public function mapJobOfferData($jobOffers) {
     $resp = array_map(function($p) {
         $jobOfferToAdd = new JobOffer();
@@ -391,6 +413,7 @@ public function mapJobOfferData($jobOffers) {
 
     return $resp;
 }
+
 }
 
 ?>

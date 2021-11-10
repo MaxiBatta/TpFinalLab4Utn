@@ -105,6 +105,11 @@ class StudentController {
             echo $e->getMessage();
         }
     }
+    public function returnEmailById($id){
+       $emailOfStudent=$this->studentDAO->findEmailById($id);
+      
+       return $emailOfStudent;
+    }
 
     public function ShowFilteredStudentListView($message = '') {
         if (!$_REQUEST["dni"]) {
