@@ -32,7 +32,7 @@ if (isset($_SESSION["found_companies"])) {
     }
 }
 
-if (!$companiesList) {
+if (!$companyList) {
     $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
 }
 
