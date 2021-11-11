@@ -5,14 +5,17 @@ namespace Controllers;
 use DAO\JobOfferDAO as JobOfferDAO;
 use Utils\Utils as Utils;
 use Controllers\AdministratorController as AdministratorController;
+use Controllers\StudentController as StudentController;
 use Models\JobOffer as JobOffer;
 
 class JobOfferController {
 
     private $jobOfferDAO;
+    private $studentController;
 
     public function __construct() {
         $this->jobOfferDAO = new JobOfferDAO();
+        $this->studentController= new StudentController();
     }
 
     public function ShowJobOffersCatalogueView($message = '') {
@@ -109,12 +112,17 @@ class JobOfferController {
 
     public function ApplyJob($studentId, $jobOfferId) {
         $_SESSION["toApply-student"] = $studentId;
-
+        $studentEmail=$this->studentController->returnEmailById($studentId);
+        echo "<script>console.log('$studentEmail')</script>";
         $jobOfferDAO = new JobOfferDAO();
         $jobOfferDAO = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, 0);
-
+        $asunto="Postulacion a una posicion de trabajo";
+        $mensaje="Felicitaciones te postulaste con exito a una posicion de trabajo";
+        $headers = 'From: Your name <jair.sergio12@gmail.com>' . "\r\n";
+        mail($studentEmail,$asunto,$mensaje,$headers);
         if ($jobOfferDAO) {
             $_SESSION["applyState"] = 1;
+            
         } else {
             $_SESSION["applyState"] = 0;
         }
