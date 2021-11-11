@@ -6,13 +6,26 @@ require_once('nav.php');
 $removeSearch = false;
 
 
+
 if (isset($_SESSION["validateError"])){
 if($_SESSION["validateError"]==0){
-    $validateError= '<h4 class="text-success">La empresa se ha agregada de forma exitosa</h4>';
+    ?>
+    <div class="text-succes">
+    <h4>La empresa se ha agregado de forma exitosa</h4>
+     </div>
+    <?php
 }elseif ($_SESSION["validateError"]==1){
-    $validateError= '<h4 class="text-danger">Se han ingresado valores no permitidos</h4>';
+    ?>
+    <div class="text-danger">
+    <h4>SE han ingresado valores no permitidos</h4>
+     </div>
+    <?php
 }elseif($_SESSION["validateError"]==2){
-    $validateError= '<h4 class="text-danger">La empresa ya se encuentra registrada</h4>';
+    ?>
+    <div class="text-danger">
+    <h4>La empresa ya se encuentra registrada</h4>
+     </div>
+    <?php
 }else {
     /*...*/
 }
