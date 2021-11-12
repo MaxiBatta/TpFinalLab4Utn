@@ -3,6 +3,11 @@
 
     use Models\Administrator as Administrator;
     use Utils\Utils as Utils;
+    use Controllers\StudentController as StudentController;
+    use Controllers\CareerController as CareerController;
+    use DAO\StudentDao as StudentDAO;
+    use DAO\CareerDao as CareerDAO;
+    
     
     class AdministratorController
     {
@@ -30,6 +35,10 @@
         
         public function ShowAdminStudentModifyView($id) {
             Utils::CheckAdmin();
+            $studentDAO = new StudentDAO();
+            $toModifyStudent = $studentDAO->GetStudentById($_SESSION["toModifyStudent"]);
+            $careerDAO = new CareerDAO();
+            $careersList = $careerDAO->GetAllMySql(); 
             if ($_GET) {
                 $_SESSION["toModifyStudent"] = $id;
                 require_once(VIEWS_PATH . "student-modify-admin.php");

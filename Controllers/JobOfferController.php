@@ -7,6 +7,10 @@ use Utils\Utils as Utils;
 use Controllers\AdministratorController as AdministratorController;
 use Controllers\StudentController as StudentController;
 use Models\JobOffer as JobOffer;
+use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\CompanyDao as CompanyDao;
+use DAO\StudentDao as StudentDao;
+
 
 class JobOfferController {
 
@@ -20,6 +24,8 @@ class JobOfferController {
 
     public function ShowJobOffersCatalogueView($message = '') {
         Utils::CheckBothSessions();
+        $jobOfferList = $this->jobOfferDAO->GetAllMySql();
+
         require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
     }
 
@@ -41,6 +47,10 @@ class JobOfferController {
 
     public function ShowAddJobOfferView($message = '') {
         Utils::CheckAdmin();
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList = $jobPositionDAO->getAll();
+        $companyDAO = new CompanyDAO();
+        $companiesList = $companyDAO->GetAllMySql();
         require_once(VIEWS_PATH . "job-offer-add.php");
     }
 
@@ -58,6 +68,16 @@ class JobOfferController {
     public function ShowJobOfferModifyView($message = '') {
         Utils::CheckAdmin();
         $_SESSION["actual_job-offer"] = $_REQUEST["job-offer-id"];
+        $jobOfferDAO = new JobOfferDAO();
+        $toModifyJobOffer = $jobOfferDAO->GetjobOfferById($_SESSION["toModifyJobOffer"]);
+        unset($_SESSION["toModifyJobOffer"]);
+        $studentDAO = new StudentDAO();
+        $studentsList = $studentDAO->GetAllMySql();
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionLists = $jobPositionDAO->GetAllMySql();
+        $companyDAO = new CompanyDAO();
+        $companiesList = $companyDAO->GetAllMySql();
+
         require_once(VIEWS_PATH . "job-offer-modify.php");
     }
 
@@ -103,6 +123,19 @@ class JobOfferController {
     public function ShowJobOfferDetailView($message = '') {
         Utils::CheckBothSessions();
         $_SESSION["actual_jobOffer"] = $_REQUEST["jobOffer-id"];
+        $jobOfferDAO = new JobOfferDAO();
+        $jobOfferList = $jobOfferDAO->GetAllMySql();
+        $actual_jobOffer = $jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
+
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList = $jobPositionDAO->GetAllMySql();
+
+        $companyDAO = new CompanyDAO();
+        $companyList = $companyDAO->GetAllMySql();
+
+        $studentDAO = new StudentDAO();
+        $studentList = $studentDAO->GetAllMySql();
+
         require_once(VIEWS_PATH . "jobOffer-detail.php");
     }
 

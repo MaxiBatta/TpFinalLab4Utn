@@ -3,11 +3,14 @@
 namespace Controllers;
 
 use DAO\StudentDAO as StudentDAO;
+use DAO\CareerDAO as CareerDAO;
 use Models\Student as Student;
 
 class RegisterController {
     
     public function ShowRegisterView($message = '') {
+        $careerDAO = new CareerDAO();
+        $careerLists = $careerDAO->getAll();
         require_once(VIEWS_PATH."student-registration.php");
     }
     

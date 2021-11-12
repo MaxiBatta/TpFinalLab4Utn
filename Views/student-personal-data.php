@@ -4,6 +4,7 @@ require_once('nav.php');
 use DAO\CareerDAO as CareerDAO;
 use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\CompanyDAO as CompanyDAO;
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">

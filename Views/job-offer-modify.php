@@ -1,22 +1,7 @@
 <?php
+
 require_once('nav.php');
 
-use DAO\CompanyDao as CompanyDAO;
-use DAO\JobPositionDao as JobPositionDAO;
-use DAO\StudentDao as StudentDAO;
-use DAO\JobOfferDao as JobOfferDAO;
-
-$jobOfferDAO = new JobOfferDAO();
-$toModifyJobOffer = $jobOfferDAO->GetjobOfferById($_SESSION["toModifyJobOffer"]);
-
-unset($_SESSION["toModifyJobOffer"]);
-
-$studentDAO = new StudentDAO();
-$studentsList = $studentDAO->GetAllMySql();
-$jobPositionDAO = new JobPositionDAO();
-$jobPositionLists = $jobPositionDAO->GetAllMySql();
-$companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAllMySql();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">

@@ -1,11 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\CareerDAO as CareerDAO;
-use DAO\StudentDAO as StudentDAO;
-
-$studentDAO = new StudentDAO();
-$toModifyStudent = $studentDAO->GetStudentById($_SESSION["toModifyStudent"]);
 
 unset($_SESSION["toModifyStudent"]);
 ?>
@@ -22,8 +17,7 @@ unset($_SESSION["toModifyStudent"]);
                             <label for="careerId">Carrera</label>
                             <select id="careerId" name="careerId" class="form-control">
                                 <?php
-                                    $careerDAO = new CareerDAO();
-                                    $careersList = $careerDAO->GetAllMySql(); 
+                                  
                                     foreach ($careersList as $key => $value) {
                                         if ($toModifyStudent->getCareerId() == $value->getCareerId()) {
                                             echo '<option value="'. $value->getCareerId() . '" selected="selected">' . $value->getDescription() . '</option>';

@@ -1,13 +1,9 @@
 <?php
 require_once('nav.php');
 
-use Controllers\JobOffer as JobOffer;
-use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDao as CompanyDao;
 
-$jobOfferDAO = new JobOfferDAO();
-$jobOfferList = $jobOfferDAO->GetAllMySql();
 $removeSearch = false;
 
 if (isset($_SESSION["found_jobOffers"])) {

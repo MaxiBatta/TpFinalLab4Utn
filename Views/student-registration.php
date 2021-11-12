@@ -1,10 +1,7 @@
 <?php
 require_once('nav.php');
 
-use DAO\CareerDAO as CareerDAO;
 
-$careerDAO = new CareerDAO();
-$careerLists = $careerDAO->getAll();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">

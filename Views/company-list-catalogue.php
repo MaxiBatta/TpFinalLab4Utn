@@ -62,11 +62,7 @@ else {
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-        <div class="row">
-                <div class="col-md-12">
-                    <?= isset ($validateError) ? $validateError : ""  ?>
-                </div>
-            </div>
+        
             <div class="row">
                 <div class="col-md-10">
                     <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>

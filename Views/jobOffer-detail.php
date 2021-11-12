@@ -1,24 +1,6 @@
 <?php
 require_once('nav.php');
 
-use Controllers\JobOffer as JobOffer;
-use DAO\JobOfferDAO as JobOfferDAO;
-use DAO\JobPositionDAO as JobPositionDAO;
-use DAO\CompanyDao as CompanyDao;
-use DAO\StudentDao as StudentDao;
-
-$jobOfferDAO = new JobOfferDAO();
-$jobOfferList = $jobOfferDAO->GetAllMySql();
-$actual_jobOffer = $jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
-
-$jobPositionDAO = new JobPositionDAO();
-$jobPositionList = $jobPositionDAO->GetAllMySql();
-
-$companyDAO = new CompanyDAO();
-$companyList = $companyDAO->GetAllMySql();
-
-$studentDAO = new StudentDAO();
-$studentList = $studentDAO->GetAllMySql();
 
 $applydJob = false;
 

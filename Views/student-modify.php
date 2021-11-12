@@ -1,7 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\CareerDAO as CareerDAO;
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -16,8 +15,7 @@ use DAO\CareerDAO as CareerDAO;
                             <label for="careerId">Carrera</label>
                             <select id="careerId" name="careerId" class="form-control" <?= !isset($_SESSION["adminLogged"]) ? "disabled='disabled'" : "" ?>>
                                 <?php
-                                    $careerDAO = new CareerDAO();
-                                    $careersList = $careerDAO->GetAllMySql(); 
+                                   
                                     foreach ($careersList as $key => $value) {
                                         if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
                                             echo '<option value="'. $value->getCareerId() . '" selected="selected">' . $value->getDescription() . '</option>';

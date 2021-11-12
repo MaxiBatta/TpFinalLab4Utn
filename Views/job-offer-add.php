@@ -1,13 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\CompanyDao as CompanyDAO;
-use DAO\JobPositionDao as JobPositionDAO;
-
-$jobPositionDAO = new JobPositionDAO();
-$jobPositionList = $jobPositionDAO->getAll();
-$companyDAO = new CompanyDAO();
-$companiesList = $companyDAO->GetAllMySql();
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
