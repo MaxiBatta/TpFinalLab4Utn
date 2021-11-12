@@ -92,7 +92,6 @@ class CompanyController {
             $this->companyDAO->UpdateCompany($companyId, $company);
 
             require_once(VIEWS_PATH . "admin-panel.php");
-            exit();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -121,12 +120,10 @@ class CompanyController {
             } else {
                $_SESSION ["validateError"] = 1;
                $this->ShowCompaniesCatalogueView();
-               exit();
             }
         } else {
             $_SESSION ["validateError"] = 2;
             $this->ShowCompaniesCatalogueView();
-               exit();
         }
         $_SESSION ["validateError"] = 0;
 

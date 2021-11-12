@@ -37,7 +37,6 @@ class JobOfferController {
         $this->jobOfferDAO->AddMySql($jobOffer);
         
         $this->ShowJobOffersCatalogueView();
-        exit();
     }
 
     public function ShowAddJobOfferView($message = '') {
@@ -67,7 +66,6 @@ class JobOfferController {
         if ($_GET) {
             $_SESSION["toModifyJobOffer"] = $jobofferid;
             require_once(VIEWS_PATH . "job-offer-modify.php");
-            exit();
         }
     }
 
@@ -92,7 +90,6 @@ class JobOfferController {
 
             if (isset($_SESSION["adminLogged"])) {
                 require_once(VIEWS_PATH."admin-panel.php");
-                exit();
             }
             else {
                 $this->ShowPanelView();

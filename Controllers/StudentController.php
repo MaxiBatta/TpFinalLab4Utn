@@ -94,7 +94,6 @@ class StudentController {
             
             if (isset($_SESSION["adminLogged"])) {
                 require_once(VIEWS_PATH."admin-panel.php");
-                exit();
             }
             else {
                 $this->ShowPanelView();

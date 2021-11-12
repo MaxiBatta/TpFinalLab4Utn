@@ -33,7 +33,6 @@
             if ($_GET) {
                 $_SESSION["toModifyStudent"] = $id;
                 require_once(VIEWS_PATH . "student-modify-admin.php");
-                exit();
             }
         }
         
