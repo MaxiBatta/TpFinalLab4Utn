@@ -31,6 +31,11 @@ else if (isset($_SESSION["registerState"]) && $_SESSION["registerState"] == 1) {
 }
 else { /***/ }
 
+if (isset($_SESSION["modifyError"])) {
+    $modifyError = '<h5 class="text-danger mt-3">Se ha producido un error al intentar modificar el registro.</h5>';
+    unset($_SESSION["modifyError"]);
+}
+
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -40,6 +45,8 @@ else { /***/ }
                     <?= isset($errorExistingMail) ? $errorExistingMail : "" ?>
                     <?= isset($registerState) ? $registerState : "" ?>
                     <?= isset($dbState) ? $dbState : "" ?>
+                    <?= isset($modifyState) ? $dbState : "" ?>
+                    <?= isset($modifyError) ? $modifyError : "" ?>
                 </div>
             </div>
             <div class="row">
@@ -58,7 +65,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Crear Empresa</h5>
-                            <p class="card-text">Genera una nueva Empresa.</p>
+                            <p class="card-text">Da de alta una nueva empresa.</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowAddCompanyView'?>" class="btn btn-primary">Crear</a>
                         </div>
                     </div>
@@ -67,7 +74,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver Empresas </h5>
-                            <p class="card-text">Ver y Modificar Empresas</p>
+                            <p class="card-text">Ver y Modificar empresas.</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
@@ -76,32 +83,12 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver Tabla Empresas </h5>
-                            <p class="card-text">Listar empresas como tabla</p>
+                            <p class="card-text">Listar empresas como tabla.</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowListCompanyView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
             </div>
-<!--            <div class="row mt-3">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Eliminar Empresas </h5>
-                            <p class="card-text">Eliminar una empresa por ID</p>
-                            <a href="<?php echo FRONT_ROOT.'Company/ShowDeleteCompanyView'?>" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Reactivar una empresa </h5>
-                            <p class="card-text">Da de alta a una empresa inactiva</p>
-                            <a href="<?php echo FRONT_ROOT.'Company/ShowActiveCompanyView'?>" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <hr>
             <div class="row mt-3">
                 <div class="col-md-12">
@@ -112,8 +99,8 @@ else { /***/ }
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Crear una Oferta Laboral </h5>
-                            <p class="card-text">Da de alta una nueva oferta laboral</p>
+                            <h5 class="card-title">Crear una Oferta Laboral.</h5>
+                            <p class="card-text">Da de alta una nueva oferta laboral.</p>
                             <a href="<?php echo FRONT_ROOT.'JobOffer/ShowAddJobOfferView'?>" class="btn btn-primary">Crear</a>
                         </div>
                     </div>
@@ -122,7 +109,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Ver Ofertas Laborales</h5>
-                            <p class="card-text">Ver y Modificar ofertas laborales</p>
+                            <p class="card-text">Ver y Modificar ofertas laborales.</p>
                             <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
@@ -139,7 +126,7 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Registrar un estudiante</h5>
-                            <p class="card-text">Da de alta un nuevo estudiante</p>
+                            <p class="card-text">Da de alta un nuevo estudiante.</p>
                             <a href="<?php echo FRONT_ROOT.'Register/ShowRegisterView'?>" class="btn btn-primary">Crear</a>
                         </div>
                     </div>

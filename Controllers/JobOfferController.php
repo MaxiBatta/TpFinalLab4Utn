@@ -67,6 +67,10 @@ class JobOfferController {
             $_SESSION["toModifyJobOffer"] = $jobofferid;
             require_once(VIEWS_PATH . "job-offer-modify.php");
         }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
+        }
     }
 
     public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
@@ -74,17 +78,12 @@ class JobOfferController {
         {
             $jobOffer = new JobOffer();
             $jobOffer->setJobOfferId($jobOfferId);
+            $jobOffer->setDateTime($dateTime);
+            $jobOffer->setLimitDate($limitDate);
+            $jobOffer->setCompanyId($companyId);
+            $jobOffer->setJobPositionId($jobPositionId);
+            $jobOffer->setStudentId($studentId);
             $jobOffer->setState($state);
-
-            $foundJobOffer = $this->jobOfferDAO->GetJobOfferById($jobOfferId);
-
-            $dateTime ? $jobOffer->setDateTime($dateTime) : $jobOffer->setDateTime($foundJobOffer->getDateTime());
-            $limitDate ? $jobOffer->setLimitDate($limitDate) : $jobOffer->setLimitDate($foundJobOffer->getLimitDate());
-            $companyId ? $jobOffer->setCompanyId($companyId) : $jobOffer->setCompanyId($foundJobOffer->getCompanyId());
-            $jobPositionId ? $jobOffer->setJobPositionId($jobPositionId) : $jobOffer->setJobPositionId($foundJobOffer->getJobPositionId());
-            $studentId == 0 ? $jobOffer->setStudentId(0) : $jobOffer->setStudentId($studentId);
-
-            $_SESSION["activeJobOffer"] = $jobOffer;
 
             $this->jobOfferDAO->UpdateJobOffer($jobOfferId, $jobOffer);
 

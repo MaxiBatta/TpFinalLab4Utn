@@ -9,6 +9,7 @@ unset($_SESSION["toModifyCompany"]);
         <div class="container">
             <h2 class="mb-4">Modificando Empresa</h2>
             <form action="<?php echo FRONT_ROOT ?>Company/ModifyCompany" method="post" class="bg-light-alpha p-5">
+                <p class="bg-dark-alpha">Si querés eliminar la empresa cambiá el estado a Inactivo o viceversa.</p>
                 <input type="hidden" name="companyId" value="<?= $toModifyCompany->getCompanyId() ?>">
                 <div class="row">
                     <div class="col-lg-4">

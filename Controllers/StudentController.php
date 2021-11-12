@@ -73,20 +73,16 @@ class StudentController {
         {
             $student = new Student();
             $student->setStudentId($studentId);
-            $student->setActive($active);
-            
-            $foundStudent = $this->studentDAO->GetStudentById($studentId);
-            
             $student->setCareerId($careerId);
-            
-            $firstName ? $student->setFirstName($firstName) : $student->setFirstName($foundStudent->getFirstName());
-            $lastName ? $student->setLastName($lastName) : $student->setLastName($foundStudent->getLastName());
-            $dni ? $student->setDni($dni) : $student->setDni($foundStudent->getDni());
-            $fileNumber ? $student->setFilenumber($fileNumber) : $student->setFilenumber($foundStudent->getFilenumber());
-            $gender ? $student->setGender($gender) : $student->setGender($foundStudent->getGender());
-            $birthDate ? $student->setBirthDate($birthDate) : $student->setBirthDate($foundStudent->getBirthDate());
-            $email ? $student->setEmail($email) : $student->setEmail($foundStudent->getEmail());
-            $phoneNumber ? $student->setPhoneNumber($phoneNumber) : $student->setPhoneNumber($foundStudent->getPhoneNumber());
+            $student->setFirstName($firstName);
+            $student->setLastName($lastName);
+            $student->setDni($dni);
+            $student->setFilenumber($fileNumber);
+            $student->setGender($gender);
+            $student->setBirthDate($birthDate);
+            $student->setEmail($email);
+            $student->setPhoneNumber($phoneNumber);
+            $student->setActive($active);
             
             $_SESSION["activeStudent"] = $student;
             

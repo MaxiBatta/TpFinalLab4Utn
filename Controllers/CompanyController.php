@@ -36,11 +36,16 @@ class CompanyController {
 
     public function ShowCompanyModifyView($companyId) {
         Utils::CheckAdmin();
-        $toModifyCompany = $this->companyDAO->returnCompanyByIdMySql($_SESSION["toModifyCompany"]);
+        $toModifyCompany = $this->companyDAO->returnCompanyByIdMySql($companyId);
+        
         if ($_GET) {
             $_SESSION["toModifyCompany"] = $companyId;
             require_once(VIEWS_PATH . "company-modify.php");
             
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
         }
     }
 
@@ -75,19 +80,14 @@ class CompanyController {
         try {
             $company = new Company();
             $company->setCompanyId($companyId);
+            $company->setName($name);
+            $company->setYearFoundation($yearFoundation);
+            $company->setCity($city);
+            $company->setDescription($description);
+            $company->setLogo($logo);
+            $company->setEmail($email);
+            $company->setPhoneNumber($phoneNumber);
             $company->setActive($active);
-
-            $foundCompany = $this->companyDAO->GetJobOfferByIdMySql($companyId);
-
-            $name ? $company->setName($name) : $company->setName($foundCompany->getName());
-            $yearFoundation ? $company->setYearFoundation($yearFoundation) : $company->setYearFoundation($foundCompany->getYearFoundation());
-            $city ? $company->setCity($city) : $company->setCity($foundCompany->getCity());
-            $description ? $company->setDescription($description) : $company->setDescription($foundCompany->getDescription());
-            $logo ? $company->setLogo($logo) : $company->setLogo($foundCompany->getLogo());
-            $email ? $company->setEmail($email) : $company->setEmail($foundCompany->getEmail());
-            $phoneNumber ? $company->setPhoneNumber($phoneNumber) : $company->setPhoneNumber($foundCompany->getPhoneNumber());
-
-            $_SESSION["activeCompany"] = $company;
 
             $this->companyDAO->UpdateCompany($companyId, $company);
 

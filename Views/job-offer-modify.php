@@ -23,6 +23,7 @@ $companiesList = $companyDAO->GetAllMySql();
         <div class="container">
             <h2 class="mb-4">Modificando Oferta laboral</h2>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/ModifyJobOffer" method="post" class="bg-light-alpha p-5">
+                <p class="bg-dark-alpha">Si querés eliminar la oferta cambiá el estado a Inactivo o viceversa.</p>
                 <div class="row">
                     <input type="hidden" name="jobOfferId" value="<?= $toModifyJobOffer->getJobOfferId() ?>">
                     <div class="col-lg-4">

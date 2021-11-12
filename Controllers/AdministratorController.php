@@ -28,11 +28,15 @@
             require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
         }
         
-        public function ShowAdminModifyView($id) {
+        public function ShowAdminStudentModifyView($id) {
             Utils::CheckAdmin();
             if ($_GET) {
                 $_SESSION["toModifyStudent"] = $id;
                 require_once(VIEWS_PATH . "student-modify-admin.php");
+            }
+            else {
+                $_SESSION["modifyError"] = 1;
+                require_once(VIEWS_PATH . "admin-panel.php");
             }
         }
         

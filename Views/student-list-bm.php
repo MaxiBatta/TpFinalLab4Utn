@@ -56,7 +56,7 @@ if (!$studentList) {
                             <h5><?= "Dni: " . $student->getDni() . " / " . $student->getFirstName() . " " . $student->getLastName() ?></h5>
                         </div>
                         <div class="col-md-6 text-right">
-                            <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminModifyView" method="get">
+                            <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminStudentModifyView" method="get">
                                 <input type="hidden" name="student-id" value="<?= $student->getStudentId() ?>">
                                 <button type="submit" class="btn btn-danger">Modificar</button>
                             </form>
