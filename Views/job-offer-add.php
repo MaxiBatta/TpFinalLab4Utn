@@ -11,13 +11,13 @@ require_once('nav.php');
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="dateTime">Fecha de comienzo</label>
-                            <input type="datetime-local" name="dateTime" id = "dateTime" value="" class="form-control" min="2021-11-05" step="1" required>
+                            <input type="date" name="dateTime" id = "dateTime" value="" class="form-control" min="<?php  echo $today;?>" step="1" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="limitDate">Fecha Limite</label>
-                            <input type="datetime-local" name="limitDate" id = "limitDate" value="" class="form-control" min="3000-01-01" step="1" required>
+                            <input type="date" name="limitDate" id = "limitDate" value="" class="form-control" min="<?php echo date("Y-m-d",strtotime($tomorrow."+ 1 days"));?>" step="1" required>
                         </div>
                     </div>
                     <div class="col-lg-4">

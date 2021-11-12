@@ -14,6 +14,10 @@ class CareerController {
     public function __construct() {
         $this->careerDAO = new CareerDAO();
     }
+    public function getAllInfo(){
+        $careerList= $this->careerDAO->getAllMySql();
+        return $careerList;
+    }
 }
 
 ?>

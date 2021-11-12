@@ -17,7 +17,10 @@
         {
             $this->jobPositionDAO = new JobPositionDAO();
         }
-
+        public function getAllInfo(){
+            $jobPositionList=$this->jobPositionDAO->getAllMySql();
+            return  $jobPositionList;
+        }
         public function ShowFilteredJobPositionListView($message = '') {
             if (!$_REQUEST["description"]) {
                 require_once(VIEWS_PATH."jobOffer-list-catalogue.php");

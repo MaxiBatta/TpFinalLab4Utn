@@ -1,9 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\JobPositionDAO as JobPositionDAO;
-use DAO\CompanyDao as CompanyDao;
-
 $removeSearch = false;
 
 if (isset($_SESSION["found_jobOffers"])) {
@@ -75,8 +72,7 @@ if (isset($_SESSION["adminLogged"])) {
                     
                     $notCurrentCareer = true;
                     
-                    $jobPositionDAO = new JobPositionDAO();
-                    $jobPositionList = $jobPositionDAO->GetAllMySql();
+                    
 
                     foreach ($jobPositionList as $key => $jobPosition) {
                         if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
@@ -94,8 +90,7 @@ if (isset($_SESSION["adminLogged"])) {
                         continue;
                     }
                     
-                    $companyDAO = new CompanyDAO();
-                    $companyList = $companyDAO->GetAllMySql();
+                   
 
                     foreach ($companyList as $key => $company) {
                         if ($company->getCompanyId() == $jobOffer->getCompanyId()) {

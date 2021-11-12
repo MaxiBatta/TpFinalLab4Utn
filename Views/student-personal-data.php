@@ -1,8 +1,7 @@
 <?php
 require_once('nav.php');
 
-use DAO\CareerDAO as CareerDAO;
-use DAO\JobOfferDAO as JobOfferDAO;
+
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDAO as CompanyDAO;
 ?>
@@ -65,9 +64,6 @@ use DAO\CompanyDAO as CompanyDAO;
                                     <h5>
                                         <?php
                                         $_SESSION["activeStudent"]->getCareerId();
-                                        $careerDAO = new CareerDAO();
-                                        $careersList = $careerDAO->GetAllMySql();
-
                                         foreach ($careersList as $key => $value) {
                                             if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
                                                 echo $value->getDescription();
@@ -90,10 +86,9 @@ use DAO\CompanyDAO as CompanyDAO;
                 </div>
             </div>
             <?php
-            $jobOfferDAO = new JobOfferDAO();
-            $jobOfferList = $jobOfferDAO->GetAllMySql();
+           
 
-            foreach ($jobOfferList as $key => $jobOffer) {
+           /* foreach ($jobOfferList as $key => $jobOffer) {
                 if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
                     $jobPositionDAO = new JobPositionDAO();
                     $jobPositionList = $jobPositionDAO->GetAllMySql();
@@ -154,7 +149,7 @@ use DAO\CompanyDAO as CompanyDAO;
                     </div>
                     <?php
                 }
-            }
+            }*/
             ?>
             <div class="row mt-3">
                 <div class="col-md-12 text-right">

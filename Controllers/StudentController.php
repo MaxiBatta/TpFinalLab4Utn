@@ -3,6 +3,9 @@
 namespace Controllers;
 
 use Controllers\CareerController as CareerController;
+use Controllers\JobOfferController as JobOfferController;
+use Controllers\JobPositionController as JobPositionController;
+use Controllers\ComapnyController as ComapnyController;
 use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
 use Models\Student as Student;
@@ -12,9 +15,13 @@ use Utils\Utils as Utils;
 class StudentController {
 
     private $studentDAO;
+    private $careerController;
+    private $jobOfferController;
 
     public function __construct() {
         $this->studentDAO = new StudentDAO();
+        $this->careerController = new CareerController();
+        ///$this->jobOfferController= new JobOfferController();
     }
     public function ShowStudentListBmView($message = '') {
         Utils::CheckBothSessions();
@@ -34,7 +41,8 @@ class StudentController {
 
     public function ShowPersonalDataView($message = '') {
         Utils::CheckSession();
-       
+        ///$jobOfferList= $this->jobOfferController->getAllInfo();
+        $careersList =  $this->careerController->getAllInfo();
         require_once(VIEWS_PATH . "student-personal-data.php");
     }
 
@@ -48,8 +56,8 @@ class StudentController {
     }
 
     public function ShowModifyView($message = '') {
-        $careerDAO = new CareerDAO();
-        $careersList = $careerDAO->GetAllMySql(); 
+        
+        $careersList =  $this->careerController->getAllInfo();
         require_once(VIEWS_PATH . "student-modify.php");
     }
 

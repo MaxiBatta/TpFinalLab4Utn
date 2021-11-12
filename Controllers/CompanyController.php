@@ -14,7 +14,10 @@ class CompanyController {
     public function __construct() {
         $this->companyDAO = new CompanyDAO();
     }
-
+    public function getAllInfo(){
+        $companiesList=$this->companyDAO->getAllMySql();
+        return $companiesList;
+    }
     public function ShowListCompanyView() {
         Utils::CheckBothSessions();
         $companyList = $this->companyDAO->GetAllMySql();

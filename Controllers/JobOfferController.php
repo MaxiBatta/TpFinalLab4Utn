@@ -6,6 +6,8 @@ use DAO\JobOfferDAO as JobOfferDAO;
 use Utils\Utils as Utils;
 use Controllers\AdministratorController as AdministratorController;
 use Controllers\StudentController as StudentController;
+use Controllers\CompanyController as ComapanyController;
+use Controllers\JobPositionController as JobPositionController;
 use Models\JobOffer as JobOffer;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDao as CompanyDao;
@@ -16,15 +18,25 @@ class JobOfferController {
 
     private $jobOfferDAO;
     private $studentController;
+    private $companyController;
+    private $jobPositionController;
 
     public function __construct() {
         $this->jobOfferDAO = new JobOfferDAO();
         $this->studentController= new StudentController();
+        $this->companyController= new CompanyController();
+        $this->jobPositionController= new JobPositionController();
+    }
+    public function getAllInfo()
+    {
+        $jobOfferList= $this->jobOfferDAO->getAllMySql();
     }
 
     public function ShowJobOffersCatalogueView($message = '') {
         Utils::CheckBothSessions();
         $jobOfferList = $this->jobOfferDAO->GetAllMySql();
+        $companyList= $this->companyController->getAllInfo();
+        $jobPositionList= $this->jobPositionController->getAllInfo();
 
         require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
     }
@@ -51,6 +63,9 @@ class JobOfferController {
         $jobPositionList = $jobPositionDAO->getAll();
         $companyDAO = new CompanyDAO();
         $companiesList = $companyDAO->GetAllMySql();
+        $today = date("Y") . '-' . date("m") . '-' . date("d");
+        $tomorrow =date("Y") . '-' . date("m") . '-' . date("d");
+        
         require_once(VIEWS_PATH . "job-offer-add.php");
     }
 
