@@ -3,7 +3,11 @@ require_once('nav.php');
 
 
 if (!$actual_company) {
-    echo '<h4 class="text-danger">Ha ocurrido un error, la empresa no ha podido identificarse correctamente.</h4>';
+    ?>
+    <div class="text-danger">
+    <h4>Ha ocurrido un error, la empresa no ha podido identificarse correctamente</h4>
+     </div>
+    <?php
 }
 
 $back = FRONT_ROOT.'Company/ShowCompaniesCatalogueView';
