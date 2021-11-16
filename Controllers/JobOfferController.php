@@ -3,40 +3,34 @@
 namespace Controllers;
 
 use DAO\JobOfferDAO as JobOfferDAO;
+use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\CompanyDAO as CompanyDAO;
+use DAO\StudentDAO as StudentDAO;
 use Utils\Utils as Utils;
 use Controllers\AdministratorController as AdministratorController;
 use Controllers\StudentController as StudentController;
 use Controllers\CompanyController as ComapanyController;
 use Controllers\JobPositionController as JobPositionController;
 use Models\JobOffer as JobOffer;
-use DAO\JobPositionDAO as JobPositionDAO;
-use DAO\CompanyDao as CompanyDao;
-use DAO\StudentDao as StudentDao;
-
 
 class JobOfferController {
 
     private $jobOfferDAO;
-    private $studentController;
-    private $companyController;
-    private $jobPositionController;
 
     public function __construct() {
         $this->jobOfferDAO = new JobOfferDAO();
-        $this->studentController= new StudentController();
-        $this->companyController= new CompanyController();
-        $this->jobPositionController= new JobPositionController();
-    }
-    public function getAllInfo()
-    {
-        $jobOfferList= $this->jobOfferDAO->getAllMySql();
     }
 
     public function ShowJobOffersCatalogueView($message = '') {
         Utils::CheckBothSessions();
+        
         $jobOfferList = $this->jobOfferDAO->GetAllMySql();
-        $companyList= $this->companyController->getAllInfo();
-        $jobPositionList= $this->jobPositionController->getAllInfo();
+        
+        $companyDAO = new CompanyDao();
+        $companyList= $companyDAO->GetAllMySql();
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
 
         require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
     }
@@ -56,13 +50,16 @@ class JobOfferController {
         
         $this->ShowJobOffersCatalogueView();
     }
-
+    
     public function ShowAddJobOfferView($message = '') {
         Utils::CheckAdmin();
+        
+        $companyDAO = new CompanyDao();
+        $companyList= $companyDAO->GetAllMySql();
+        
         $jobPositionDAO = new JobPositionDAO();
-        $jobPositionList = $jobPositionDAO->getAll();
-        $companyDAO = new CompanyDAO();
-        $companiesList = $companyDAO->GetAllMySql();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
+        
         $today = date("Y") . '-' . date("m") . '-' . date("d");
         $tomorrow =date("Y") . '-' . date("m") . '-' . date("d");
         
@@ -80,26 +77,23 @@ class JobOfferController {
         require_once(VIEWS_PATH . "job-offer-delete.php");
     }
 
-    public function ShowJobOfferModifyView($message = '') {
+    public function ShowJobOfferModifyView($jobofferid) {
         Utils::CheckAdmin();
-        $_SESSION["actual_job-offer"] = $_REQUEST["job-offer-id"];
-        $jobOfferDAO = new JobOfferDAO();
-        $toModifyJobOffer = $jobOfferDAO->GetjobOfferById($_SESSION["toModifyJobOffer"]);
-        unset($_SESSION["toModifyJobOffer"]);
-        $studentDAO = new StudentDAO();
-        $studentsList = $studentDAO->GetAllMySql();
-        $jobPositionDAO = new JobPositionDAO();
-        $jobPositionLists = $jobPositionDAO->GetAllMySql();
-        $companyDAO = new CompanyDAO();
-        $companiesList = $companyDAO->GetAllMySql();
-
-        require_once(VIEWS_PATH . "job-offer-modify.php");
-    }
-
-    public function ShowOfferModifyView($jobofferid) {
-        Utils::CheckAdmin();
+        
+        $toModifyJobOffer = $this->jobOfferDAO->returnJobOfferById($jobofferid);
+        
         if ($_GET) {
             $_SESSION["toModifyJobOffer"] = $jobofferid;
+            
+            $companyDAO = new CompanyDao();
+            $companyList= $companyDAO->GetAllMySql();
+
+            $jobPositionDAO = new JobPositionDAO();
+            $jobPositionList= $jobPositionDAO->GetAllMySql();
+
+            $studentDAO = new StudentDAO();
+            $studentList= $studentDAO->GetAllMySql();
+            
             require_once(VIEWS_PATH . "job-offer-modify.php");
         }
         else {
@@ -137,34 +131,41 @@ class JobOfferController {
 
     public function ShowJobOfferDetailView($message = '') {
         Utils::CheckBothSessions();
-        $_SESSION["actual_jobOffer"] = $_REQUEST["jobOffer-id"];
-        $jobOfferDAO = new JobOfferDAO();
-        $jobOfferList = $jobOfferDAO->GetAllMySql();
-        $actual_jobOffer = $jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
+        
+        if ($_GET) {
+            $_SESSION["actual_jobOffer"] = $_REQUEST["jobOffer-id"];
+            $actual_jobOffer = $this->jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
+            
+            $companyDAO = new CompanyDao();
+            $_SESSION["jobOffer_company"] = $companyDAO->returnCompanyByIdMySql($actual_jobOffer->getCompanyId());
+            
+            $jobPositionDAO = new JobPositionDAO();
+            $_SESSION["jobOffer_position"] = $jobPositionDAO->returnJobPositionByIdMySql($actual_jobOffer->getJobPositionId());
 
-        $jobPositionDAO = new JobPositionDAO();
-        $jobPositionList = $jobPositionDAO->GetAllMySql();
-
-        $companyDAO = new CompanyDAO();
-        $companyList = $companyDAO->GetAllMySql();
-
-        $studentDAO = new StudentDAO();
-        $studentList = $studentDAO->GetAllMySql();
-
-        require_once(VIEWS_PATH . "jobOffer-detail.php");
+            $studentDAO = new StudentDAO();
+            $_SESSION["jobOffer_applied_student"] = $studentDAO->GetStudentById($actual_jobOffer->getStudentId());
+            
+            require_once(VIEWS_PATH . "joboffer-detail.php");
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
+        }
     }
-
+    
     public function ApplyJob($studentId, $jobOfferId) {
         $_SESSION["toApply-student"] = $studentId;
         $studentEmail=$this->studentController->returnEmailById($studentId);
         echo "<script>console.log('$studentEmail')</script>";
-        $jobOfferDAO = new JobOfferDAO();
-        $jobOfferDAO = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, 0);
+        
+        $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, 0);
+        
         $asunto="Postulacion a una posicion de trabajo";
         $mensaje="Felicitaciones te postulaste con exito a una posicion de trabajo";
         $headers = 'From: Your name <jair.sergio12@gmail.com>' . "\r\n";
+        
         mail($studentEmail,$asunto,$mensaje,$headers);
-        if ($jobOfferDAO) {
+        if ($jobOfferToApply) {
             $_SESSION["applyState"] = 1;
             
         } else {

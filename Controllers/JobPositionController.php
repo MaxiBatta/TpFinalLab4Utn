@@ -3,8 +3,10 @@
 
     use DAO\JobPositionDAO as JobPositionDAO;
     use DAO\JobOfferDAO as JobOfferDAO;
+    use DAO\CompanyDAO as CompanyDAO;
     use Utils\Utils as Utils;
     use Controllers\AdministratorController as AdministratorController;
+    use Controllers\JobOfferController as JobOfferController;
     use Models\JobPosition as JobPosition;
     
     
@@ -21,26 +23,32 @@
             $jobPositionList=$this->jobPositionDAO->getAllMySql();
             return  $jobPositionList;
         }
+        
         public function ShowFilteredJobPositionListView($message = '') {
-            if (!$_REQUEST["description"]) {
-                require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
-                return;
-            }
-            else {
-                $jobOfferDAO = new JobOfferDAO();
-                $newJobOfferList = $jobOfferDAO->SearchJobPosition($_REQUEST["description"]);
+            $jobOfferDAO = new JobOfferDAO();
+            $jobOfferController = new JobOfferController();
+
+            if ($_REQUEST["description"]) {
+                $jobOfferList = $jobOfferDAO->SearchJobPosition($_REQUEST["description"]);
                 
-                if (!$newJobOfferList) {
-                    require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
-                    return;
+                if (!$jobOfferList) {
+                    $_SESSION["found_jobOffers"] = 0;
                 }
                 else {
-                    $_SESSION["found_jobOffers"] = $newJobOfferList;
-                    require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
+                    $_SESSION["found_jobOffers"] = 1;
                 }
+                
+                $companyDAO = new CompanyDao();
+                $companyList = $companyDAO->GetAllMySql();
+
+                $jobPositionDAO = new JobPositionDAO();
+                $jobPositionList = $jobPositionDAO->GetAllMySql();
+                
+                require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
+            }
+            else {
+                $jobOfferController->ShowJobOffersCatalogueView();
             }
         }
-    
-        
     }
 ?>

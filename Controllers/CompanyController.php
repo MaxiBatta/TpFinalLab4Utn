@@ -14,10 +14,6 @@ class CompanyController {
     public function __construct() {
         $this->companyDAO = new CompanyDAO();
     }
-    public function getAllInfo(){
-        $companiesList=$this->companyDAO->getAllMySql();
-        return $companiesList;
-    }
     public function ShowListCompanyView() {
         Utils::CheckBothSessions();
         $companyList = $this->companyDAO->GetAllMySql();
@@ -32,9 +28,16 @@ class CompanyController {
 
     public function ShowCompanyDetailView($message = '') {
         Utils::CheckBothSessions();
-        $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["actual_company"]);
-        $_SESSION["actual_company"] = $_REQUEST["company-id"];
-        require_once(VIEWS_PATH . "company-detail.php");
+        
+        if ($_GET) {
+            $_SESSION["actual_company"] = $_REQUEST["company-id"];
+            $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["actual_company"]);
+            require_once(VIEWS_PATH . "company-detail.php");
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
+        }
     }
 
     public function ShowCompanyModifyView($companyId) {
@@ -44,7 +47,6 @@ class CompanyController {
         if ($_GET) {
             $_SESSION["toModifyCompany"] = $companyId;
             require_once(VIEWS_PATH . "company-modify.php");
-            
         }
         else {
             $_SESSION["modifyError"] = 1;
@@ -134,21 +136,22 @@ class CompanyController {
     }
 
     public function ShowFilteredCompanyListView($message = '') {
-        if (!$_REQUEST["name"]) {
-            require_once(VIEWS_PATH . "company-list-catalogue.php");
-            return;
-        } else {
-            $newCompanyList = $this->companyDAO->SearchCompanyMySql($_REQUEST["name"]);
-            if (!$newCompanyList) {
-                require_once(VIEWS_PATH . "company-list-catalogue.php");
-                return;
-            } else {
-                $_SESSION["found_companies"] = $newCompanyList;
-                require_once(VIEWS_PATH . "company-list-catalogue.php");
+        if ($_REQUEST["name"]) {
+            $companyList = $this->companyDAO->SearchCompanyMySql($_REQUEST["name"]);
+            
+            if (!$companyList) {
+                $_SESSION["found_companies"] = 0;
             }
+            else {
+                $_SESSION["found_companies"] = 1;
+            }
+            
+            require_once(VIEWS_PATH . "company-list-catalogue.php");
+        }
+        else {
+            $this->ShowCompaniesCatalogueView();
         }
     }
-
 }
 
 ?>

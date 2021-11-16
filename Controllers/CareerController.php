@@ -9,14 +9,10 @@ use Utils\Utils as Utils;
 
 class CareerController {
 
-    private $CareerDAO;
+    private $careerDAO;
 
     public function __construct() {
         $this->careerDAO = new CareerDAO();
-    }
-    public function getAllInfo(){
-        $careerList= $this->careerDAO->getAllMySql();
-        return $careerList;
     }
 }
 

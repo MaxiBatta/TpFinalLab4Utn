@@ -69,7 +69,7 @@ unset($_SESSION["toModifyCompany"]);
                     </div> 
                 </div>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'Company/ShowCompaniesCatalogueView' ?>" class="btn btn-primary">Volver</a> 
                     <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button>
                 </div>
             </form>

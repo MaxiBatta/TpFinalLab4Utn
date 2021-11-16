@@ -122,7 +122,19 @@ class JobPositionDAO {
             throw $ex;
         }
     }
+    
+    
+    public function returnJobPositionByIdMySql($id) {
+        $jobPositionList = $this->GetAllMySql();
 
+        foreach ($jobPositionList as $jobPosition) {
+            if ($jobPosition->getJobPositionId() == $id) {
+                return $jobPosition;
+            }
+        }
+
+        return false;
+    }
     
 
 }

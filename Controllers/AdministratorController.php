@@ -21,12 +21,6 @@
             Utils::CheckAdmin();
             require_once(VIEWS_PATH."admin-panel.php");
         }
-        
-        public function ShowCompaniesCatalogueView($message = '')
-        {
-            Utils::CheckAdmin();
-            require_once(VIEWS_PATH."company-list-catalogue.php");
-        }
 
         public function ShowOffersCatalogueView($message = '')
         {
@@ -35,10 +29,13 @@
         
         public function ShowAdminStudentModifyView($id) {
             Utils::CheckAdmin();
+            
             $studentDAO = new StudentDAO();
-            $toModifyStudent = $studentDAO->GetStudentById($_SESSION["toModifyStudent"]);
+            $toModifyStudent = $studentDAO->GetStudentById($id);
+            
             $careerDAO = new CareerDAO();
             $careersList = $careerDAO->GetAllMySql(); 
+            
             if ($_GET) {
                 $_SESSION["toModifyStudent"] = $id;
                 require_once(VIEWS_PATH . "student-modify-admin.php");

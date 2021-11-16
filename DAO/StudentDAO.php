@@ -98,7 +98,6 @@ class StudentDAO implements IStudentDAO {
 
                 $this->connection = Connection::getInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
-
             }
             return 1;
         } catch (Exception $ex) {
@@ -109,12 +108,11 @@ class StudentDAO implements IStudentDAO {
     }
 
     public function UpdateStudent($studentId, Student $newStudent) {
-        try
-        {
+        try {
             $query = "UPDATE " . $this->tableName . " SET careerId = :careerId, firstName = :firstName, lastName = :lastName, dni = :dni, fileNumber = :fileNumber, gender = :gender, birthDate = :birthDate, email = :email, phoneNumber = :phoneNumber, active = :active WHERE (studentId = :studentId);";
 
             $this->connection = Connection::GetInstance();
-            
+
             $parameters["studentId"] = $studentId;
             $parameters["careerId"] = $newStudent->getCareerId();
             $parameters["firstName"] = $newStudent->getFirstName();
@@ -126,17 +124,14 @@ class StudentDAO implements IStudentDAO {
             $parameters["email"] = $newStudent->getEmail();
             $parameters["phoneNumber"] = $newStudent->getPhoneNumber();
             $parameters["active"] = $newStudent->getActive();
-            
-            $cantRows = $this->connection->ExecuteNonQuery($query,$parameters);
+
+            $cantRows = $this->connection->ExecuteNonQuery($query, $parameters);
 
             return $cantRows;
-
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             throw new PDOException($e->getMessage());
         }
-    } 
+    }
 
     /// Base de datos
 
@@ -285,16 +280,15 @@ class StudentDAO implements IStudentDAO {
     }
 
     public function SearchStudentMySql($dni) {
-        try
-        {
+        try {
             $studentList = array();
-    
-            $query = "SELECT * FROM .$this->tableName  WHERE dni LIKE '%$dni%'" ;
-    
+
+            $query = "SELECT * FROM .$this->tableName  WHERE dni LIKE '%$dni%'";
+
             $this->connection = Connection::GetInstance();
-    
+
             $resultSet = $this->connection->Execute($query);
-            
+
             foreach ($resultSet as $row) {
                 $student = new Student();
                 $student->setStudentId($row["studentid"]);
@@ -313,107 +307,103 @@ class StudentDAO implements IStudentDAO {
             }
 
             return $studentList;
-    
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             throw $ex;
         }
-}
-public function SearchJobPosition($description) {
-            
-    try
-    {
-        $jobOfferList = array();
+    }
 
-        $query = "SELECT * FROM .$this->tableName o  INNER JOIN .$this->tableName1 p  ON o.jobPositionId = p.jobPositionId WHERE description LIKE '%$description%'" ;
+    public function SearchJobOfferMySql($description) {
 
-        $this->connection = Connection::GetInstance();
+        try {
+            $jobOfferList = array();
 
-        $resultSet = $this->connection->Execute($query);
-        
-        foreach ($resultSet as $row)
-        {                
-            $jobOffer = new JobOffer();
-            $jobOffer->setJobOfferId($row["jobofferid"]);
-            $jobOffer->setDateTime($row["datetime"]);
-            $jobOffer->setLimitDate($row["limitdate"]);
-            $jobOffer->setState($row["state"]);
-            $jobOffer->setCompanyId($row["companyid"]);
-            $jobOffer->setJobPositionId($row["jobpositionid"]);
-            $jobOffer->setStudentId($row["studentid"]);
+            $query = "SELECT * FROM .$this->tableName o  INNER JOIN .$this->tableName1 p  ON o.jobPositionId = p.jobPositionId WHERE description LIKE '%$description%'";
 
-            array_push($jobOfferList, $jobOffer);
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["jobofferid"]);
+                $jobOffer->setDateTime($row["datetime"]);
+                $jobOffer->setLimitDate($row["limitdate"]);
+                $jobOffer->setState($row["state"]);
+                $jobOffer->setCompanyId($row["companyid"]);
+                $jobOffer->setJobPositionId($row["jobpositionid"]);
+                $jobOffer->setStudentId($row["studentid"]);
+
+                array_push($jobOfferList, $jobOffer);
+            }
+
+            return $jobOfferList;
+        } catch (Exception $ex) {
+            throw $ex;
         }
-
-        return $jobOfferList;
     }
-    catch(Exception $ex)
-    {
-        throw $ex;
-    }
-}
-public function GetJobOfferById($jobOfferId) {
-    try {
-        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".jobOfferId = :jobOfferId";
 
-        $this->connection = Connection::GetInstance();
+    public function GetJobOfferById($jobOfferId) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".jobOfferId = :jobOfferId";
 
-        $parameters['jobOfferId'] = $jobOfferId;
+            $this->connection = Connection::GetInstance();
 
-        $resultSet = $this->connection->Execute($query, $parameters);
+            $parameters['jobOfferId'] = $jobOfferId;
 
-        if ($resultSet) {
-            $newResultSet = $this->mapJobOfferData($resultSet);
+            $resultSet = $this->connection->Execute($query, $parameters);
 
-            return $newResultSet[0];
+            if ($resultSet) {
+                $newResultSet = $this->mapJobOfferData($resultSet);
+
+                return $newResultSet[0];
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
         }
-
-        return false;
-    } catch (PDOException $e) {
-        throw new PDOException($e->getMessage());
     }
-}
-public function findEmailById($studentId){
-    try {
-        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".studentId = :studentId";
 
-        $this->connection = Connection::GetInstance();
+    public function findEmailById($studentId) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".studentId = :studentId";
 
-        $parameters['studentId'] = $studentId;
+            $this->connection = Connection::GetInstance();
 
-        $resultSet = $this->connection->Execute($query, $parameters);
+            $parameters['studentId'] = $studentId;
 
-        if ($resultSet) {
-            $newResultSet = $this->mapStudentData($resultSet);
+            $resultSet = $this->connection->Execute($query, $parameters);
 
-            return $newResultSet[0]->getEmail();
+            if ($resultSet) {
+                $newResultSet = $this->mapStudentData($resultSet);
+
+                return $newResultSet[0]->getEmail();
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
         }
-
-        return false;
-    } catch (PDOException $e) {
-        throw new PDOException($e->getMessage());
     }
-}
 
-public function mapJobOfferData($jobOffers) {
-    $resp = array_map(function($p) {
-        $jobOfferToAdd = new JobOffer();
+    public function mapJobOfferData($jobOffers) {
+        $resp = array_map(function($p) {
+            $jobOfferToAdd = new JobOffer();
 
-        $jobOfferToAdd->setjobOfferId($p['jobofferid']);
-        $jobOfferToAdd->setDateTime($p['datetime']);
-        $jobOfferToAdd->setLimitDate($p['limitdate']);
-        $jobOfferToAdd->setState($p['state']);
-        $jobOfferToAdd->setCompanyId($p['companyid']);
-        $jobOfferToAdd->setJobPositionId($p['jobpositionid']);
-        $jobOfferToAdd->setStudentId($p['studentid']);
+            $jobOfferToAdd->setjobOfferId($p['jobofferid']);
+            $jobOfferToAdd->setDateTime($p['datetime']);
+            $jobOfferToAdd->setLimitDate($p['limitdate']);
+            $jobOfferToAdd->setState($p['state']);
+            $jobOfferToAdd->setCompanyId($p['companyid']);
+            $jobOfferToAdd->setJobPositionId($p['jobpositionid']);
+            $jobOfferToAdd->setStudentId($p['studentid']);
 
-        return $jobOfferToAdd;
-    }, $jobOffers);
+            return $jobOfferToAdd;
+        }, $jobOffers);
 
-    return $resp;
-}
-
+        return $resp;
+    }
+    
 }
 
 ?>

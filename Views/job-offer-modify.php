@@ -39,7 +39,7 @@ require_once('nav.php');
                             <label for="companyId">Empresa</label><br>
                             <select id="companyId" name="companyId" class="form-control" >
                                 <?php
-                                foreach ($companiesList as $key => $value) {
+                                foreach ($companyList as $key => $value) {
                                     if ($toModifyJobOffer->getCompanyId() == $value->getCompanyId()) {
                                         echo '<option value="' . $value->getCompanyId() . '" selected="selected">' . $value->getName() . '</option>';
                                     } else {
@@ -55,7 +55,7 @@ require_once('nav.php');
                             <label for="jobPositionId">Posicion de trabajo</label>
                             <select name="jobPositionId" id="jobPositionId" class="form-control" >
                                 <?php
-                                foreach ($jobPositionLists as $key => $value) {
+                                foreach ($jobPositionList as $key => $value) {
                                     if ($toModifyJobOffer->getJobPositionId() == $value->getJobPositionId()) {
                                         echo '<option value="' . $value->getJobPositionId() . '" selected="selected">' . $value->getDescription() . '</option>';
                                     } else {
@@ -73,7 +73,7 @@ require_once('nav.php');
                             <select id="studentId" class="form-control" name="studentId" title="pobre chabón mira que le vas a cambiar la oferta">
                                 <option value="0">Sin postulación</option>
                                 <?php
-                                foreach ($studentsList as $key => $value) {
+                                foreach ($studentList as $key => $value) {
                                     if ($toModifyJobOffer->getStudentId() == $value->getStudentId()) {
                                         echo '<option value="' . $value->getStudentId() . '" selected="selected">' . $value->getFirstName() . " " . $value->getLastName() . '</option>';
                                     } else {
@@ -86,7 +86,7 @@ require_once('nav.php');
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView' ?>" class="btn btn-primary">Volver</a> 
                     <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button> 
                 </div>
             </form>

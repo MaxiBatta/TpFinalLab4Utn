@@ -1,52 +1,34 @@
 <?php
 require_once('nav.php');
 
-
-
 $removeSearch = false;
 
-
-
-if (isset($_SESSION["validateError"])){
-if($_SESSION["validateError"]==0){
-    ?>
-    <div class="text-succes">
-    <h4>La empresa se ha agregado de forma exitosa</h4>
-     </div>
-    <?php
-}elseif ($_SESSION["validateError"]==1){
-    ?>
-    <div class="text-danger">
-    <h4>SE han ingresado valores no permitidos</h4>
-     </div>
-    <?php
-}elseif($_SESSION["validateError"]==2){
-    ?>
-    <div class="text-danger">
-    <h4>La empresa ya se encuentra registrada</h4>
-     </div>
-    <?php
-}else {
-    /*...*/
-}
-}
-
-
-
-if (isset($_SESSION["found_companies"])) {
-    $companyList = $_SESSION["found_companies"];
-    unset($_SESSION["found_companies"]);
-    
-    $removeSearch = '<a href="'. FRONT_ROOT.'Student/ShowCompaniesCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-    
-    if (isset($_SESSION["adminLogged"])) {
-        $back = FRONT_ROOT.'Administrator/ShowPanelView';
-        $removeSearch = '<a href="'. FRONT_ROOT.'Administrator/ShowCompaniesCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+if (isset($_SESSION["validateError"])) {
+    if($_SESSION["validateError"]==0){
+        $validateError = '<div class="text-succes">
+            <h4 class="text-succes">La empresa se ha agregado de forma exitosa</h4>
+        </div>';
+    } elseif ($_SESSION["validateError"]==1) { 
+        $validateError = '<div class="text-danger">
+            <h4 class="text-danger">SE han ingresado valores no permitidos</h4>
+        </div>';
+    } elseif ($_SESSION["validateError"]==2) {
+        $validateError = '<div class="text-danger">
+            <h4 class="text-danger">La empresa ya se encuentra registrada</h4>
+        </div>';
+    } else {
+        /*...*/
     }
 }
 
-if (!$companyList) {
-    $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
+if (isset($_SESSION["found_companies"])) {
+    if ($_SESSION["found_companies"] == 0) {
+        $nullCompanies = '<h4 class="text-danger">No hay empresas disponibles.</h4>';
+    }
+    
+    unset($_SESSION["found_companies"]);
+    
+    $removeSearch = '<a href="'. FRONT_ROOT.'Company/ShowCompaniesCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
 
 $back = VIEWS_PATH . "index.php";
@@ -62,7 +44,7 @@ else {
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
-        
+            <?= isset($validateError) ? $validateError : "" ?>
             <div class="row">
                 <div class="col-md-10">
                     <p class="mb-5" style="font-size: 28px;">Empresas disponibles</p>
@@ -77,7 +59,7 @@ else {
                     <form action="<?= FRONT_ROOT ?>Company/ShowFilteredCompanyListView" method="get">
                         <div class="row mb-3">
                             <div class="col-md-8">
-                                <input type="text" class="flex-grow-1 form-control" name="name" placeholder="Busca una empresa...">
+                                <input type="text" class="flex-grow-1 form-control" name="name" placeholder="Busca una empresa..." value="<?= isset($_REQUEST["name"]) ? $_REQUEST["name"] : "" ?>">
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>

@@ -4,14 +4,13 @@ require_once('nav.php');
 $removeSearch = false;
 
 if (isset($_SESSION["found_students"])) {
-    $studentList = $_SESSION["found_students"];
+    if ($_SESSION["found_students"] == 0) {
+        $nullStudents = '<h4 class="text-danger">No se han encontrado alumnos.</h4>';
+    }
+    
     unset($_SESSION["found_students"]);
-
-    $removeSearch = '<a href="' . FRONT_ROOT . 'Student/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
-}
-
-if (!$studentList) {
-    $nullStudents = '<h4 class="text-danger">No hay alumnos con ese dni.</h4>';
+    
+    $removeSearch = '<a href="'. FRONT_ROOT.'Student/ShowStudentListBmView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
 ?>
 <main class="py-5">
@@ -29,7 +28,7 @@ if (!$studentList) {
                     <form action="<?= FRONT_ROOT ?>Student/ShowFilteredstudentListView" method="get">
                         <div class="row mb-3">
                             <div class="col-md-8">
-                                <input type="text" class="flex-grow-1 form-control" name="dni" placeholder="Busca por dni...">
+                                <input type="text" class="flex-grow-1 form-control" name="dni" placeholder="Buscar por dni..." value="<?= isset($_REQUEST["dni"]) ? $_REQUEST["dni"] : "" ?>">
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>
@@ -47,7 +46,7 @@ if (!$studentList) {
 
             <?php
             if (!$studentList) {
-                echo "No hay ninguna oferta laboral disponible";
+                echo "No se han encontrado alumnos con el dni proporcionado.";
             } else {
                 foreach ($studentList as $key => $student) {
                     ?>

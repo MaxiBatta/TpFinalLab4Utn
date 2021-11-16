@@ -23,8 +23,12 @@ class StudentController {
         $this->careerController = new CareerController();
         ///$this->jobOfferController= new JobOfferController();
     }
+    public function getAllInfo()
+    {
+        $studentList= $this->studentDAO->getAllMySql();
+    }
     public function ShowStudentListBmView($message = '') {
-        Utils::CheckBothSessions();
+        Utils::CheckAdmin();
         $studentList = $this->studentDAO->GetAllMySql();
         require_once(VIEWS_PATH . "student-list-bm.php");
     }
@@ -41,14 +45,9 @@ class StudentController {
 
     public function ShowPersonalDataView($message = '') {
         Utils::CheckSession();
-        ///$jobOfferList= $this->jobOfferController->getAllInfo();
-        $careersList =  $this->careerController->getAllInfo();
+        $careerDAO = new CareerDAO();
+        $careersList =  $careerDAO->GetAllMySql();
         require_once(VIEWS_PATH . "student-personal-data.php");
-    }
-
-    public function ShowCompaniesCatalogueView($message = '') {
-        Utils::CheckSession();
-        require_once(VIEWS_PATH . "company-list-catalogue.php");
     }
 
     public function ShowOffersCatalogueView($message = '') {
@@ -56,8 +55,8 @@ class StudentController {
     }
 
     public function ShowModifyView($message = '') {
-        
-        $careersList =  $this->careerController->getAllInfo();
+        $careerDAO = new CareerDAO();
+        $careersList =  $careerDAO->GetAllMySql();
         require_once(VIEWS_PATH . "student-modify.php");
     }
 
@@ -121,20 +120,20 @@ class StudentController {
     }
 
     public function ShowFilteredStudentListView($message = '') {
-        if (!$_REQUEST["dni"]) {
-            require_once(VIEWS_PATH."student-list-bm.php");
-            return;
-        }
-        else {
-            $newStudentList = $this->studentDAO->SearchStudentMySql($_REQUEST["dni"]);
-            if (!$newStudentList) {
-                require_once(VIEWS_PATH."student-list-bm.php");
-                return;
+        if ($_REQUEST["dni"]) {
+            $studentList = $this->studentDAO->SearchStudentMySql($_REQUEST["dni"]);
+            
+            if (!$studentList) {
+                $_SESSION["found_students"] = 0;
             }
             else {
-                $_SESSION["found_students"] = $newStudentList;
-                require_once(VIEWS_PATH."student-list-bm.php");
+                $_SESSION["found_students"] = 1;
             }
+            
+            require_once(VIEWS_PATH . "student-list-bm.php");
+        }
+        else {
+            $this->ShowStudentListBmView();
         }
     }
 }

@@ -1,42 +1,26 @@
 <?php
 require_once('nav.php');
 
-
-$applydJob = false;
-
-foreach ($jobOfferList as $key => $jobOffer) {
-    if (!isset($_SESSION["adminLogged"])) {
-        if ($jobOffer->getStudentId() == $_SESSION["activeStudent"]->getStudentId()) {
-            $applydJob = true;
-        }
-    }
-}
-
-foreach ($jobPositionList as $key => $jobPosition) {
-    
-    if ($jobPosition->getJobPositionId() == $actual_jobOffer->getJobPositionId()) {
-        $jobPositionDescription = $jobPosition->getDescription();
-        break;
-    }
-}
-foreach ($companyList as $key => $company) {
-    if ($company->getCompanyId() == $actual_jobOffer->getCompanyId()) {
-        $companyName = $company->getName();
-        $companyDescription = $company->getDescription();
-        break;
-    }
-}
-foreach ($studentList as $key => $student) {
-    if ($student->getStudentId() == $actual_jobOffer->getStudentId()) {
-        $studentName = $student->getFirstName() . " " . $student->getLastName();
-        $studentDni =  $student->getDni();
-        break;
-    }
-}
-
 if (!$actual_jobOffer) {
     echo '<h4 class="text-danger">Ha ocurrido un error, la oferta no ha podido identificarse correctamente.</h4>';
 }
+
+$appliedJob = false;
+
+if (isset($_SESSION["jobOffer_applied_student"]) && $_SESSION["jobOffer_applied_student"]) {
+    $studentName = $_SESSION["jobOffer_applied_student"]->getFirstName() . " " . $_SESSION["jobOffer_applied_student"]->getLastName();
+    $studentDni = $_SESSION["jobOffer_applied_student"]->getDni();
+    $appliedJob = true;
+}
+
+$jobPositionDescription = $_SESSION["jobOffer_position"]->getDescription();
+
+$companyName = $_SESSION["jobOffer_company"]->getName();
+$companyDescription = $_SESSION["jobOffer_company"]->getDescription();
+
+unset($_SESSION["jobOffer_applied_student"]);
+unset($_SESSION["jobOffer_position"]);
+unset($_SESSION["jobOffer_company"]);
 
 $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
 ?>
@@ -103,14 +87,11 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
                                     </div>
                                 </div>
                                 <?php if(isset($studentName)) { ?>
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                <hr>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
                                             <label>Estudiante con el puesto aplicado</label>
-                                            <h5><?= $studentName ?></h5>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Dni</label>
-                                            <?= $studentDni ?>
+                                            <h5><?= $studentName . " / " . $studentDni ?></h5>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -130,7 +111,7 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
                             <input type="hidden" name="jobOfferId" value="<?= $actual_jobOffer->getJobOfferId() ?>">
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-danger" <?= $applydJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a una oferta laboral'" : "" ?>>¡Me postulo!</button>
+                                    <button type="submit" class="btn btn-danger" <?= $appliedJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a una oferta laboral'" : "" ?>>¡Me postulo!</button>
                                 </div>
                             </div>
                         </form>

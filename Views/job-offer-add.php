@@ -36,7 +36,7 @@ require_once('nav.php');
                             <label for="companyId">Empresa</label><br>
                             <select id="companyId" name="companyId" class="form-control" required>
                                 <?php
-                                foreach ($companiesList as $key => $value) {
+                                foreach ($companyList as $key => $value) {
                                     echo "<option value=" . $value->getCompanyId() . ">" . $value->getName() . "</option>";
                                 }
                                 ?>
