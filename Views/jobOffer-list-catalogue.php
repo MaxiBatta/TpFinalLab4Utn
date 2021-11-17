@@ -62,7 +62,7 @@ if (isset($_SESSION["adminLogged"])) {
                 foreach ($jobOfferList as $key => $jobOffer) {
                     
                     if (!isset($_SESSION["adminLogged"])) {
-                        if ($jobOffer->getStudentId() > 0 || !$jobOffer->getState()) {
+                        if (!$jobOffer->getState()) {
                             continue;
                         }
                     }

@@ -13,6 +13,7 @@ class JobOfferDAO {
     private $connection;
     private $tableName = "jobOffers";
     private $tableName1 = "jobPositions";
+    private $tableNameInner = "joboffer_by_student";
 
     public function __construct() {
         $this->jobOfferList = array();
@@ -171,19 +172,23 @@ class JobOfferDAO {
         }
     }
 
-    public function ApplyJobOffer($studentId, $jobOfferId, $state) {
-        $jobOfferToApply = $this->GetJobOfferById($jobOfferId);
+    
+    public function ApplyJobOffer($studentId, $jobOfferId, $postulationDate) {
+        try {
+            $query = "INSERT INTO " . $this->tableNameInner . " ( studentId, jobOfferId, postulationDate) VALUES ( :studentid, :jobofferid, :postulationdate);";
 
-        $query = "UPDATE .$this->tableName SET studentId = :studentId, state = :state WHERE jobOfferId = :jobOfferId";
+            $parameters["studentid"] = $studentId;
+            $parameters["jobofferid"] = $jobOfferId;
+            $parameters["postulationdate"] = $postulationDate;
 
-        $parameters["jobOfferId"] = $jobOfferId;
-        $parameters["studentId"] = $studentId;
-        $parameters["state"] = $state;
+            $this->connection = Connection::GetInstance();
 
-        $this->connection = Connection::GetInstance();
-        $cantRows = $this->connection->ExecuteNonQuery($query, $parameters);
-
-        return true;
+            $this->connection->ExecuteNonQuery($query, $parameters);
+            
+            return true;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 }
 ?>
