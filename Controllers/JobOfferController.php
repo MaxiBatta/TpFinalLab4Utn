@@ -199,6 +199,10 @@ class JobOfferController {
     }
     
     public function ApplyJob($studentId, $jobOfferId) {
+        /*$studentController = new StudentController();
+        $studentEmail=$studentController->returnEmailById($studentId);
+        $MailController= new MailController();
+        $MailController->SendEmail($studentEmail);*/
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
 
         $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, $currentDate);
