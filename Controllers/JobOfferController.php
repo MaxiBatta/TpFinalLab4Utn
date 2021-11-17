@@ -92,7 +92,27 @@ class JobOfferController {
         Utils::CheckAdmin();
         require_once(VIEWS_PATH . "job-offer-delete.php");
     }
-
+    
+    public function ShowJobOffersStudentRecordView($message = '') {
+        Utils::CheckSession();
+        
+        $jobOfferList = $this->jobOfferDAO->GetAllMySql();
+        
+        $companyDAO = new CompanyDao();
+        $companyList= $companyDAO->GetAllMySql();
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
+        
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllJobOffersByStudent($_SESSION["activeStudent"]->getStudentId());
+        
+        $jobOfferByStudentDAO2 = new JobOfferByStudentDAO();
+        $jobOfferByStudentPostulationDates = $jobOfferByStudentDAO2->GetJobOffersByStudentByStudent($_SESSION["activeStudent"]->getStudentId());
+        
+        require_once(VIEWS_PATH . "job-offer-student-record.php");
+    }
+    
     public function ShowJobOfferModifyView($jobofferid) {
         Utils::CheckAdmin();
         
@@ -117,7 +137,7 @@ class JobOfferController {
             require_once(VIEWS_PATH . "admin-panel.php");
         }
     }
-
+    
     public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
         try
         {

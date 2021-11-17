@@ -4,6 +4,7 @@ namespace DAO;
 
 use Models\JobOfferByStudent as JobOfferByStudent;
 use Models\Student as Student;
+use Models\JobOffer as JobOffer;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\JobOfferDAO as JobOfferDAO;
@@ -95,6 +96,61 @@ class JobOfferByStudentDAO {
             }
 
             return $studentList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetAllJobOffersByStudent($studentId) {
+
+        try {
+            $jobOffersList = array();
+
+            $query = "SELECT * FROM .$this->tableName jxs INNER JOIN .$this->tableJobOffer jo ON jxs.jobOfferId = jo.jobOfferId WHERE jxs.studentId = $studentId";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["jobofferid"]);
+                $jobOffer->setDateTime($row["datetime"]);
+                $jobOffer->setLimitDate($row["limitdate"]);
+                $jobOffer->setState($row["state"]);
+                $jobOffer->setCompanyId($row["companyid"]);
+                $jobOffer->setJobPositionId($row["jobpositionid"]);
+                $jobOffer->setStudentId($row["studentid"]);
+
+                array_push($jobOffersList, $jobOffer);
+            }
+
+            return $jobOffersList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
+    public function GetJobOffersByStudentByStudent($studentId) {
+        try {
+            $jobOfferByStudentList = array();
+
+            $query = "SELECT * FROM $this->tableName jxs WHERE jxs.studentId = $studentId";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOfferByStudent = new JobOfferByStudent();
+                $jobOfferByStudent->setStudentId($row["studentid"]);
+                $jobOfferByStudent->setJobOfferId($row["jobofferid"]);
+                $jobOfferByStudent->setPostulationDate($row["postulationdate"]);
+
+                array_push($jobOfferByStudentList, $jobOfferByStudent);
+            }
+
+            return $jobOfferByStudentList;
         } catch (Exception $ex) {
             throw $ex;
         }
