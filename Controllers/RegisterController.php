@@ -7,6 +7,7 @@ use DAO\CompanyDAO as CompanyDAO;
 use DAO\CareerDAO as CareerDAO;
 use Models\Student as Student;
 use Models\Company as Company;
+use Utils\Utils as Utils;
 
 class RegisterController {
     
@@ -50,7 +51,11 @@ class RegisterController {
         }
     }
 
-    public function RegisterCompany($companyId, $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber, $active) {
+    public function RegisterCompany( $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber, $active) {
+        $companyDAO= new CompanyDAO();
+        $validate = Utils :: validateFormCompany($name, $city, $phoneNumber);
+        $validateName = $companyDAO->ValidateCompanyNameMySql($name);
+        
         if ($_POST) {
             $companyDAO = new CompanyDAO();
             $company = $companyDAO->checkCompanyByMail($email);
@@ -60,8 +65,10 @@ class RegisterController {
                 exit;
             }
             
+        if ($validateName) {
+                if ($validate) {
             $companyToAdd = new Company();
-            $companyToAdd->setCompanyId($companyId);
+            
             $companyToAdd->setName($name);
             $companyToAdd->setYearFoundation($yearFoundation);
             $companyToAdd->setCity($city);
@@ -72,6 +79,15 @@ class RegisterController {
             $companyToAdd->setActive($active);
 
             $addedCompany = $companyDAO->AddMySql($companyToAdd);
+                                } else {
+            $_SESSION ["validateError"] = 1;
+            require_once(VIEWS_PATH . "index.php");
+                             }
+                          } else {
+            $_SESSION ["validateError"] = 2;
+            require_once(VIEWS_PATH . "index.php");
+                            }
+            $_SESSION ["validateError"] = 0;
 
             if (empty($addedCompany)) {
                 $_SESSION["registerState"] = 0; //"Ocurrió un error al registrar el usuario"
@@ -82,6 +98,10 @@ class RegisterController {
             require_once(VIEWS_PATH . "index.php");
         }
     }
+    public function ShowCompanyRegisterView($message = '')
+        {
+            require_once(VIEWS_PATH."company-registration.php");
+        }
 }
 ?>
 

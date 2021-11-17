@@ -5,23 +5,30 @@ if (isset($_SESSION["loginError"])) {
     $errorIncorrectLogin = '<h5 class="text-danger">Los datos ingresados son inválidos.</h5>';
     unset($_SESSION["loginError"]);
 }
-if (isset($_SESSION["registerState"])){
-    if($_SESSION["registerState"]==1){
-        ?>
-        <div class="text-succes">
-        <h4>La empresa se ha registrado de forma exitosa !! </h4>
-         </div>
-        <?php
-    }elseif ($_SESSION["registerState"]==0){
-        ?>
-        <div class="text-danger">
-        <h4>La empresa no se ha podido registrar</h4>
-         </div>
-        <?php
 
-    }else {
-        /*...*/
-    }}
+    if (isset($_SESSION["validateError"])){
+        if($_SESSION["validateError"]==0){
+            ?>
+            <div class="text-succes">
+            <h4>La empresa se ha registrado de forma exitosa !! Puede ingresar a través del Login </h4>
+             </div>
+            <?php
+        }elseif ($_SESSION["validateError"]==1){
+            ?>
+            <div class="text-danger">
+            <h4>Formato de datos ingresados no permitido</h4>
+             </div>
+            <?php
+        }elseif ($_SESSION["validateError"]==2){
+            ?>
+            <div class="text-danger">
+            <h4>La empresa ya se encuentra registrada</h4>
+             </div>
+            <?php
+    
+        }else {
+            /*...*/
+        }}
 
 
 ?>
@@ -44,6 +51,10 @@ if (isset($_SESSION["registerState"])){
                             </div>
                             <?= isset($errorIncorrectLogin) ? '<h5 class="mt-2">'. $errorIncorrectLogin .'</h5>' : "" ?>
                         </form>
+                        <div class="d-flex justify-content-end mt-3">
+                    <a href="<?php echo FRONT_ROOT . 'Register/ShowCompanyRegisterView' ?>" class="btn btn-primary">Registrarse como compania</a> 
+                    
+                </div>
                     </div>
                 </div>
             </div>
