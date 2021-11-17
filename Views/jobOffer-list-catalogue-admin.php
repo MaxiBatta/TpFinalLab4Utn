@@ -10,7 +10,7 @@ if (isset($_SESSION["found_jobOffers"])) {
     
     unset($_SESSION["found_jobOffers"]);
     
-    $removeSearch = '<a href="'. FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+    $removeSearch = '<a href="'. FRONT_ROOT.'JobOffer/ShowJobOffersAdminCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
 
 $back = FRONT_ROOT . 'Student/ShowPanelView';
@@ -23,7 +23,7 @@ $back = FRONT_ROOT . 'Student/ShowPanelView';
             
             <div class="row">
                 <div class="col-md-10">
-                    <p class="mb-5" style="font-size: 28px;">Ofertas de trabajo disponibles</p>
+                    <p class="mb-5" style="font-size: 28px;">Listado ofertas de trabajo</p>
                 </div>
                 <div class="col-md-2">
                     <a href="<?= $back ?>" class="btn btn-primary">Volver</a>
@@ -55,24 +55,10 @@ $back = FRONT_ROOT . 'Student/ShowPanelView';
                 $count = 0;
                 foreach ($jobOfferList as $key => $jobOffer) {
                     
-                    if (!$jobOffer->getState()) {
-                        continue;
-                    }
-                    
-                    $notCurrentCareer = true;
-
                     foreach ($jobPositionList as $key => $jobPosition) {
                         if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
-                            if ($jobPosition->getCareerId() != $_SESSION["activeStudent"]->getCareerId()) {
-                                $notCurrentCareer = false;
-                                continue;
-                            }
                             $jobPositionDescription = $jobPosition->getDescription();
                         }
-                    }
-                    
-                    if (!$notCurrentCareer) {
-                        continue;
                     }
 
                     foreach ($companyList as $key => $company) {
@@ -94,15 +80,21 @@ $back = FRONT_ROOT . 'Student/ShowPanelView';
                         </div>
                     </div>
                     <div class="row" style="margin-left: 3px;">
-                        <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferDetailView" method="get">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferAdminDetailView" method="get">
                             <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
                             <div class="d-flex align-item-center">
                                 <button type="submit" class="btn btn-primary">Ver detalle</button>
                             </div>
                         </form>
                     </div>
+                    <div class="row" style="margin-left: 3px;">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferModifyView" method="get">
+                            <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
+                            <button type="submit" class="btn btn-danger mt-2">Modificar</button>
+                        </form>
+                    </div>
                     <?php
-                }
+                    }
                 echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera.") . "</p>";
             }
             ?>

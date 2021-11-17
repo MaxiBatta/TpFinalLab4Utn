@@ -24,7 +24,7 @@
 
         public function ShowOffersCatalogueView($message = '')
         {
-            require_once(VIEWS_PATH."jobOffer-list-catalogue.php");
+            require_once(VIEWS_PATH."jobOffer-list-catalogue-admin.php");
         }
         
         public function ShowAdminStudentModifyView($id) {

@@ -108,7 +108,7 @@ if (isset($_SESSION["modifyError"])) {
                         <div class="card-body">
                             <h5 class="card-title">Ver Ofertas Laborales</h5>
                             <p class="card-text">Ver y Modificar ofertas laborales.</p>
-                            <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Ver</a>
+                            <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersAdminCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
