@@ -1,8 +1,6 @@
 <?php
 require_once('nav.php');
 
-use DAO\Connection as Connection;
-
 if (isset($_SESSION["dbState"]) && $_SESSION["dbState"] == 1) {
     $dbState = '<h5 class="text-success">La API ha sido actualizada exitosamente.</h5>';
     unset($_SESSION["dbState"]);

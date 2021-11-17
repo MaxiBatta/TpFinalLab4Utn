@@ -154,17 +154,10 @@ class JobOfferController {
     }
     
     public function ApplyJob($studentId, $jobOfferId) {
-        $_SESSION["toApply-student"] = $studentId;
-        $studentEmail=$this->studentController->returnEmailById($studentId);
-        echo "<script>console.log('$studentEmail')</script>";
+        $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+
+        $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, $currentDate);
         
-        $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, 0);
-        
-        $asunto="Postulacion a una posicion de trabajo";
-        $mensaje="Felicitaciones te postulaste con exito a una posicion de trabajo";
-        $headers = 'From: Your name <jair.sergio12@gmail.com>' . "\r\n";
-        
-        mail($studentEmail,$asunto,$mensaje,$headers);
         if ($jobOfferToApply) {
             $_SESSION["applyState"] = 1;
             
