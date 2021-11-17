@@ -6,7 +6,7 @@ require_once('nav.php');
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
-            <h2 class="mb-4">Registrándome como alumno</h2>
+            <h2 class="mb-4">Registrando a un alumno</h2>
             <form action="<?php echo FRONT_ROOT ?>Register/RegisterStudent" method="post" class="bg-light-alpha p-5">
                 <div class="row">
                     <!--<input type="number" name="studentId" id= "studentId" value="" class="form-control">-->

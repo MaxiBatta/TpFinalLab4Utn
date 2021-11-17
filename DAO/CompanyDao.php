@@ -389,6 +389,49 @@ class CompanyDao implements ICompanyDAO {
         return $resp;
     }
 
+    public function GetCompanyByMail($email) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".email = :email";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['email'] = $email;
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if ($resultSet) {
+                $newResultSet = $this->mapCompanyData($resultSet);
+
+                return $newResultSet[0];
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+
+    public function checkCompanyByMail($email) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE email = :email";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['email'] = $email;
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if ($resultSet) {
+                $_SESSION["existingMail"] = 1;
+                return false;
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+
 }
 
 ?>

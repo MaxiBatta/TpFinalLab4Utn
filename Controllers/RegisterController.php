@@ -3,8 +3,10 @@
 namespace Controllers;
 
 use DAO\StudentDAO as StudentDAO;
+use DAO\CompanyDAO as CompanyDAO;
 use DAO\CareerDAO as CareerDAO;
 use Models\Student as Student;
+use Models\Company as Company;
 
 class RegisterController {
     
@@ -45,6 +47,39 @@ class RegisterController {
             }
 
             require_once(VIEWS_PATH . "admin-panel.php");
+        }
+    }
+
+    public function RegisterCompany($companyId, $name, $yearFoundation, $city, $description, $logo, $email, $phoneNumber, $active) {
+        if ($_POST) {
+            $companyDAO = new CompanyDAO();
+            $company = $companyDAO->checkCompanyByMail($email);
+            
+            if (!$company) {
+                require_once(VIEWS_PATH . "admin-panel.php");
+                exit;
+            }
+            
+            $companyToAdd = new Company();
+            $companyToAdd->setCompanyId($companyId);
+            $companyToAdd->setName($name);
+            $companyToAdd->setYearFoundation($yearFoundation);
+            $companyToAdd->setCity($city);
+            $companyToAdd->setDescription($description);
+            $companyToAdd->setLogo($logo);
+            $companyToAdd->setEmail($email);
+            $companyToAdd->setPhoneNumber($phoneNumber);
+            $companyToAdd->setActive($active);
+
+            $addedCompany = $companyDAO->AddMySql($companyToAdd);
+
+            if (empty($addedCompany)) {
+                $_SESSION["registerState"] = 0; //"Ocurrió un error al registrar el usuario"
+            } else {
+                $_SESSION["registerState"] = 1; //"El usuario ha sido registrado exitosamente"
+            }
+
+            require_once(VIEWS_PATH . "index.php");
         }
     }
 }

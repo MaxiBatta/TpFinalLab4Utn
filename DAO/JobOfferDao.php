@@ -6,6 +6,7 @@ use Models\JobOffer as JobOffer;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 
+
 class JobOfferDAO {
 
     private $jobOfferList = array();

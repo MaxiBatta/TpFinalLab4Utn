@@ -2,10 +2,12 @@
 
 namespace Controllers;
 
-use DAO\StudentDAO as StudentDAO;
 use Models\Student as Student;
 use Models\Administrator as Administrator;
+use Models\Company as Company;
 use Utils\Utils as Utils;
+use DAO\StudentDAO as StudentDAO;
+use DAO\CompanyDAO as CompanyDAO;
 
 class LoginController {
 
@@ -35,13 +37,16 @@ class LoginController {
         
             $studentDAO = new StudentDAO();
             $student = $studentDAO->GetStudentByMail($email);
+            $companyDAO = new CompanyDAO();
+            $company = $companyDAO->GetCompanyByMail($email);
 
-            if(empty($student) || !isset($student)){
+            if(empty($student) && empty ($company)){
                 $_SESSION["loginError"] = 1;
                 require_once(VIEWS_PATH . "index.php");
                 exit;
             }
 
+            if ($student) {
             $activeStudent = new Student();
             $activeStudent->setStudentId($student->getStudentId());
             $activeStudent->setCareerId($student->getCareerId());
@@ -58,6 +63,27 @@ class LoginController {
             $_SESSION["activeStudent"] = $activeStudent;
 
             require_once(VIEWS_PATH . "student-panel.php");
+            }
+            
+            if ($company){
+            
+            $activeCompany = new Company();
+            
+            $activeCompany->setCompanyId($company->getCompanyId());
+            $activeCompany->setName($company->getName());
+            $activeCompany->setYearFoundation($company->getYearFoundation());
+            $activeCompany->setCity($company->getCity());
+            $activeCompany->setDescription($company->getDescription());
+            $activeCompany->setLogo($company->getLogo());
+            $activeCompany->setEmail($company->getEmail());
+            $activeCompany->setPhoneNumber($company->getPhoneNumber());
+            $activeCompany->setActive($company->getActive());
+            
+
+            $_SESSION["activeCompany"] = $activeCompany;
+
+            require_once(VIEWS_PATH . "company-panel.php");
+            }
         }
     }
 }
