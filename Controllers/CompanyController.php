@@ -4,6 +4,10 @@ namespace Controllers;
 
 use DAO\CompanyDAO as CompanyDAO;
 use Models\Company as Company;
+use DAO\JobOfferDAO as JobOfferDAO;
+use Models\JobOffer as JobOffer;
+use DAO\JobPositionDAO as JobPositionDAO;
+use Models\JobPosition as JobPosition;
 use Utils\Utils as Utils;
 use Controllers\AdministratorController as AdministratorController;
 
@@ -14,6 +18,11 @@ class CompanyController {
     public function __construct() {
         $this->companyDAO = new CompanyDAO();
     }
+    public function ShowPanelView($message = '')
+        {
+            Utils::CheckCompany();
+            require_once(VIEWS_PATH."company-panel.php");
+        }
     public function ShowListCompanyView() {
         Utils::CheckBothSessions();
         $companyList = $this->companyDAO->GetAllMySql();
@@ -151,6 +160,54 @@ class CompanyController {
         else {
             $this->ShowCompaniesCatalogueView();
         }
+    }
+
+    public function ShowAddJobOfferView($message = '') {
+        Utils::CheckCompany();
+        
+        $companyDAO = new CompanyDao();
+        $companyList= $companyDAO->GetAllMySql();
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
+        
+        $today = date("Y") . '-' . date("m") . '-' . date("d");
+        $tomorrow =date("Y") . '-' . date("m") . '-' . date("d");
+        
+        require_once(VIEWS_PATH . "job-offer-company-add.php");
+    }
+
+    public function AddJobOffer($dateTime, $limitDate, $state, $companyId, $jobPositionId) {
+        Utils::CheckCompany();
+
+        $jobOfferDAO = new JobOfferDAO();
+        
+        $jobOffer = new JobOffer();
+
+        $jobOffer->setDateTime($dateTime);
+        $jobOffer->setLimitDate($limitDate);
+        $jobOffer->setState($state);
+        $jobOffer->setCompanyId($companyId);
+        $jobOffer->setJobPositionId($jobPositionId);
+
+        $jobOfferDAO->AddMySql($jobOffer);
+        
+        
+        $this->ShowJobOffersCatalogueView();
+    }
+
+    public function ShowJobOffersCatalogueView($message = '') {
+        Utils::CheckCompany();
+        $jobOfferDAO = new JObOfferDAO();
+        $jobOfferList = $jobOfferDAO->GetAllMySql();
+        
+        
+        $companyList= $this->companyDAO->GetAllMySql();
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
+
+        require_once(VIEWS_PATH . "company-jobOffer-list-catalogue.php");
     }
 }
 

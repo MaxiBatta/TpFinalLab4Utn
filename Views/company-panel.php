@@ -59,7 +59,7 @@ else { /***/ }
                         <div class="card-body">
                             <h5 class="card-title">Crear una Oferta laboral</h5>
                             <p class="card-text">Da de alta una nueva oferta de trabajo.</p>
-                            <a href="<?php echo FRONT_ROOT.'Company/ShowAddCompanyView'?>" class="btn btn-primary">Crear</a>
+                            <a href="<?php echo FRONT_ROOT.'Company/ShowAddJobOfferView'?>" class="btn btn-primary">Crear</a>
                         </div>
                     </div>
                 </div>

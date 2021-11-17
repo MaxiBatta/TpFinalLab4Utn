@@ -38,6 +38,7 @@ class JobOfferController {
     public function Add($dateTime, $limitDate, $state, $companyId, $jobPositionId) {
         Utils::CheckAdmin();
         
+        
         $jobOffer = new JobOffer();
 
         $jobOffer->setDateTime($dateTime);
@@ -47,6 +48,7 @@ class JobOfferController {
         $jobOffer->setJobPositionId($jobPositionId);
 
         $this->jobOfferDAO->AddMySql($jobOffer);
+        
         
         $this->ShowJobOffersCatalogueView();
     }

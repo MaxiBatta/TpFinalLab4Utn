@@ -32,6 +32,17 @@ class Utils {
             $_SESSION["studentLogged"] = true;
         }
     }
+    public static function CheckCompany() {
+        if (!isset($_SESSION["activeCompany"])) {
+            $_SESSION["notLogged"] = true;
+            header("location:" . FRONT_ROOT . "index.php");
+
+            exit;
+        } else {
+            $_SESSION["companyLogged"] = true;
+        }
+    }
+
 
     /*
      * Checkea ambas sesiones, se utiliza con la intención de acceder a vistas compartidas en ambos usuarios.

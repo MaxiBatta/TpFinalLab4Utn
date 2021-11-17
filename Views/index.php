@@ -49,5 +49,6 @@ if (isset($_SESSION["registerState"])){
             </div>
             <hr>
         </div>
+        
     </section>
 </main>
