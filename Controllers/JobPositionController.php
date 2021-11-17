@@ -44,10 +44,20 @@
                 $jobPositionDAO = new JobPositionDAO();
                 $jobPositionList = $jobPositionDAO->GetAllMySql();
                 
-                require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
+                if (!isset($_SESSION["adminLogged"])) {
+                    require_once(VIEWS_PATH . "jobOffer-list-catalogue.php");
+                }
+                else {
+                    require_once(VIEWS_PATH . "jobOffer-list-catalogue-admin.php");
+                }
             }
             else {
-                $jobOfferController->ShowJobOffersCatalogueView();
+                if (isset($_SESSION["adminLogged"])) {
+                    $jobOfferController->ShowJobOffersAdminCatalogueView();
+                }
+                else {
+                    $jobOfferController->ShowJobOffersCatalogueView();
+                }
             }
         }
     }

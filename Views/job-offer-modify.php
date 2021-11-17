@@ -86,7 +86,7 @@ require_once('nav.php');
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?php echo FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView' ?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'JobOffer/ShowJobOffersAdminCatalogueView' ?>" class="btn btn-primary">Volver</a> 
                     <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button> 
                 </div>
             </form>
