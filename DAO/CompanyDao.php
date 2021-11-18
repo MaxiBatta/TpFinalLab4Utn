@@ -13,6 +13,7 @@ class CompanyDao implements ICompanyDAO {
     private $companyList;
     private $connection;
     private $tableName = "companies";
+    
 
     public function __construct() {
         $this->companyList = array();
@@ -431,6 +432,38 @@ class CompanyDao implements ICompanyDAO {
             throw new PDOException($e->getMessage());
         }
     }
+
+    public function SearchCompanyByIdMySql($id) {
+        try {
+            $companyList = array();
+
+            $query = "SELECT * FROM .$this->tableName  WHERE companyId = '$id'";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $company = new Company();
+                $company->setCompanyId($row["companyId"]);
+                $company->setName($row["name"]);
+                $company->setYearFoundation($row["yearFoundation"]);
+                $company->setCity($row["city"]);
+                $company->setDescription($row["description"]);
+                $company->setLogo($row["logo"]);
+                $company->setEmail($row["email"]);
+                $company->setPhoneNumber($row["phoneNumber"]);
+                $company->setActive($row["active"]);
+
+                array_push($companyList, $company);
+            }
+
+            return $companyList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
 
 }
 

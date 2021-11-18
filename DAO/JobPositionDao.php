@@ -11,6 +11,8 @@ class JobPositionDAO {
     private $jobPositionList = array();
     private $connection;
     private $tableName = "jobPositions";
+    private $tableName1 = "jobOffers";
+    private $tableName2 = "companies";
 
     public function __construct() {
         $this->jobPositionList = array();
@@ -134,6 +136,32 @@ class JobPositionDAO {
         }
 
         return false;
+    }
+
+    public function GetJobPositionByCompanyIdMySql($companyId) {
+        try {
+            $jobPositionList = array();
+            
+            $query = "SELECT * FROM .$this->tableName p INNER JOIN .$this->tableName1 j ON p.jobPositionId = j.jobPositionId INNER JOIN .$this->tableName2 c ON j.companyId = c.companyId WHERE c.companyId = '$companyId'";
+
+            $this->connection = Connection::GetInstance();
+
+            
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobPosition = new JobPosition();
+                $jobPosition->setJobPositionId($row["jobpositionid"]);
+                $jobPosition->setCareerId($row["careerid"]);
+                $jobPosition->setDescription($row["description"]);
+
+                array_push($jobPositionList, $jobPosition);
+            }
+
+            return $jobPositionList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
     
 

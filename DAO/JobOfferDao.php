@@ -13,6 +13,7 @@ class JobOfferDAO {
     private $connection;
     private $tableName = "jobOffers";
     private $tableName1 = "jobPositions";
+    private $tableName2 = "companies";
     private $tableNameInner = "joboffer_by_student";
 
     public function __construct() {
@@ -51,7 +52,7 @@ class JobOfferDAO {
 
             foreach ($resultSet as $row) {
                 $jobOffer = new JobOffer();
-                $jobOffer->setJobOfferId($row["jobofferid"]);
+                $jobOffer->setJobOfferId($row["jobOfferid"]);
                 $jobOffer->setDateTime($row["datetime"]);
                 $jobOffer->setLimitDate($row["limitdate"]);
                 $jobOffer->setState($row["state"]);
@@ -186,6 +187,37 @@ class JobOfferDAO {
             $this->connection->ExecuteNonQuery($query, $parameters);
             
             return true;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    public function GetJobOfferByCompanyIdMySql($companyId) {
+        try {
+            $jobOfferList = array();
+
+            $query = "SELECT * FROM $this->tableName WHERE companyId = '$companyId'";
+
+            $this->connection = Connection::GetInstance();
+
+            
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["jobOfferid"]);
+                $jobOffer->setDateTime($row["datetime"]);
+                $jobOffer->setLimitDate($row["limitdate"]);
+                $jobOffer->setState($row["state"]);
+                $jobOffer->setCompanyId($row["companyid"]);
+                $jobOffer->setJobPositionId($row["jobpositionid"]);
+                $jobOffer->setStudentId($row["studentid"]);
+               
+
+                array_push($jobOfferList, $jobOffer);
+            }
+
+            return $jobOfferList;
         } catch (Exception $ex) {
             throw $ex;
         }

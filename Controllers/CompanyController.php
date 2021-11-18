@@ -198,17 +198,27 @@ class CompanyController {
 
     public function ShowJobOffersCatalogueView($message = '') {
         Utils::CheckCompany();
-        $jobOfferDAO = new JObOfferDAO();
-        $jobOfferList = $jobOfferDAO->GetAllMySql();
+        if ($_POST) {
+           
+            $_SESSION["activeCompany"] = $_REQUEST["companyId"];
+           
+            $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["activeCompany"]);
+            
+        $jobOfferDAO = new JobOfferDAO();
+        $jobOfferList = $jobOfferDAO->GetJobOfferByCompanyIdMySql($_SESSION["activeCompany"]);
         
-        
-        $companyList= $this->companyDAO->GetAllMySql();
         
         $jobPositionDAO = new JobPositionDAO();
-        $jobPositionList= $jobPositionDAO->GetAllMySql();
+        $jobPositionList= $jobPositionDAO->GetJobPositionByCompanyIdMySql($_SESSION["activeCompany"]);
 
         require_once(VIEWS_PATH . "company-jobOffer-list-catalogue.php");
+        }else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "company-panel.php");
+        }
     }
+
+
 }
 
 ?>
