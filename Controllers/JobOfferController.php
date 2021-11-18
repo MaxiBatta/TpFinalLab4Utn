@@ -12,6 +12,7 @@ use Controllers\AdministratorController as AdministratorController;
 use Controllers\StudentController as StudentController;
 use Controllers\CompanyController as ComapanyController;
 use Controllers\JobPositionController as JobPositionController;
+use Controllers\MailController as MailController;
 use Models\JobOffer as JobOffer;
 
 class JobOfferController {
@@ -220,10 +221,6 @@ class JobOfferController {
     }
     
     public function ApplyJob($studentId, $jobOfferId) {
-        /*$studentController = new StudentController();
-        $studentEmail=$studentController->returnEmailById($studentId);
-        $MailController= new MailController();
-        $MailController->SendEmail($studentEmail);*/
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
 
         $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, $currentDate);
@@ -236,6 +233,32 @@ class JobOfferController {
         }
         
         require_once(VIEWS_PATH . "student-panel.php");
+    }
+    
+    public function SendMailsToStudents() {
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        $postulationList = $jobOfferByStudentDAO->GetAllMySql();
+        
+        $jobOfferDAO = new JobOfferDAO();
+        
+        $mailController = new MailController();
+        
+        $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+        $currentDateFormat = strtotime($currentDate);
+        
+        var_dump($currentDateFormat);
+        
+        foreach ($postulationList as $postulation) {
+            $jobOffer = $jobOfferDAO->returnJobOfferById($postulation->getJobOfferId());
+            
+            $jobOfferLimit = strtotime($jobOffer->getLimitDate());
+            
+            if ($jobOfferLimit < $currentDateFormat) {
+                var_dump($jobOfferLimit);
+                $mailController->SendMailEndJobOfferToStudents($jobOffer, $postulation->getStudentId());
+            }
+        }
+        $this->ShowJobOffersAdminCatalogueView();
     }
 
 }

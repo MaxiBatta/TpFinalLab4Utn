@@ -155,6 +155,16 @@ if (isset($_SESSION["modifyError"])) {
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Enviar correos</h5>
+                            <p class="card-text">Escribe los datos de la API a la DB.</p>
+                            <p class="card-text">Arrojará un error en el encabezado de la página en caso de keys duplicadas.</p>
+                            <a href="<?php echo FRONT_ROOT . 'JobOffer/SendMailsToStudents' ?>" class="btn btn-danger">Actualizar</a> 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

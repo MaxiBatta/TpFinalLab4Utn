@@ -431,7 +431,6 @@ class CompanyDao implements ICompanyDAO {
             throw new PDOException($e->getMessage());
         }
     }
-
 }
 
 ?>
