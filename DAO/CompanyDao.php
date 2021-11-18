@@ -432,6 +432,7 @@ class CompanyDao implements ICompanyDAO {
             throw new PDOException($e->getMessage());
         }
     }
+<<<<<<< HEAD
 
     public function SearchCompanyByIdMySql($id) {
         try {
@@ -465,6 +466,8 @@ class CompanyDao implements ICompanyDAO {
     }
 
 
+=======
+>>>>>>> e965d2aa19c1e2161796e846f35c92838446eabe
 }
 
 ?>

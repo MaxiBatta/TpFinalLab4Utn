@@ -12,6 +12,7 @@ use Controllers\AdministratorController as AdministratorController;
 use Controllers\StudentController as StudentController;
 use Controllers\CompanyController as ComapanyController;
 use Controllers\JobPositionController as JobPositionController;
+use Controllers\MailController as MailController;
 use Models\JobOffer as JobOffer;
 
 class JobOfferController {
@@ -92,7 +93,27 @@ class JobOfferController {
         Utils::CheckAdmin();
         require_once(VIEWS_PATH . "job-offer-delete.php");
     }
-
+    
+    public function ShowJobOffersStudentRecordView($message = '') {
+        Utils::CheckSession();
+        
+        $jobOfferList = $this->jobOfferDAO->GetAllMySql();
+        
+        $companyDAO = new CompanyDao();
+        $companyList= $companyDAO->GetAllMySql();
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetAllMySql();
+        
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllJobOffersByStudent($_SESSION["activeStudent"]->getStudentId());
+        
+        $jobOfferByStudentDAO2 = new JobOfferByStudentDAO();
+        $jobOfferByStudentPostulationDates = $jobOfferByStudentDAO2->GetJobOffersByStudentByStudent($_SESSION["activeStudent"]->getStudentId());
+        
+        require_once(VIEWS_PATH . "job-offer-student-record.php");
+    }
+    
     public function ShowJobOfferModifyView($jobofferid) {
         Utils::CheckAdmin();
         
@@ -117,7 +138,7 @@ class JobOfferController {
             require_once(VIEWS_PATH . "admin-panel.php");
         }
     }
-
+    
     public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
         try
         {
@@ -200,10 +221,6 @@ class JobOfferController {
     }
     
     public function ApplyJob($studentId, $jobOfferId) {
-        /*$studentController = new StudentController();
-        $studentEmail=$studentController->returnEmailById($studentId);
-        $MailController= new MailController();
-        $MailController->SendEmail($studentEmail);*/
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
 
         $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, $currentDate);
@@ -216,6 +233,32 @@ class JobOfferController {
         }
         
         require_once(VIEWS_PATH . "student-panel.php");
+    }
+    
+    public function SendMailsToStudents() {
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        $postulationList = $jobOfferByStudentDAO->GetAllMySql();
+        
+        $jobOfferDAO = new JobOfferDAO();
+        
+        $mailController = new MailController();
+        
+        $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+        $currentDateFormat = strtotime($currentDate);
+        
+        var_dump($currentDateFormat);
+        
+        foreach ($postulationList as $postulation) {
+            $jobOffer = $jobOfferDAO->returnJobOfferById($postulation->getJobOfferId());
+            
+            $jobOfferLimit = strtotime($jobOffer->getLimitDate());
+            
+            if ($jobOfferLimit < $currentDateFormat) {
+                var_dump($jobOfferLimit);
+                $mailController->SendMailEndJobOfferToStudents($jobOffer, $postulation->getStudentId());
+            }
+        }
+        $this->ShowJobOffersAdminCatalogueView();
     }
 
 }
