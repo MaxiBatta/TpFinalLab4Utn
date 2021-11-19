@@ -67,8 +67,8 @@ else { /***/ }
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mis oferta laborales</h5>
-                            <p class="card-text">Muestra tus ofertas laborales.</p>
-                            <a href="<?php echo FRONT_ROOT.'Company/ShowJobOffersCatalogueView'?>" class="btn btn-primary">Crear</a>
+                            <p class="card-text">Ver mis ofertas laborales y modificarlas.</p>
+                            <a href="<?php echo FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueCompanyView'?>" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>

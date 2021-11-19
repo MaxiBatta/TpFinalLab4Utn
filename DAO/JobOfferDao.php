@@ -199,8 +199,6 @@ class JobOfferDAO {
 
             $this->connection = Connection::GetInstance();
 
-            
-
             $resultSet = $this->connection->Execute($query);
 
             foreach ($resultSet as $row) {
@@ -213,7 +211,6 @@ class JobOfferDAO {
                 $jobOffer->setJobPositionId($row["jobpositionid"]);
                 $jobOffer->setStudentId($row["studentid"]);
                
-
                 array_push($jobOfferList, $jobOffer);
             }
 

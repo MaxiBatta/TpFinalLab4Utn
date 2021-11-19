@@ -150,6 +150,40 @@ class JobOfferController {
         }
     }
     
+    public function ShowJobOfferCompanyModifyView($jobofferid) {
+        Utils::CheckCompany();
+        
+        $toModifyJobOffer = $this->jobOfferDAO->returnJobOfferById($jobofferid);
+        
+        if ($_GET) {
+            $_SESSION["toModifyJobOffer"] = $jobofferid;
+            
+            $jobPositionDAO = new JobPositionDAO();
+            $jobPositionList= $jobPositionDAO->GetAllMySql();
+
+            $studentDAO = new StudentDAO();
+            $studentList= $studentDAO->GetAllMySql();
+            
+            require_once(VIEWS_PATH . "job-offer-company-modify.php");
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "company-panel.php");
+        }
+    }
+    
+    public function ShowJobOffersCatalogueCompanyView($message = '') {
+        Utils::CheckCompany();
+        
+        $jobOfferList = $this->jobOfferDAO->GetJobOfferByCompanyIdMySql($_SESSION["activeCompany"]->getCompanyId());
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPositionList= $jobPositionDAO->GetJobPositionByCompanyIdMySql($_SESSION["activeCompany"]->getCompanyId());
+
+        require_once(VIEWS_PATH . "company-joboffer-list-catalogue.php");
+    }
+
+    
     public function ModifyJobOffer($jobOfferId,$dateTime, $limitDate, $state, $companyId,$jobPositionId , $studentId) {   
         try
         {
@@ -168,7 +202,7 @@ class JobOfferController {
                 require_once(VIEWS_PATH."admin-panel.php");
             }
             else {
-                $this->ShowPanelView();
+                $this->ShowJobOffersCatalogueCompanyView();
             }
         }
         catch(Exception $e)
@@ -236,6 +270,30 @@ class JobOfferController {
             $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllStudentsByJobOffer($_SESSION["actual_jobOffer"]);
             
             require_once(VIEWS_PATH . "joboffer-detail-admin.php");
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
+        }
+    }
+
+    public function ShowJobOfferCompanyDetailView($message = '') {
+        Utils::CheckCompany();
+        
+        if ($_GET) {
+            $_SESSION["actual_jobOffer"] = $_REQUEST["jobOffer-id"];
+            $actual_jobOffer = $this->jobOfferDAO->returnJobOfferById($_SESSION["actual_jobOffer"]);
+            
+            $companyDAO = new CompanyDao();
+            $_SESSION["jobOffer_company"] = $companyDAO->returnCompanyByIdMySql($actual_jobOffer->getCompanyId());
+            
+            $jobPositionDAO = new JobPositionDAO();
+            $_SESSION["jobOffer_position"] = $jobPositionDAO->returnJobPositionByIdMySql($actual_jobOffer->getJobPositionId());
+
+            $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+            $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllStudentsByJobOffer($_SESSION["actual_jobOffer"]);
+            
+            require_once(VIEWS_PATH . "joboffer-detail-company.php");
         }
         else {
             $_SESSION["modifyError"] = 1;

@@ -10,8 +10,8 @@ class JobPositionDAO {
 
     private $jobPositionList = array();
     private $connection;
-    private $tableName = "jobPositions";
-    private $tableName1 = "jobOffers";
+    private $tableName = "jobpositions";
+    private $tableName1 = "joboffers";
     private $tableName2 = "companies";
 
     public function __construct() {
@@ -142,10 +142,9 @@ class JobPositionDAO {
         try {
             $jobPositionList = array();
             
-            $query = "SELECT * FROM .$this->tableName p INNER JOIN .$this->tableName1 j ON p.jobPositionId = j.jobPositionId INNER JOIN .$this->tableName2 c ON j.companyId = c.companyId WHERE c.companyId = '$companyId'";
+            $query = "SELECT p.jobpositionid, p.careerid, p.description FROM $this->tableName p INNER JOIN $this->tableName1 j ON p.jobPositionId = j.jobPositionId INNER JOIN $this->tableName2 c ON j.companyId = c.companyId WHERE c.companyId = $companyId";
 
             $this->connection = Connection::GetInstance();
-
             
             $resultSet = $this->connection->Execute($query);
 
@@ -163,8 +162,68 @@ class JobPositionDAO {
             throw $ex;
         }
     }
-    
+    public function GetJobPositionByCompanyIdMySql3($companyId) {
+        try {
+            $jobPositionList = array();
+            
+            $query = "SELECT * FROM $this->tableName p INNER JOIN $this->tableName1 j ON p.jobPositionId = j.jobPositionId INNER JOIN .$this->tableName2 c ON j.companyId = c.companyId WHERE c.companyId = :companyId";
 
+            $this->connection = Connection::GetInstance();
+            
+            $parameters['companyId'] = $companyId;
+            
+            $resultSet = $this->connection->Execute($query, $parameters);
+            
+            if ($resultSet) {
+                $newResultSet = $this->mapJobPositionData($resultSet);
+
+                return $newResultSet[0];
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+    
+    public function mapJobPositionData($jobPositions) {
+        $resp = array_map(function($p) {
+            $jobPositionToAdd = new JobPosition();
+
+            $jobPositionToAdd->setJobPositionId($p['jobpositionid']);
+            $jobPositionToAdd->setCareerId($p['careerid']);
+            $jobPositionToAdd->setDescription($p['description']);
+
+            return $jobPositionToAdd;
+        }, $jobPositions);
+
+        return $resp;
+    }
+    
+    public function GetJobPositionByCompanyIdMySql2($companyId) {
+        try {
+            $jobPositionList = array();
+
+            $query = "SELECT * FROM $this->tableName p INNER JOIN $this->tableName1 j ON p.jobPositionId = j.jobPositionId INNER JOIN .$this->tableName2 c ON j.companyId = c.companyId WHERE c.companyId = :companyId";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobPosition = new JobPosition();
+                $jobPosition->setJobPositionId($row["jobposition"]);
+                $jobPosition->setCareerId($row["careerid"]);
+                $jobPosition->setDescription($row["description"]);
+
+                array_push($jobPositionList, $jobPosition);
+            }
+
+            return $jobPositionList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }
 
 ?>

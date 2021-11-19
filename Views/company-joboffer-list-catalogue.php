@@ -1,66 +1,112 @@
 <?php
 require_once('nav.php');
 
+$removeSearch = false;
 
+if (isset($_SESSION["found_jobOffers"])) {
+    if ($_SESSION["found_jobOffers"] == 0) {
+        $nullJobOffers = '<h4 class="text-danger">No hay ofertas laborales disponibles.</h4>';
+    }
+    
+    unset($_SESSION["found_jobOffers"]);
+    
+    $removeSearch = '<a href="'. FRONT_ROOT.'JobOffer/ShowJobOffersCatalogueCompanyView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
+}
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
         <div class="container">
             
+            <?= isset($nullJobOffers) ? $nullJobOffers : "" ?>
+            
             <div class="row">
                 <div class="col-md-10">
-                    <p class="mb-5" style="font-size: 28px;">Ofertas de trabajo pertenecientes a la empresa</p>
+                    <p class="mb-5" style="font-size: 28px;">Mis ofertas laborales</p>
                 </div>
                 <div class="col-md-2">
-                <a href="<?php echo FRONT_ROOT . 'Company/ShowAddJobOfferView' ?>" class="btn btn-primary">Volver</a>
+                    <a href="<?php echo FRONT_ROOT . 'Company/ShowPanelView' ?>" class="btn btn-primary">Volver</a>
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <form action="<?= FRONT_ROOT ?>JobPosition/ShowFilteredJobPositionListView" method="get">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <input type="text" class="flex-grow-1 form-control" name="description" placeholder="Busca por posición de trabajo..." value="<?= isset($_REQUEST["description"]) ? $_REQUEST["description"] : "" ?>">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary" style="margin-left: 3px;">Buscar</button>
+                            </div>
+                            <div class="col-md-2">
+                                <?= $removeSearch ? $removeSearch : "" ?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <?php
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+
+            $currentDateFormat = strtotime($currentDate);
+            
             if (!$jobOfferList) {
                 echo "No hay ninguna oferta laboral disponible";
-            } 
-                    ?>
+            } else {
+                $count = 0;
+                
+                $index = 0;
+                $jobPositionDescirptions = array();
+                
+                foreach ($jobPositionList as $key => $jobPosition) {
+                    $jobPositionDescirptions[$index] = $jobPosition->getDescription();
+                    $index++;
+                }
+
+                $index = 0;
+                
+                foreach ($jobOfferList as $key => $jobOffer) {
+                    $inactive = false;
+                    $caducated = false;
                     
- <main class="py-5">
-    <section id="listado" class="mb-5">
-        <div class="container">
-            <h2 class="mb-4">Listado de Ofertas laborales</h2>
+                    if (!$jobOffer->getState()) {
+                        $inactive = true;
+                    }
+                    
+                    $jobOfferLimit = strtotime($jobOffer->getLimitDate());
 
-            <div class="row">
-                <div class="col-md-12">
-                    <h2><?= $actual_company->getName() ?></h2>
-                </div>
-            </div>
-            
-            <table class="table bg-light">
-                <thead class="bg-dark text-white">
-                
-                <th>Id Oferta Laboral</th>
-                <th>Fecha</th>
-                <th>Fecha limite</th>
-                
-                </thead>
-                <tbody>
-                  
-                       
+                    if ($jobOfferLimit < $currentDateFormat) {
+                        $caducated = true;
+                    }
+                    $count++;
+                    ?>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <h4 class="<?= $inactive || $caducated ? 'text-danger' : '' ?>"><?= $jobPositionDescirptions[$index] . ($inactive ? ' (inactiva)' : '') . ($caducated ? ' (caducada)' : '') ?></h4>
+                            <?php $index++; ?>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left: 3px;">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferCompanyDetailView" method="get">
+                            <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
+                            <div class="d-flex align-item-center">
+                                <button type="submit" class="btn btn-primary">Ver detalle</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row" style="margin-left: 3px;">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferCompanyModifyView" method="get">
+                            <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
+                            <button type="submit" class="btn btn-danger mt-2">Modificar</button>
+                        </form>
+                    </div>
                     <?php
-
-                        foreach ($jobOfferList as $jobOffer) {
-                        
-                        ?>
-                        <tr>
-                            <th><?= $jobOffer->getJobOfferId() ?></th>
-                            <th><?= $jobOffer->getDateTime() ?></th>
-                            <th><?= $jobOffer->getLimitDate() ?></th>
-                        
-                        </tr>
-                    <?php }?>
-                </tbody>
-            </table>
+                    }
+                echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera.") . "</p>";
+            }
+            ?>
         </div>
     </section>
 </main>
-
-

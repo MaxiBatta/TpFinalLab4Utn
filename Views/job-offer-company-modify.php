@@ -8,7 +8,7 @@ require_once('nav.php');
         <div class="container">
             <h2 class="mb-4">Modificando Oferta laboral</h2>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/ModifyJobOffer" method="post" class="bg-light-alpha p-5">
-                <p class="bg-dark-alpha">Si querés eliminar la oferta cambiá el estado a Inactivo o viceversa.</p>
+                <p class="bg-dark-alpha">Si querés hacer que la oferta no aparezca cambiá el estado a Inactivo o viceversa.</p>
                 <div class="row">
                     <input type="hidden" name="jobOfferId" value="<?= $toModifyJobOffer->getJobOfferId() ?>">
                     <div class="col-lg-4">
@@ -34,22 +34,7 @@ require_once('nav.php');
                     </div>                         
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 ">
-                        <div class="form-group">
-                            <label for="companyId">Empresa</label><br>
-                            <select id="companyId" name="companyId" class="form-control" >
-                                <?php
-                                foreach ($companyList as $key => $value) {
-                                    if ($toModifyJobOffer->getCompanyId() == $value->getCompanyId()) {
-                                        echo '<option value="' . $value->getCompanyId() . '" selected="selected">' . $value->getName() . '</option>';
-                                    } else {
-                                        echo '<option value="' . $value->getCompanyId() . '">' . $value->getName() . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
+                    <input type="hidden" name="companyId" value="<?= $_SESSION["activeCompany"]->getCompanyId() ?>">
                     <div class="col-lg-4 ml-10">
                         <div class="form-group">
                             <label for="jobPositionId">Posicion de trabajo</label>
@@ -66,10 +51,10 @@ require_once('nav.php');
                             </select>
                         </div>
                     </div>
-                    <input type="hidden" name="studentId" value="0">
                 </div>
+                <input type="hidden" name="studentId" value="0">
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?php echo FRONT_ROOT . 'JobOffer/ShowJobOffersAdminCatalogueView' ?>" class="btn btn-primary">Volver</a> 
+                    <a href="<?php echo FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueCompanyView' ?>" class="btn btn-primary">Volver</a> 
                     <button type="submit" class="btn btn-danger ml-auto d-block">Modificar</button> 
                 </div>
             </form>

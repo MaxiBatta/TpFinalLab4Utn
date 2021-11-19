@@ -18,11 +18,12 @@ class CompanyController {
     public function __construct() {
         $this->companyDAO = new CompanyDAO();
     }
-    public function ShowPanelView($message = '')
-        {
-            Utils::CheckCompany();
-            require_once(VIEWS_PATH."company-panel.php");
-        }
+
+    public function ShowPanelView($message = '') {
+        Utils::CheckCompany();
+        require_once(VIEWS_PATH . "company-panel.php");
+    }
+
     public function ShowListCompanyView() {
         Utils::CheckBothSessions();
         $companyList = $this->companyDAO->GetAllMySql();
@@ -37,13 +38,12 @@ class CompanyController {
 
     public function ShowCompanyDetailView($message = '') {
         Utils::CheckBothSessions();
-        
+
         if ($_GET) {
             $_SESSION["actual_company"] = $_REQUEST["company-id"];
             $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["actual_company"]);
             require_once(VIEWS_PATH . "company-detail.php");
-        }
-        else {
+        } else {
             $_SESSION["modifyError"] = 1;
             require_once(VIEWS_PATH . "admin-panel.php");
         }
@@ -52,12 +52,11 @@ class CompanyController {
     public function ShowCompanyModifyView($companyId) {
         Utils::CheckAdmin();
         $toModifyCompany = $this->companyDAO->returnCompanyByIdMySql($companyId);
-        
+
         if ($_GET) {
             $_SESSION["toModifyCompany"] = $companyId;
             require_once(VIEWS_PATH . "company-modify.php");
-        }
-        else {
+        } else {
             $_SESSION["modifyError"] = 1;
             require_once(VIEWS_PATH . "admin-panel.php");
         }
@@ -132,8 +131,8 @@ class CompanyController {
 
                 $this->companyDAO->AddMySql($company);
             } else {
-               $_SESSION ["validateError"] = 1;
-               $this->ShowCompaniesCatalogueView();
+                $_SESSION ["validateError"] = 1;
+                $this->ShowCompaniesCatalogueView();
             }
         } else {
             $_SESSION ["validateError"] = 2;
@@ -147,33 +146,31 @@ class CompanyController {
     public function ShowFilteredCompanyListView($message = '') {
         if ($_REQUEST["name"]) {
             $companyList = $this->companyDAO->SearchCompanyMySql($_REQUEST["name"]);
-            
+
             if (!$companyList) {
                 $_SESSION["found_companies"] = 0;
-            }
-            else {
+            } else {
                 $_SESSION["found_companies"] = 1;
             }
-            
+
             require_once(VIEWS_PATH . "company-list-catalogue.php");
-        }
-        else {
+        } else {
             $this->ShowCompaniesCatalogueView();
         }
     }
 
     public function ShowAddJobOfferView($message = '') {
         Utils::CheckCompany();
-        
+
         $companyDAO = new CompanyDao();
-        $companyList= $companyDAO->GetAllMySql();
-        
+        $companyList = $companyDAO->GetAllMySql();
+
         $jobPositionDAO = new JobPositionDAO();
-        $jobPositionList= $jobPositionDAO->GetAllMySql();
-        
+        $jobPositionList = $jobPositionDAO->GetAllMySql();
+
         $today = date("Y") . '-' . date("m") . '-' . date("d");
-        $tomorrow =date("Y") . '-' . date("m") . '-' . date("d");
-        
+        $tomorrow = date("Y") . '-' . date("m") . '-' . date("d");
+
         require_once(VIEWS_PATH . "job-offer-company-add.php");
     }
 
@@ -181,7 +178,7 @@ class CompanyController {
         Utils::CheckCompany();
 
         $jobOfferDAO = new JobOfferDAO();
-        
+
         $jobOffer = new JobOffer();
 
         $jobOffer->setDateTime($dateTime);
@@ -191,34 +188,10 @@ class CompanyController {
         $jobOffer->setJobPositionId($jobPositionId);
 
         $jobOfferDAO->AddMySql($jobOffer);
-        
-        
+
+
         $this->ShowJobOffersCatalogueView();
     }
-
-    public function ShowJobOffersCatalogueView($message = '') {
-        Utils::CheckCompany();
-        if ($_POST) {
-           
-            $_SESSION["activeCompany"] = $_REQUEST["companyId"];
-           
-            $actual_company = $this->companyDAO->returnCompanyByIdMySql($_SESSION["activeCompany"]);
-            
-        $jobOfferDAO = new JobOfferDAO();
-        $jobOfferList = $jobOfferDAO->GetJobOfferByCompanyIdMySql($_SESSION["activeCompany"]);
-        
-        
-        $jobPositionDAO = new JobPositionDAO();
-        $jobPositionList= $jobPositionDAO->GetJobPositionByCompanyIdMySql($_SESSION["activeCompany"]);
-
-        require_once(VIEWS_PATH . "company-jobOffer-list-catalogue.php");
-        }else {
-            $_SESSION["modifyError"] = 1;
-            require_once(VIEWS_PATH . "company-panel.php");
-        }
-    }
-
-
 }
 
 ?>
