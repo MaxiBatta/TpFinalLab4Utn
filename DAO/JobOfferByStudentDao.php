@@ -111,7 +111,7 @@ class JobOfferByStudentDAO {
         try {
             $jobOffersList = array();
 
-            $query = "SELECT * FROM .$this->tableName jxs INNER JOIN .$this->tableJobOffer jo ON jxs.jobOfferId = jo.jobOfferId WHERE jxs.studentId = $studentId";
+            $query = "SELECT * FROM .$this->tableName jxs INNER JOIN .$this->tableJobOffer jo ON jxs.jobOfferId = jo.jobOfferId WHERE jxs.studentId = $studentId AND jxs.active = 1";
 
             $this->connection = Connection::GetInstance();
 
@@ -246,6 +246,46 @@ class JobOfferByStudentDAO {
         }
 
         return false;
+    }
+    
+    public function GetJobOfferByJobOfferIdAndStudentId($jobOfferId, $studentId) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE jobofferid = :jobOfferId AND studentid = :studentId";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['jobOfferId'] = $jobOfferId;
+            $parameters['studentId'] = $studentId;
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if ($resultSet) {
+                $newResultSet = $this->mapJobOfferByStudentData($resultSet);
+
+                return $newResultSet[0];
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+    
+    public function mapJobOfferByStudentData($jobOffersByStudent) {
+        $resp = array_map(function($p) {
+            $jobOfferByStudentToAdd = new JobOfferByStudent();
+
+            $jobOfferByStudentToAdd->setJobOfferByStudentId($p['jobofferbystudentid']);
+            $jobOfferByStudentToAdd->setStudentId($p['studentid']);
+            $jobOfferByStudentToAdd->setJobOfferId($p['jobofferid']);
+            $jobOfferByStudentToAdd->setPostulationDate($p['postulationdate']);
+            $jobOfferByStudentToAdd->setMailSent($p['mailsent']);
+            $jobOfferByStudentToAdd->setActive($p['active']);
+
+            return $jobOfferByStudentToAdd;
+        }, $jobOffersByStudent);
+
+        return $resp;
     }
 }
 ?>

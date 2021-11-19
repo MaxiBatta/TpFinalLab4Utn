@@ -2,7 +2,7 @@
 require_once('nav.php');
 
 if (isset($_SESSION["loginError"])) {
-    $errorIncorrectLogin = '<h5 class="text-danger">Los datos ingresados son inválidos.</h5>';
+    $errorIncorrectLogin = '<h5 class="text-danger">Los datos ingresados son inválidos o de dio de baja tu cuenta.</h5>';
     unset($_SESSION["loginError"]);
 }
 

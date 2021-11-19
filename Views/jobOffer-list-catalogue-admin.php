@@ -47,15 +47,34 @@ if (isset($_SESSION["found_jobOffers"])) {
             </div>
 
             <?php
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+
+            $currentDateFormat = strtotime($currentDate);
+            
             if (!$jobOfferList) {
                 echo "No hay ninguna oferta laboral disponible";
             } else {
                 $count = 0;
+
                 foreach ($jobOfferList as $key => $jobOffer) {
+                    $inactive = false;
+                    $caducated = false;
+                    
+                    if (!$jobOffer->getState()) {
+                        $inactive = true;
+                    }
+                    
+                    $jobOfferLimit = strtotime($jobOffer->getLimitDate());
+
+                    if ($jobOfferLimit < $currentDateFormat) {
+                        $caducated = true;
+                    }
                     
                     foreach ($jobPositionList as $key => $jobPosition) {
                         if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
                             $jobPositionDescription = $jobPosition->getDescription();
+                            break;
                         }
                     }
 
@@ -64,12 +83,13 @@ if (isset($_SESSION["found_jobOffers"])) {
                             $companyName = $company->getName();
                             $companyDescription = $company->getDescription();
                             $count++;
+                            break;
                         }
                     }
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <h4><?= $jobPositionDescription ?></h4>
+                            <h4 class="<?= $inactive || $caducated ? 'text-danger' : '' ?>"><?= $jobPositionDescription . ($inactive ? ' (inactiva)' : '') . ($caducated ? ' (caducada)' : '') ?></h4>
                         </div>
                     </div>
                     <div class="row">

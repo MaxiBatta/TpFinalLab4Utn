@@ -60,6 +60,7 @@ require_once('nav.php');
                 <div class="row" style="margin-left: 3px;">
                     <form action="<?= FRONT_ROOT ?>JobOffer/ShowJobOfferDetailView" method="get">
                         <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
+                        <input type="hidden" name="from-record" value="1">
                         <div class="d-flex align-item-center">
                             <button type="submit" class="btn btn-primary">Ver detalle</button>
                         </div>

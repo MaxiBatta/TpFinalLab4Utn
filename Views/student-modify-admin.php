@@ -12,10 +12,11 @@ unset($_SESSION["toModifyStudent"]);
                 <p class="bg-dark-alpha">Si querés eliminar un alumno cambiá el estado a Inactivo o viceversa.</p>
                 <div class="row mt-3">
                     <input type="hidden" name="studentId" value="<?= $toModifyStudent->getStudentId() ?>">
+                    <input type="hidden" name="careerId" value="<?= $toModifyStudent->getCareerId() ?>">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
-                            <span class="form-control" title="No podés cambiarle la carrera a un estudiante."><?= $career->getDescription() ?></span>
+                            <input class="form-control" title="No podés cambiarle la carrera a un estudiante." value="<?= $career->getDescription() ?>" disabled="disabled">
                         </div>
                     </div>
                     <div class="col-lg-4">

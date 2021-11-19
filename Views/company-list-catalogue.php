@@ -6,7 +6,7 @@ $removeSearch = false;
 if (isset($_SESSION["validateError"])) {
     if($_SESSION["validateError"]==0){
         $validateError = '<div class="text-succes">
-            <h4 class="text-succes">La empresa se ha agregado de forma exitosa</h4>
+            <h4 class="text-success">La empresa se ha agregado de forma exitosa</h4>
         </div>';
     } elseif ($_SESSION["validateError"]==1) { 
         $validateError = '<div class="text-danger">
@@ -19,6 +19,7 @@ if (isset($_SESSION["validateError"])) {
     } else {
         /*...*/
     }
+    unset($_SESSION["validateError"]);
 }
 
 if (isset($_SESSION["found_companies"])) {
@@ -78,6 +79,13 @@ else {
                 echo "No hay ninguna compañía cargada o disponible";
             } else {
                 foreach ($companyList as $key => $company) {
+                    
+                    $inactive = false;
+                    
+                    if (!$company->getActive()) {
+                        $inactive = true;
+                    }
+                    
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-3">
@@ -85,7 +93,7 @@ else {
                         </div>
                         <div class="col-md-9">
                             <div class="row">
-                                <h4><?= $company->getName() ?></h4>
+                                <h4 class="<?= $inactive ? 'text-danger' : '' ?>"><?= $company->getName() . ($inactive ? ' (inactiva)' : '')?></h4>
                             </div>
                             <div class="row">
                                 <p><?= $company->getDescription() ?></p>

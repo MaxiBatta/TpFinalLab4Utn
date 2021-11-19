@@ -10,7 +10,6 @@ $jobPositionDescription = $_SESSION["jobOffer_position"]->getDescription();
 $companyName = $_SESSION["jobOffer_company"]->getName();
 $companyDescription = $_SESSION["jobOffer_company"]->getDescription();
 
-unset($_SESSION["jobOffer_applied_student"]);
 unset($_SESSION["jobOffer_position"]);
 unset($_SESSION["jobOffer_company"]);
 

@@ -6,10 +6,9 @@ if (!$actual_jobOffer) {
 }
 
 $appliedJob = false;
+$fromRecord = false;
 
-if (isset($_SESSION["jobOffer_applied_student"]) && $_SESSION["jobOffer_applied_student"]) {
-    $studentName = $_SESSION["activeStudent"]->getFirstName() . " " . $_SESSION["activeStudent"]->getLastName();
-    $studentDni = $_SESSION["activeStudent"]->getDni();
+if (isset($_SESSION["jobOffer_applied_student"]) && $_SESSION["jobOffer_applied_student"] == 1) {
     $appliedJob = true;
 }
 
@@ -22,8 +21,14 @@ unset($_SESSION["jobOffer_applied_student"]);
 unset($_SESSION["jobOffer_position"]);
 unset($_SESSION["jobOffer_company"]);
 
-$back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
-
+if (isset($_SESSION["from_record"]) && $_SESSION["from_record"] == 1) {
+    $back = FRONT_ROOT . 'JobOffer/ShowJobOffersStudentRecordView';
+    $fromRecord = true;
+    unset($_SESSION["from_record"]);
+}
+else {
+    $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
+}
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
@@ -68,17 +73,19 @@ $back = FRONT_ROOT . 'JobOffer/ShowJobOffersCatalogueView';
                 <div class="col-md-2">
                     <a href="<?= $back ?>" class="btn btn-primary">Volver</a>
                 </div>
-                <div class="col-md-10 text-right">
-                    <form action="<?= FRONT_ROOT ?>JobOffer/ApplyJob" method="get">
-                        <input type="hidden" name="studentId" value="<?= $_SESSION["activeStudent"]->getStudentId() ?>">
-                        <input type="hidden" name="jobOfferId" value="<?= $actual_jobOffer->getJobOfferId() ?>">
-                        <div class="row mb-3">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-danger" <?= $appliedJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a esta oferta laboral'" : "" ?>>¡Me postulo!</button>
+                <?php if(!$fromRecord) { ?>
+                    <div class="col-md-10 text-right">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/ApplyJob" method="get">
+                            <input type="hidden" name="studentId" value="<?= $_SESSION["activeStudent"]->getStudentId() ?>">
+                            <input type="hidden" name="jobOfferId" value="<?= $actual_jobOffer->getJobOfferId() ?>">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-danger" <?= $appliedJob ? "disabled='disabled'" . " title='Usted ya se encuentra inscripto a esta oferta laboral'" : "" ?>>¡Me postulo!</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                <?php } ?>
             </div>
         </div>
 

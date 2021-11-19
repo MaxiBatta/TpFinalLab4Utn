@@ -194,7 +194,7 @@ class StudentDAO implements IStudentDAO {
 
     public function GetStudentByMail($email) {
         try {
-            $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".email = :email";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->tableName . ".email = :email AND active = 1";
 
             $this->connection = Connection::GetInstance();
 

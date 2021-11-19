@@ -81,6 +81,7 @@ require_once('nav.php');
                 </div>
                 <div class="d-flex justify-content-end mt-3">
                     <button type="submit" class="btn btn-dark ml-auto d-block">Agregar</button> 
+                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary ml-2">Volver</a> 
                 </div>
             </form>
         </div>

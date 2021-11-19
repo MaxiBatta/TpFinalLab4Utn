@@ -47,7 +47,7 @@ class JobOfferController {
         
         $jobPositionDAO = new JobPositionDAO();
         $jobPositionList= $jobPositionDAO->GetAllMySql();
-
+        
         require_once(VIEWS_PATH . "jobOffer-list-catalogue-admin.php");
     }
 
@@ -120,8 +120,7 @@ class JobOfferController {
         $jobOfferByStudentDAO = new JobOfferByStudentDAO();
         $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllJobOffersByStudent($_SESSION["activeStudent"]->getStudentId());
         
-        $jobOfferByStudentDAO2 = new JobOfferByStudentDAO();
-        $jobOfferByStudentPostulationDates = $jobOfferByStudentDAO2->GetJobOffersByStudentByStudent($_SESSION["activeStudent"]->getStudentId());
+        $jobOfferByStudentPostulationDates = $jobOfferByStudentDAO->GetJobOffersByStudentByStudent($_SESSION["activeStudent"]->getStudentId());
         
         require_once(VIEWS_PATH . "job-offer-student-record.php");
     }
@@ -192,12 +191,24 @@ class JobOfferController {
             $_SESSION["jobOffer_position"] = $jobPositionDAO->returnJobPositionByIdMySql($actual_jobOffer->getJobPositionId());
 
             $jobOfferByStudentDAO = new JobOfferByStudentDAO();
-            
+
             if (isset($_SESSION["adminLogged"])) {
                 $jobOfferByStudentList = $jobOfferByStudentDAO->GetAllStudents();
             }
             else {
-                $_SESSION["jobOffer_applied_student"] = $jobOfferByStudentDAO->returnJobOfferByStudentByJobOfferId($_SESSION["actual_jobOffer"]);
+                if (isset($_REQUEST["from-record"])) {
+                    $_SESSION["from_record"] = 1;
+                }
+                else {
+                    $postulationExists = $jobOfferByStudentDAO->GetJobOfferByJobOfferIdAndStudentId($actual_jobOffer->getJobOfferId(),  $_SESSION["activeStudent"]->getStudentId());
+
+                    if ($postulationExists) {
+                        $_SESSION["jobOffer_applied_student"] = 1;
+                    }
+                    else {
+                        $_SESSION["jobOffer_applied_student"] = 0;
+                    }
+                }
             }
             
             require_once(VIEWS_PATH . "joboffer-detail.php");
@@ -233,6 +244,7 @@ class JobOfferController {
     }
     
     public function ApplyJob($studentId, $jobOfferId) {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
 
         $jobOfferToApply = $this->jobOfferDAO->ApplyJobOffer($studentId, $jobOfferId, $currentDate);
@@ -255,7 +267,9 @@ class JobOfferController {
         
         $mailController = new MailController();
         
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+        
         $currentDateFormat = strtotime($currentDate);
         
         foreach ($postulationList as $postulation) {

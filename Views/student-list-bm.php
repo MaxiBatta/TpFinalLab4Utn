@@ -52,10 +52,7 @@ if (isset($_SESSION["found_students"])) {
                     ?>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <h5><?= "Dni: " . $student->getDni() . " / " . $student->getFirstName() . " " . $student->getLastName()?></h5>
-                            <?php if (!$student->getActive()) {
-                                echo '<b class="text-danger">Inactivo</b>';
-                            } ?>
+                            <h5 class="<?= !$student->getActive() ? 'text-danger' : '' ?>"><?= "Dni: " . $student->getDni() . " / " . $student->getFirstName() . " " . $student->getLastName() . (!$student->getActive() ? ' (inactivo)' : '')?></h5>
                         </div>
                         <div class="col-md-6 text-right">
                             <form action="<?= FRONT_ROOT ?>Administrator/ShowAdminStudentModifyView" method="get">

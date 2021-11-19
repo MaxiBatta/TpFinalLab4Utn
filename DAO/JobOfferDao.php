@@ -176,7 +176,7 @@ class JobOfferDAO {
     
     public function ApplyJobOffer($studentId, $jobOfferId, $postulationDate) {
         try {
-            $query = "INSERT INTO " . $this->tableNameInner . " ( studentId, jobOfferId, postulationDate) VALUES ( :studentid, :jobofferid, :postulationdate);";
+            $query = "INSERT INTO " . $this->tableNameInner . " ( studentId, jobOfferId, postulationDate, active) VALUES ( :studentid, :jobofferid, :postulationdate, 1);";
 
             $parameters["studentid"] = $studentId;
             $parameters["jobofferid"] = $jobOfferId;

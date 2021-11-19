@@ -49,13 +49,24 @@ $back = FRONT_ROOT . 'Student/ShowPanelView';
             </div>
 
             <?php
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
+
+            $currentDateFormat = strtotime($currentDate);
+            
             if (!$jobOfferList) {
                 echo "No hay ninguna oferta laboral disponible";
             } else {
                 $count = 0;
                 foreach ($jobOfferList as $key => $jobOffer) {
-                    
+
                     if (!$jobOffer->getState()) {
+                        continue;
+                    }
+                    
+                    $jobOfferLimit = strtotime($jobOffer->getLimitDate());
+                    
+                    if ($jobOfferLimit < $currentDateFormat) {
                         continue;
                     }
                     
