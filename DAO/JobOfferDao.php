@@ -52,7 +52,7 @@ class JobOfferDAO {
 
             foreach ($resultSet as $row) {
                 $jobOffer = new JobOffer();
-                $jobOffer->setJobOfferId($row["jobOfferid"]);
+                $jobOffer->setJobOfferId($row["jobofferid"]);
                 $jobOffer->setDateTime($row["datetime"]);
                 $jobOffer->setLimitDate($row["limitdate"]);
                 $jobOffer->setState($row["state"]);
@@ -205,7 +205,7 @@ class JobOfferDAO {
 
             foreach ($resultSet as $row) {
                 $jobOffer = new JobOffer();
-                $jobOffer->setJobOfferId($row["jobOfferid"]);
+                $jobOffer->setJobOfferId($row["jobofferid"]);
                 $jobOffer->setDateTime($row["datetime"]);
                 $jobOffer->setLimitDate($row["limitdate"]);
                 $jobOffer->setState($row["state"]);

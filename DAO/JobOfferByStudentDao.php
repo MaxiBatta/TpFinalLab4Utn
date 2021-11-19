@@ -29,11 +29,13 @@ class JobOfferByStudentDAO {
 
     public function AddMySql(JobOfferByStudent $jobOfferByStudent) {
         try {
-            $query = "INSERT INTO " . $this->tableName . " ( studentId, jobOfferId, postulationDate) VALUES ( :studentId, :jobOfferId, :postulationDate);";
+            $query = "INSERT INTO " . $this->tableName . " ( studentId, jobOfferId, postulationDate, mailSent, active) VALUES ( :studentId, :jobOfferId, :postulationDate, :mailSent, :active);";
 
             $parameters["studentId"] = $jobOfferByStudent->getStudentId();
             $parameters["jobOfferId"] = $jobOfferByStudent->getJobOfferId();
             $parameters["postulationDate"] = $jobOfferByStudent->getPostulationDate();
+            $parameters["mailSent"] = $jobOfferByStudent->getMailSent();
+            $parameters["active"] = $jobOfferByStudent->getActive();
 
             $this->connection = Connection::GetInstance();
 
@@ -55,9 +57,12 @@ class JobOfferByStudentDAO {
 
             foreach ($resultSet as $row) {
                 $jobOfferByStudent = new JobOfferByStudent();
+                $jobOfferByStudent->setJobOfferByStudentId($row["jobofferbystudentid"]);
                 $jobOfferByStudent->setStudentId($row["studentid"]);
                 $jobOfferByStudent->setJobOfferId($row["jobofferid"]);
                 $jobOfferByStudent->setPostulationDate($row["postulationdate"]);
+                $jobOfferByStudent->setMailSent($row["mailsent"]);
+                $jobOfferByStudent->setActive($row["active"]);
 
                 array_push($jobOfferByStudentList, $jobOfferByStudent);
             }
@@ -146,6 +151,8 @@ class JobOfferByStudentDAO {
                 $jobOfferByStudent->setStudentId($row["studentid"]);
                 $jobOfferByStudent->setJobOfferId($row["jobofferid"]);
                 $jobOfferByStudent->setPostulationDate($row["postulationdate"]);
+                $jobOfferByStudent->setMailSent($row["mailsent"]);
+                $jobOfferByStudent->setActive($row["active"]);
 
                 array_push($jobOfferByStudentList, $jobOfferByStudent);
             }
@@ -183,6 +190,8 @@ class JobOfferByStudentDAO {
                 $jobOfferByStudent->setStudentId($row["studentid"]);
                 $jobOfferByStudent->setJobOfferId($row["jobofferid"]);
                 $jobOfferByStudent->setPostulationDate($row["postulationdate"]);
+                $jobOfferByStudent->setMailSent($row["mailsent"]);
+                $jobOfferByStudent->setActive($row["active"]);
 
                 array_push($jobOfferByStudentList, $jobOfferByStudent);
             }
@@ -191,6 +200,52 @@ class JobOfferByStudentDAO {
         } catch (Exception $ex) {
             throw $ex;
         }
+    }
+    
+    public function modifyMailSent($jobOfferByStudentId, $mailSent) {
+        try {
+            $query = "UPDATE " . $this->tableName . " SET mailsent = :mailSent WHERE jobofferbystudentid = :jobOfferByStudentId;";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['jobOfferByStudentId'] = $jobOfferByStudentId;
+            $parameters["mailSent"] = $mailSent;
+
+            $cantRows = $this->connection->ExecuteNonQuery($query, $parameters);
+
+            return $cantRows;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+    
+    public function UpdateActiveJobOfferByStudent($postulationId, $active){
+        try {
+            $query = "UPDATE " . $this->tableName . " SET active = :active WHERE jobofferbystudentid = :postulationId;";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['postulationId'] = $postulationId;
+            $parameters["active"] = $active;
+
+            $cantRows = $this->connection->ExecuteNonQuery($query, $parameters);
+
+            return $cantRows;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+    
+    public function returnJobPositionByIdPostulationDate($postulationDate) {
+        $jobOfferByStudentList = $this->GetAllMySql();
+
+        foreach ($jobOfferByStudentList as $jobOfferByStudent) {
+            if ($jobOfferByStudent->getPostulationDate() == $postulationDate) {
+                return $jobOfferByStudent;
+            }
+        }
+
+        return false;
     }
 }
 ?>

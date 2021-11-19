@@ -8,6 +8,7 @@ use Controllers\JobPositionController as JobPositionController;
 use Controllers\ComapnyController as ComapnyController;
 use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
+use DAO\JobOfferByStudentDAO as JobOfferByStudentDAO;
 use Models\Student as Student;
 use Utils\Utils as Utils;
 
@@ -45,8 +46,10 @@ class StudentController {
 
     public function ShowPersonalDataView($message = '') {
         Utils::CheckSession();
+        
         $careerDAO = new CareerDAO();
-        $careersList =  $careerDAO->GetAllMySql();
+        $career =  $careerDAO->GetCareerByStudent($_SESSION["activeStudent"]->getCareerId());
+        
         require_once(VIEWS_PATH . "student-personal-data.php");
     }
 

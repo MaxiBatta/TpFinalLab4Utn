@@ -82,7 +82,7 @@ class JobOfferController {
         
         require_once(VIEWS_PATH . "job-offer-add.php");
     }
-
+    
     public function DeleteJobOffer($jobOfferId) {
         $this->jobOfferDAO->Delete($jobOfferId);
 
@@ -92,6 +92,18 @@ class JobOfferController {
     public function ShowDeleteJobOfferView($message = '') {
         Utils::CheckAdmin();
         require_once(VIEWS_PATH . "job-offer-delete.php");
+    }
+    
+    public function ShowDeclineJobOfferView() {
+        Utils::CheckAdmin();
+        if ($_GET) {
+            $_SESSION["actualJobOfferDate"] = $_GET["postulationdate"];
+            require_once(VIEWS_PATH . "job-offer-declination.php");
+        }
+        else {
+            $_SESSION["modifyError"] = 1;
+            require_once(VIEWS_PATH . "admin-panel.php");
+        }
     }
     
     public function ShowJobOffersStudentRecordView($message = '') {
@@ -246,21 +258,47 @@ class JobOfferController {
         $currentDate = date('m/d/Y', time()) . "T" . date('h:i:s', time());
         $currentDateFormat = strtotime($currentDate);
         
-        var_dump($currentDateFormat);
-        
         foreach ($postulationList as $postulation) {
+
+            if ($postulation->getMailSent() == 1) {
+                continue;
+            }
+            
             $jobOffer = $jobOfferDAO->returnJobOfferById($postulation->getJobOfferId());
             
             $jobOfferLimit = strtotime($jobOffer->getLimitDate());
-            
+
             if ($jobOfferLimit < $currentDateFormat) {
-                var_dump($jobOfferLimit);
-                $mailController->SendMailEndJobOfferToStudents($jobOffer, $postulation->getStudentId());
+                $mailController->SendMailEndJobOfferToStudents($postulation);
             }
         }
-        $this->ShowJobOffersAdminCatalogueView();
+        
+        if (!isset($_SESSION["succefully-sent-mails"])) {
+            $_SESSION["succefully-sent-mails"] = 1;
+        }
+        
+        $adminController = new AdministratorController();
+        $adminController->ShowPanelView();
     }
-
+    
+    public function DeclineJobOffer($postulationDate, $mailcontent) {
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        $postulation = $jobOfferByStudentDAO->returnJobPositionByIdPostulationDate($postulationDate);
+        
+        $jobOfferByStudentDAO->UpdateActiveJobOfferByStudent($postulation->getJobOfferByStudentId(), 0);
+        
+        $mailController = new MailController();
+        $mailController->SendMailDeclineJobOffer($postulation, $mailcontent);
+        
+        if (!isset($_SESSION["succefully-sent-mails"])) {
+            $_SESSION["succefully-sent-mails"] = 1;
+        }
+        
+        $adminController = new AdministratorController();
+        $adminController->ShowPanelView();
+        
+        
+    }
 }
 
 ?>

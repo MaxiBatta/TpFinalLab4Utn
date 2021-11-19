@@ -59,12 +59,7 @@ require_once('nav.php');
                                     <label>Carrera</label>
                                     <h5>
                                         <?php
-                                        $_SESSION["activeStudent"]->getCareerId();
-                                        foreach ($careersList as $key => $value) {
-                                            if ($_SESSION["activeStudent"]->getCareerId() == $value->getCareerId()) {
-                                                echo $value->getDescription();
-                                            }
-                                        }
+                                        echo $career->getDescription();
                                         ?>
                                     </h5>
                                 </div>

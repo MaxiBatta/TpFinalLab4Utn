@@ -6,28 +6,16 @@ unset($_SESSION["toModifyStudent"]);
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
-        <div class="container">
+        <div class="container bg-light-alpha p-5">
             <h3 class="mb-4">Modificando a <?= $toModifyStudent->getFirstName() . " " . $toModifyStudent->getLastName() . " / " . $toModifyStudent->getDni() ?></h3>
-            <form action="<?php echo FRONT_ROOT ?>Student/UpdateStudent" method="post" class="bg-light-alpha p-5">
+            <form action="<?php echo FRONT_ROOT ?>Student/UpdateStudent" method="post">
                 <p class="bg-dark-alpha">Si querés eliminar un alumno cambiá el estado a Inactivo o viceversa.</p>
                 <div class="row mt-3">
                     <input type="hidden" name="studentId" value="<?= $toModifyStudent->getStudentId() ?>">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="careerId">Carrera</label>
-                            <select id="careerId" name="careerId" class="form-control">
-                                <?php
-                                  
-                                    foreach ($careersList as $key => $value) {
-                                        if ($toModifyStudent->getCareerId() == $value->getCareerId()) {
-                                            echo '<option value="'. $value->getCareerId() . '" selected="selected">' . $value->getDescription() . '</option>';
-                                        }
-                                        else {
-                                            echo '<option value="'. $value->getCareerId() . '">' . $value->getDescription() . '</option>';
-                                        }
-                                    }
-                                ?>
-                            </select>
+                            <span class="form-control" title="No podés cambiarle la carrera a un estudiante."><?= $career->getDescription() ?></span>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -99,6 +87,50 @@ unset($_SESSION["toModifyStudent"]);
                     <a href="<?php echo FRONT_ROOT . 'Student/ShowStudentListBmView' ?>" class="btn btn-primary ml-2">Volver</a> 
                 </div>
             </form>
+            <hr>
+            <?php
+            if ($jobOffersList) {
+                echo '<h4>Puestos Aplicados</h4>';
+
+                $index = 0;
+                $jobOfferPostulationDate = array();
+
+                foreach ($jobOfferByStudentPostulationDates as $key => $jobOfferByStudentPostulationDate) {
+                    $jobOfferPostulationDate[$index] = $jobOfferByStudentPostulationDate->getPostulationDate();
+                    $index++;
+                }
+
+                $index = 0;
+
+                foreach ($jobOffersList as $key => $jobOffer) {
+
+                    foreach ($jobPositionList as $key => $jobPosition) {
+                        if ($jobPosition->getJobPositionId() == $jobOffer->getJobPositionId()) {
+                            $jobPositionDescription = $jobPosition->getDescription();
+                        }
+                    }
+
+                    foreach ($companyList as $key => $company) {
+                        if ($company->getCompanyId() == $jobOffer->getCompanyId()) {
+                            $companyName = $company->getName();
+                        }
+                    }
+                    ?>
+                    <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowDeclineJobOfferView" method="get">
+                        <input type="hidden" name="postulationdate" value="<?= $jobOfferPostulationDate[$index] ?>">
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <?= '<h5>'.$jobPositionDescription.'</h5>' ?>
+                                <?= '<p>'.$companyName . " - Se postuló el " . $jobOfferPostulationDate[$index] .'</p>' ?>
+                                <?php $index++; ?>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-danger ml-auto d-block">Declinar</button> 
+                            </div>
+                        </div>
+                    </form>
+                <?php } 
+            } ?>
         </div>
     </section>
     <?php

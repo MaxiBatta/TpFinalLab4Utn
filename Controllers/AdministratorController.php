@@ -7,6 +7,10 @@
     use Controllers\CareerController as CareerController;
     use DAO\StudentDao as StudentDAO;
     use DAO\CareerDao as CareerDAO;
+    use DAO\CompanyDao as CompanyDao;
+    use DAO\JobPositionDAO as JobPositionDAO;
+    use DAO\JobOfferByStudentDAO as JobOfferByStudentDAO;
+    use DAO\JobOfferDAO as JobOfferDAO;
     
     
     class AdministratorController
@@ -34,7 +38,19 @@
             $toModifyStudent = $studentDAO->GetStudentById($id);
             
             $careerDAO = new CareerDAO();
-            $careersList = $careerDAO->GetAllMySql(); 
+            $career = $careerDAO->GetCareerByStudent($toModifyStudent->getCareerId()); 
+            
+            $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+            $jobOffersList = $jobOfferByStudentDAO->GetAllJobOffersByStudent($id);
+            
+            $companyDAO = new CompanyDao();
+            $companyList= $companyDAO->GetAllMySql();
+
+            $jobPositionDAO = new JobPositionDAO();
+            $jobPositionList= $jobPositionDAO->GetAllMySql();
+            
+            $jobOfferByStudentDAO2 = new JobOfferByStudentDAO();
+            $jobOfferByStudentPostulationDates = $jobOfferByStudentDAO2->GetJobOffersByStudentByStudent($id);
             
             if ($_GET) {
                 $_SESSION["toModifyStudent"] = $id;

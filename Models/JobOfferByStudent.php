@@ -8,6 +8,8 @@ Class JobOfferByStudent
     private $studentId;
     private $jobOfferId;
     private $postulationDate;
+    private $mailSent;
+    private $active;
     
     function __construct() {
         
@@ -45,8 +47,21 @@ Class JobOfferByStudent
         $this->postulationDate = $postulationDate;
     }
 
+    function getMailSent() {
+        return $this->mailSent;
+    }
 
+    function setMailSent($mailSent): void {
+        $this->mailSent = $mailSent;
+    }
     
+    function getActive() {
+        return $this->active;
+    }
+
+    function setActive($active): void {
+        $this->active = $active;
+    }
 }
 
 

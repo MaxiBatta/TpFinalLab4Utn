@@ -12,8 +12,6 @@ if (isset($_SESSION["found_jobOffers"])) {
     
     $removeSearch = '<a href="'. FRONT_ROOT.'JobOffer/ShowJobOffersAdminCatalogueView" class="btn btn-outline-danger text-strong" style="color: #ff0000">Restaurar</a>';
 }
-
-$back = FRONT_ROOT . 'Administraton/ShowPanelView';
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5 bg-light-alpha p-5">
@@ -26,7 +24,7 @@ $back = FRONT_ROOT . 'Administraton/ShowPanelView';
                     <p class="mb-5" style="font-size: 28px;">Listado ofertas de trabajo</p>
                 </div>
                 <div class="col-md-2">
-                    <a href="<?= $back ?>" class="btn btn-primary">Volver</a>
+                    <a href="<?php echo FRONT_ROOT . 'Administrator/ShowPanelView' ?>" class="btn btn-primary">Volver</a>
                 </div>
             </div>
 

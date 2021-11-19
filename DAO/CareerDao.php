@@ -5,6 +5,8 @@ namespace DAO;
 use Models\Career as Career;
 use \Exception as Exception;
 use DAO\Connection as Connection;
+use DAO\CareerDAO as CareerDAO;
+use DAO\StudentDAO as StudentDAO;
 
 class CareerDAO {
 
@@ -127,6 +129,43 @@ class CareerDAO {
         } catch (Exception $ex) {
             throw $ex;
         }
+    }
+    
+    public function GetCareerByStudent($careerId) {
+        try {
+            $query = "SELECT * FROM " . $this->tableName . " c INNER JOIN students s WHERE c.careerid = :careerId";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters['careerId'] = $careerId;
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if ($resultSet) {
+                $careerDAO = new CareerDAO();
+                $newResultSet = $careerDAO->mapCareerData($resultSet);
+
+                return $newResultSet[0];
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
+    }
+    
+    public function mapCareerData($career) {
+        $resp = array_map(function($p) {
+            $careerToAdd = new Career();
+
+            $careerToAdd->setCareerId($p['careerid']);
+            $careerToAdd->setDescription($p['description']);
+            $careerToAdd->setActive($p['active']);
+
+            return $careerToAdd;
+        }, $career);
+
+        return $resp;
     }
 }
 ?>

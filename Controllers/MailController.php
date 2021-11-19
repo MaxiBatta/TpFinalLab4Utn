@@ -5,6 +5,7 @@ namespace Controllers;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+use Models\JobOfferByStudent as JobOfferByStudent;
 use DAO\StudentDAO as StudentDAO;
 use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
@@ -57,10 +58,14 @@ class MailController {
         }
     }
 
-    public function SendMailEndJobOfferToStudents($jobOffer, $studentId) {
+    public function SendMailEndJobOfferToStudents($postulation) {
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        
+        $jobOfferDAO = new JobOfferDAO();
+        $jobOffer = $jobOfferDAO->GetJobOfferById($postulation->getJobOfferId());
         
         $studentDAO = new StudentDAO();
-        $student = $studentDAO->GetStudentById($studentId);
+        $student = $studentDAO->GetStudentById($postulation->getStudentId());
         
         $jobPositionDAO = new JobPositionDAO();
         $jobPosition = $jobPositionDAO->returnJobPositionByIdMySql($jobOffer->getJobPositionId());
@@ -96,10 +101,58 @@ class MailController {
             $mail->Body = "¡Felicidades " . $student->getFirstName() ." tu postulación ha sido registrada exitosamente! En la brevedad " . $company->getName() . " se contactará contigo.";
 
             $mail->send();
-
-            //$this->postulationDAO->Modify($postulation);
+            
+            $jobOfferByStudentDAO->modifyMailSent($postulation->getJobOfferByStudentId(), 1); //Settea campo mailsent a 1;
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION["succefully-sent-mails"] = $mail->ErrorInfo;
+        }
+    }
+    
+    public function SendMailDeclineJobOffer($postulation, $mailcontent) {
+        $jobOfferByStudentDAO = new JobOfferByStudentDAO();
+        
+        $jobOfferDAO = new JobOfferDAO();
+        $jobOffer = $jobOfferDAO->GetJobOfferById($postulation->getJobOfferId());
+        
+        $studentDAO = new StudentDAO();
+        $student = $studentDAO->GetStudentById($postulation->getStudentId());
+        
+        $jobPositionDAO = new JobPositionDAO();
+        $jobPosition = $jobPositionDAO->returnJobPositionByIdMySql($jobOffer->getJobPositionId());
+        
+        $companyDAO = new companyDAO();
+        $company = $companyDAO->GetCompanyByIdMySql($jobOffer->getCompanyId());
+        
+        $mail = new PHPMailer(true);
+
+        try {
+
+            $tamaño = 2; //Tamaño de Pixel
+            $level = 'Q'; //Precisión Baja
+            $framSize = 3; //Tamaño en blanco
+            //Server settings
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host = 'smtp.gmail.com';                       // Set the SMTP server to send through
+            $mail->SMTPAuth = true;                                   // Enable SMTP authentication
+            $mail->Username = 'tpfinallaborato525@gmail.com';                // SMTP username
+            $mail->Password = 'larousse356';                    // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            //Recipients
+            $mail->setFrom('tpFinalLaboratorio@gmail.com', 'Administration');
+            $mail->addAddress($student->getEmail(), $student->getFirstName());        // Name is optional
+            // Attachments
+            // foreach($listEntradas as $entrada) {
+            //     $mail->addAttachment('Views/temp/'.$filename);         // Add attachments
+            // }
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = "Se ha declinado tu postulacion del puesto " . $jobPosition->getDescription();
+            $mail->Body = $mailcontent;
+
+            $mail->send();
+        } catch (Exception $e) {
+            $_SESSION["succefully-sent-mails"] = $mail->ErrorInfo;
         }
     }
 

@@ -13,6 +13,18 @@ else {
     /***/
 }
 
+if (isset($_SESSION["succefully-sent-mails"]) && $_SESSION["succefully-sent-mails"] == 1) {
+    $mailState = '<h5 class="text-success">Los correos han sido enviados exitosamente.</h5>';
+    unset($_SESSION["succefully-sent-mails"]);
+}
+else if (isset($_SESSION["succefully-sent-mails"]) && $_SESSION["succefully-sent-mails"] != 1) {
+    $mailState = '<h5 class="text-danger">Ha ocurrido un error: ' . $_SESSION["succefully-sent-mails"] . '</h5>';
+    unset($_SESSION["succefully-sent-mails"]);
+}
+else {
+    /***/
+}
+
 if (isset($_SESSION["existingMail"])) {
     $errorExistingMail = '<h5 class="text-danger mt-3">Ya existe un usuario con ese mail registrado.</h5>';
     unset($_SESSION["existingMail"]);
@@ -42,6 +54,7 @@ if (isset($_SESSION["modifyError"])) {
                     <?= isset($errorExistingMail) ? $errorExistingMail : "" ?>
                     <?= isset($registerState) ? $registerState : "" ?>
                     <?= isset($dbState) ? $dbState : "" ?>
+                    <?= isset($mailState) ? $mailState : "" ?>
                     <?= isset($modifyState) ? $dbState : "" ?>
                     <?= isset($modifyError) ? $modifyError : "" ?>
                 </div>
@@ -70,7 +83,7 @@ if (isset($_SESSION["modifyError"])) {
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Ver Empresas </h5>
+                            <h5 class="card-title">Ver Empresas</h5>
                             <p class="card-text">Ver y Modificar empresas.</p>
                             <a href="<?php echo FRONT_ROOT.'Company/ShowCompaniesCatalogueView'?>" class="btn btn-primary">Ver</a>
                         </div>
@@ -147,10 +160,10 @@ if (isset($_SESSION["modifyError"])) {
             <div class="row">
                 <div class="col-md-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <h5 class="card-title">API a DB</h5>
                             <p class="card-text">Escribe los datos de la API a la DB.</p>
-                            <p class="card-text">Arrojará un error en el encabezado de la página en caso de keys duplicadas.</p>
+                            <p class="card-text">Arrojará un error en el encabezado de la página en caso de encontrar keys duplicadas.</p>
                             <a href="<?php echo FRONT_ROOT . 'Data/getAllData' ?>" class="btn btn-danger">Actualizar</a> 
                         </div>
                     </div>
@@ -158,10 +171,10 @@ if (isset($_SESSION["modifyError"])) {
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Enviar correos</h5>
-                            <p class="card-text">Escribe los datos de la API a la DB.</p>
-                            <p class="card-text">Arrojará un error en el encabezado de la página en caso de keys duplicadas.</p>
-                            <a href="<?php echo FRONT_ROOT . 'JobOffer/SendMailsToStudents' ?>" class="btn btn-danger">Actualizar</a> 
+                            <h5 class="card-title">Enviar mails agradecimiento</h5>
+                            <p class="card-text">Envia correos a los postulados de las ofertas laborales.</p>
+                            <p class="card-text">Comprueba fecha límite y si ya se enviaron anteriormente.</p>
+                            <a href="<?php echo FRONT_ROOT . 'JobOffer/SendMailsToStudents' ?>" class="btn btn-danger">Enviar</a> 
                         </div>
                     </div>
                 </div>
