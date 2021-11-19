@@ -111,6 +111,14 @@ if (isset($_SESSION["found_jobOffers"])) {
                             <button type="submit" class="btn btn-danger mt-2">Modificar</button>
                         </form>
                     </div>
+                    <div class="row" style="margin-left: 3px; display:none;">
+                        <form action="<?= FRONT_ROOT ?>JobOffer/Pdf" method="get">
+                            <input type="hidden" name="jobOffer-id" value="<?= $jobOffer->getJobOfferId() ?>">
+                            <div class="d-flex align-item-center">
+                                <button type="submit" class="btn btn-primary">Pdf Prueba</button>
+                            </div>
+                        </form>
+                    </div>
                     <?php
                     }
                 echo "<p class='mt-5'>". ($count > 0 ? "Se han encontrado ".$count." oferta(s) laboral(es)." : "No hay ninguna oferta laboral disponible para tu carrera.") . "</p>";
